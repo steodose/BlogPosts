@@ -1,0 +1,117 @@
+---
+title: "Super Bowl Squares"
+author: "Stephan Teodosescu"
+date: 2019-02-02
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Overview
+
+The unofficial American holiday known as the Super Bowl is upon us. It’s the one day a year where diehard fans, casual fans, non-fans and even Maroon 5 fans huddle together around the TV to watch grown men fumble an oblong-shaped piece of pigskin.
+
+It’s also one of the biggest betting days of the year. Sure, lots of money is placed legally in Vegas, and illegally offshore, but most gambling happens in one’s home or office. Approximately $4.7 billion will be wagered on the big game this year — most of that illegally, of course.
+
+One of the most popular games to play -- especially in corporate America -- is Super Bowl Squares. If you’re unfamiliar with the game here’s a primer:
+
+You start with a 10-by-10 grid with the Patriots team name labeled at the top and the Rams on one side (or vice versa). From there people buy individual squares. Once every square has been purchased, the numbers zero through nine are randomly chosen and placed across the top and side of the grid. The y-axis of the grid represents the last digit of the Ram’s score, while the x-axis represents the last digit of the Patriot’s score. (Note: there are variations on how the numbers/squares are chosen). At the end of each quarter the winner is the player who owns the square where the Patriots’ last digit intersects the Rams’ last digit.
+
+Let's model what squares have the highest probability of winning.
+
+# Exploratory Data Analysis
+
+```{r}
+# Load packages
+library(tidyverse)
+library(patchwork)
+
+# Load 2015-2018 NFL regular season and postseason results
+games <- read_csv("2015-2018_results.csv") #on local disk
+ 
+```
+
+Let's determine the most common digits
+
+```{r}
+# Gather into a data frame of scores, and calculate the digit
+scores <- games %>%
+  mutate(digitW = PtsW %% 10, digitL = PtsL %% 10)
+
+scores %>%
+  count(digitW, digitL) %>%
+  mutate(percent = n / sum(n))
+```
+
+We can also calcuate the frequency of certain scores for the winning team and losing team, as well as for the games themselves. 
+
+```{r}
+# Calculate frequency of certain scores
+scores %>%
+  count(PtsW, sort = TRUE)
+
+scores %>%
+  count(PtsL, sort = TRUE)
+
+scores %>%
+  count(PtsW, PtsL, sort = TRUE)
+
+```
+
+# Including Plots
+
+We can also plot the most common winning and losing numbers using a histogram.
+
+```{r}
+#Plot Histogram of most common winning numbers
+ggplot(data = scores, mapping = aes(x = digitW)) + 
+  geom_histogram(binwidth = 1, color = "black", fill = "grey") + 
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_x_continuous(breaks = seq(0,9, by = 1)) +
+  labs( title = "NFL Score Data 2015 - 2018",
+        x = "Winning Team's Final Digit",
+        caption = "Data from Pro-Football-Reference.com")
+
+#Histogram for losing numbers
+ggplot(data = scores, mapping = aes(x = digitL)) + 
+  geom_histogram(binwidth = 1, color = "black", fill = "grey") + 
+  theme(legend.position = "none") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_x_continuous(breaks = seq(0,9, by = 1)) +
+  labs( title = "NFL Score Data 2015 - 2018", 
+        x = "Losing Team's Final Digit",
+        caption = "Data from Pro-Football-Reference.com")
+```
+
+# Determine Common Pairs of NFL Scores
+
+```{r}
+# Make a heat map using geom_tile
+scores %>%
+  count(digitW, digitL) %>%
+  mutate(percent = n / sum(n)) %>%
+  ggplot(aes(digitW, digitL, fill = percent)) +
+  geom_tile() +
+  scale_x_continuous(breaks = 0:9) +
+  scale_y_continuous(breaks = 0:9) +
+  geom_text(aes(label = round(percent*100, 3))) +
+  scale_fill_gradient2(high = "red", low = "white",
+                       labels = scales::percent_format()) +
+  theme_minimal() +
+  labs(x = "Last digit of winning team score",
+       y = "Last digit of losing team score",
+       title = "Common pairs of NFL scores 2015-2018",
+       fill = "% of games in '15-18")
+```
+
+The types of scores we’ve seen in recent memory are different from those in the past. Looking at at all regular season and postseaason scores for the past four years (the NFL moved the extra point distance back for the 2015 season) gives us rich set of data and a sense of how that rule change affected final scores.
+
+The squares that will give you the best chance to take home cash are those where the losing team has a seven and the winning team zero, or where you have the winning team hitting three and the losing team zero.
+
+Code was heavily borrowed from David Robinson's blog post at the following link: http://varianceexplained.org/r/super-bowl-squares/. 
+
+The original article I wrote can be found here: https://steodoseblog.wordpress.com/2018/02/03/super-bowl-squares-a-game-of-strategy/
