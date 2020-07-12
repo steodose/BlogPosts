@@ -1,6 +1,6 @@
 ##### Premier League 2019-20 Season Simulations #####
 #### By: Stephan Teodosescu
-### February 22, 2020
+### Updated: July 12, 2020; Matchday 35
 ## Inspiration: http://rstudio-pubs-static.s3.amazonaws.com/149923_584734fddffe40799cee564c938948d7.html
 
 # Load libraries
@@ -107,9 +107,9 @@ df.all %>%
 #Table of probabilities by position
 league_table <- table(df.all$Team, df.all$Rank)/iSim
 
-# Convert table to data frame for offline analysis
+# Convert table to data frame for offline analyses
 league_table2 <- as.data.frame(league_table)
-write_csv(league_table2, "league_table.csv") #for Tableau
+write_csv(league_table2, "league_table.csv")
 
 ## Come up with team color schemes
 epl_colors <- teamcolors %>%
@@ -141,7 +141,7 @@ epl_colors <- teamcolors %>%
 ggplot(df.all, aes(x = Pts, y = fct_reorder(Team, Pts), fill = Team)) +
     geom_density_ridges_gradient(show.legend = FALSE) +
     labs(x = "Points", y = "",
-         title = "2019-20 Premier League: Matchday 27",
+         title = "2019-20 Premier League: Matchday 35",
          subtitle = "Probability distributions of teams finishing with x points",
          caption = "Data: football-data.co.uk") +
     theme(plot.title = element_text(face="bold")) +
@@ -151,7 +151,7 @@ ggplot(df.all, aes(x = Pts, y = fct_reorder(Team, Pts), fill = Team)) +
 ggplot(df.all, aes(x = Rank, y = fct_reorder(Team, Rank), fill = Team)) +
     geom_density_ridges_gradient(show.legend = FALSE) +
     labs(x = "Rank", y = "",
-         title = "2019-20 Premier League: Matchday 27",
+         title = "2019-20 Premier League: Matchday 33",
          subtitle = "Probability distributions league table finish",
          caption = "Data: football-data.co.uk") +
     theme(plot.title = element_text(face="bold")) +
@@ -162,14 +162,26 @@ ggplot(df.all, aes(x = Rank, y = fct_reorder(Team, Rank), fill = Team)) +
 ggplot(df.all, aes(x = GD, y = fct_reorder(Team, GD), fill = Team)) +
     geom_density_ridges_gradient(show.legend = FALSE) +
     labs(x = "Goal Differential", y = "",
-         title = "2019-20 Premier League: Matchday 27",
+         title = "2019-20 Premier League: Matchday 35",
          subtitle = "Probability distributions of end-of-season goal differential",
          caption = "Data: football-data.co.uk") +
     theme(plot.title = element_text(face="bold")) +
     scale_fill_manual(values = epl_colors$primary) +
     geom_vline(xintercept =  0, color = "red", linetype = "dashed")
 
-## Average points table
+### Facet plots
+ggplot(league_table2, aes(x = Var2, y = Freq, fill = "blue")) +
+    geom_bar(stat="identity") +
+    facet_wrap(~ Var1, ncol = 5) +
+    labs(x = "League Position", y = "",
+         title = "2019-20 Premier League: Matchday 35",
+         subtitle = "Probability distributions of league table finish, 1-20",
+         caption = "Data: football-data.co.uk") +
+    theme(plot.title = element_text(face="bold")) +
+    theme(legend.position="none")
+    
+
+## Average points table (Excel League Table analysis)
 points_table <- df.all %>%
     group_by(Team) %>%
     summarise(average_points = mean(Pts),
