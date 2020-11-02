@@ -1,2 +1,2 @@
 # Data
-Data and scripts for all my projects. Original work can be found at https://betweenpipes.wordpress.com/
+Data and scripts for my blog posts. Original work can be found at [Between the Pipes](https://betweenpipes.wordpress.com/).
