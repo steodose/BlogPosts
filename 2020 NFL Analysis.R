@@ -19,7 +19,7 @@ data <- readRDS(url('https://raw.githubusercontent.com/guga31bb/nflfastR-data/ma
 
 ##### Create 538 table theme from Thomas Mock's blog #####
 # Comes from this post: https://themockup.blog/posts/2020-09-26-functions-and-themes-for-gt-tables/?panelset3=theme-code2&panelset4=theme-code3 
-gt_theme_538 <- function(data,...) {
+gt_nfl_theme_538 <- function(data,...) {
     data %>%
         # Add team logos w/ web_image
         text_transform(
@@ -32,6 +32,10 @@ gt_theme_538 <- function(data,...) {
                     height = 25
                 )
             }
+        ) %>%
+        # Relabel columns
+        cols_label(
+            team_logo_espn = ""
         ) %>%
         opt_all_caps()  %>%
         opt_table_font(
@@ -79,21 +83,23 @@ schotty <- pbp_rp %>% #Schotty is a shoutout to Marty Schottenheimer who does no
     filter(wp > .20 & wp < .80 & down <= 2 & qtr <= 2 & half_seconds_remaining > 120) %>%
     group_by(posteam) %>%
     summarize(plays = n(), mean_pass = mean(pass), mean_rush = mean(rush)) %>%
-    arrange(-mean_pass)
+    arrange(-mean_pass) %>%
+  left_join(teams_colors_logos, by = c('posteam' = 'team_abbr')) #add team logos
 
 # Create Play Type Tendencies table
 schotty %>%
+    select(team_logo_espn, posteam, plays, mean_pass, mean_rush) %>%
     arrange(desc(mean_pass), desc(mean_rush)) %>%
     rename(c("Team" = "posteam", "Pass" = "mean_pass", "Rush" = "mean_rush")) %>%
     gt() %>% 
-    gt_theme_538() %>%
+    gt_nfl_theme_538() %>%
     fmt_number(columns = vars(Pass, Rush), decimals = 2) %>%
     cols_align(align = "left",
                columns = 1) %>%
     tab_spanner(label = "Percentage of plays that are...", 
-                columns = 3:4) %>%
+                columns = 4:5) %>%
     tab_header(title = md("**2020 NFL Play Type Tendencies**"),
-               subtitle ="1st and 2nd Downs in the First Half with win probability between 20% and 80%, excluding the final 2 minutes. Thru Week 11.") %>%
+               subtitle ="1st and 2nd Downs in the First Half with win probability between 20% and 80%, excluding the final 2 minutes. Thru Week 12.") %>%
     tab_source_note(
         source_note = md("DATA: nflfastR<br>TABLE: @steodosescu")) %>%
     data_color(columns = vars(Pass),
@@ -228,7 +234,7 @@ epa_data %>%
          y = "Offensive Rush EPA ",
          caption = "Data: @nflfastR",
          title = "Offensive Pass and Rush EPA per Play",
-         subtitle = "2020 season, thru Week 11") +
+         subtitle = "2020 season, thru Week 13") +
     theme_bw() +
     theme(plot.title = element_text(face = "bold")) +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
@@ -244,7 +250,7 @@ epa_data %>%
          y = "Defensive Rush EPA ",
          caption = "Data: @nflfastR",
          title = "Defensive Pass and Rush EPA per Play",
-         subtitle = "2020 season, thru Week 11") +
+         subtitle = "2020 season, thru Week 12") +
     theme_bw() +
     theme(plot.title = element_text(face = "bold")) +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
@@ -254,21 +260,21 @@ epa_data %>%
     scale_x_reverse() +
     scale_y_reverse()
 
-# Results Table
+# Season Advanced Stats Table
 epa_data %>%
     select(team_logo_espn, team, wins, point_diff, off_pass_epa, off_rush_epa, def_pass_epa, def_rush_epa) %>%
     arrange(desc(wins), desc(point_diff)) %>%
     rename(c("Off_Pass" = "off_pass_epa", "Off_Rush" = "off_rush_epa", 
              "Def_Pass" = "def_pass_epa", "Def_Rush" = "def_rush_epa")) %>%
     gt() %>% 
-    gt_theme_538() %>%
+    gt_nfl_theme_538() %>%
     fmt_number(columns = vars(Off_Pass, Off_Rush, Def_Pass, Def_Rush), decimals = 2) %>%
     cols_align(align = "left",
                columns = 1) %>%
-    tab_spanner(label = "Expected Points Added (EPA)/Play", 
+    tab_spanner(label = "EPA/Play", 
                 columns = 5:8) %>%
     tab_header(title = md("**2020 NFL Season Advanced Stats**"),
-               subtitle ="Thru Week 12") %>%
+               subtitle ="Thru Week 13. EPA/Play accounts for factors such as down, distance, field position, roof types, TOs remaining, home-field advantage and time remaining.") %>%
     tab_source_note(
         source_note = md("DATA: nflfastR<br>TABLE: @steodosescu")) %>%
     data_color(columns = vars(point_diff),
@@ -276,3 +282,5 @@ epa_data %>%
                    palette = c("white", "#3fc1c9"),
                    domain = NULL))
 
+
+##### Predictions (To Be Updated) #####

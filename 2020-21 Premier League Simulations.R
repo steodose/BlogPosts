@@ -11,6 +11,7 @@ library(gt) #for 538-themed tables
 library(extrafont) #for adding in new fonts
 library(rvest) #for web scraping
 library(ggalt) #for dumbbell plot
+library(ggtext)
 
 ##### Building the model #####
 # Inspiration: http://rstudio-pubs-static.s3.amazonaws.com/149923_584734fddffe40799cee564c938948d7.html
@@ -111,7 +112,6 @@ league_table <- table(df.all$Team, df.all$Rank)/iSim
 
 ##### Convert table to data frame for import into Tableau #####
 league_table2 <- as.data.frame(league_table)
-
 write_csv(league_table2, "league_table_MW8.csv") # This becomes our datasource for Tableau Public dashboard
 
 write_csv(df.all, "df.all.csv") #Tableau version 2
@@ -162,9 +162,12 @@ font_import(pattern = "Chivo")
 ggplot(df.all, aes(x = Pts, y = fct_reorder(Team, Pts), fill = Team)) +
     geom_density_ridges_gradient(show.legend = FALSE) +
     labs(x = "Points", y = "",
-         title = "2020-21 Premier League: Thru Matchweek 9",
+         title = "2020-21 Premier League: Thru Matchweek 10",
          subtitle = "Expected points after simulating the remainder of the season 10,000x",
-         caption = "Data: football-data.co.uk") +
+         caption = "Data: football-data.co.uk"
+         ) +
+    theme_bw() +
+    scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
     theme(plot.title = element_text(face="bold")) +
     theme(plot.title = element_text(face="bold"), text = element_text(family = "Chivo")) +
     scale_fill_manual(values = epl_colors2$Primary)
@@ -174,7 +177,7 @@ ggplot(df.all, aes(x = Pts, y = fct_reorder(Team, Pts), fill = Team)) +
 ggplot(df.all, aes(x = Rank, y = fct_reorder(Team, Rank), fill = Team)) +
     geom_density_ridges_gradient(show.legend = FALSE) +
     labs(x = "Rank", y = "",
-         title = "2020-21 Premier League: Matchweek 9",
+         title = "2020-21 Premier League: Matchweek 10",
          subtitle = "Probability distributions league table finish",
          caption = "Data: football-data.co.uk") +
         theme(plot.title = element_text(face="bold")) +
@@ -185,7 +188,7 @@ ggplot(df.all, aes(x = Rank, y = fct_reorder(Team, Rank), fill = Team)) +
 ggplot(df.all, aes(x = GD, y = fct_reorder(Team, GD), fill = Team)) +
     geom_density_ridges_gradient(show.legend = FALSE) +
     labs(x = "Goal Differential", y = "",
-         title = "2020-21 Premier League: Matchweek 9",
+         title = "2020-21 Premier League: Matchweek 10",
          subtitle = "Probability distributions of end-of-season goal differential",
          caption = "Data: football-data.co.uk") +
     theme(plot.title = element_text(face="bold")) +
@@ -323,11 +326,13 @@ ggplot(Average_Goals, aes(x=Season, y=`Goals per Game`)) +
     
 ###### Football Reference data for advanced analytics plots #####
 
-# Load the data (Squad Shooting data set for the 2020-21 season)...last updated 11/2/20
+# Load the data (Squad Shooting data set for the 2020-21 season)...remember to update
 squad_shooting <- read_csv("Squad Shooting.csv")
 View(squad_shooting)
 
 # Create a dumbbell plot showing the delta between xG and actual goals for all PL teams
+# Code comes from this example: https://towardsdatascience.com/create-dumbbell-plots-to-visualize-group-differences-in-r-3536b7d0a19a
+
 ggplot(squad_shooting, aes(x = `Gls`, xend = `xG`, y = reorder(Squad, `G-xG`), group = Squad)) + 
     geom_dumbbell(colour = "#dddddd",
                   size = 2,
@@ -335,7 +340,7 @@ ggplot(squad_shooting, aes(x = `Gls`, xend = `xG`, y = reorder(Squad, `G-xG`), g
                   colour_xend = "#1380A1") +
     labs(x = "", y = "",
          title = "Premier League Shot Quality Profiles",
-         subtitle = "The difference between actual goals scored and expected goals, as of Week 9",
+         subtitle = "The difference between <span style = 'color:#FAAB18'>actual Goals</span>, scored and <span style = 'color:#1380A1'>Expected goals </span>, as of Week 11",
          caption = "Data Source: fbref.com/StatsBomb") +
     theme_minimal() +
     theme(plot.title = element_text(face="bold"), text = element_text(family = "Chivo")) +
@@ -345,7 +350,14 @@ ggplot(squad_shooting, aes(x = `Gls`, xend = `xG`, y = reorder(Squad, `G-xG`), g
     geom_text(data=filter(squad_shooting, Squad=="Crystal Palace"),
               aes(x=xG, y=Squad, label="Expected Goals"),
               color= "#1380A1", size=3, vjust=-1.5, fontface="bold", family="Chivo") +
+    geom_text(data=squad_shooting, aes(x=Gls, y=Squad, label=Gls),
+              color="#FAAB18", size=2.75, vjust=2.5, family="Chivo") +
+    geom_text(data=squad_shooting, aes(x=xG, y=Squad, label=xG),
+              color="#1380A1", size=2.75, vjust=2.5, family="Chivo") +
+    geom_rect(data=squad_shooting, aes(xmin=27, xmax=30, ymin=-Inf, ymax=Inf), fill="lightgrey") +
+    geom_text(data=squad_shooting, aes(label=`G-xG`, y=Squad, x=28.5), fontface="bold", size=3, family="Chivo") +
     theme(panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
         axis.ticks=element_blank())
+
 
