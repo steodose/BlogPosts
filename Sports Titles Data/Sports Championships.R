@@ -14,6 +14,7 @@ library(glue)
 library(teamcolors)
 library(rvest) #for webscraping
 library(ggalt) #for dumbbell plot
+library(googlesheets4)
 
 
 ##### Import data from Sports Reference family of websites, and Wikipedia
@@ -21,7 +22,13 @@ library(ggalt) #for dumbbell plot
 champs <- read_csv("champions.csv") #Available on my GitHub page
 expected_championships <- read_csv("expected_championships.csv") #Available on my GitHub page
 
-# Custom ggplot theme (inspired by Owen Phillips at the F5)
+# Un-comment the below code if you use the Google sheets import function
+
+# champs <- read_sheet("https://docs.google.com/spreadsheets/d/1SXLHvtSzbCp3C8Ungk6uE8soowlxL3wh8pfzYOJi-0E/edit#gid=0")
+# expected_championships <- read_sheet("https://docs.google.com/spreadsheets/d/1wl7O5U-K67YvDVDkDjQbkbPz3TNdvoQ9gJTmnVDqaGo/edit#gid=0")
+
+
+##### Custom ggplot theme (inspired by Owen Phillips at the F5) #####
 theme_custom <- function () { 
     theme_minimal(base_size=11, base_family="Chivo") %+replace% 
         theme(
