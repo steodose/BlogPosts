@@ -276,7 +276,7 @@ qb_success_rate <- qbs %>%
     y = "EPA per play",
     caption = "Data: @nflscrapR | Plot: @steodosescu",
     title = "QB success rate and EPA/play",
-    subtitle = "2020, min 100 pass attempts, includes all QB's rush and pass plays"
+    subtitle = "2020 season, min 100 pass attempts, includes all QB's rush and pass plays. Size represents no. of plays"
   ) +
   theme_custom() +
   theme(plot.title = element_text(face = "bold")) +
@@ -289,3 +289,86 @@ qb_success_rate +
   stat_smooth(method = "lm", geom = "line", alpha = 0.5, se = FALSE, color = "red", size = 1)
 
 ggsave("QB_Success_Rate.png")
+
+
+##### Explosive Plays #####
+
+explosive_plays <- pbp_rp %>% 
+  filter(
+    play_type %in% c("pass", "run"),
+    penalty == 0,
+    !is.na(epa)
+  ) %>% 
+  mutate(explosive_play = case_when((play_type == "pass" & yards_gained >= 20) ~ 1,
+                            (play_type == "run" & yards_gained >= 15) ~ 1,
+                            TRUE ~ 0)) %>% 
+  group_by(posteam) %>%
+  summarize(
+    n_dropbacks = sum(pass),
+    n_rush = sum(rush),
+    n_plays = n(),
+    n_explosive_plays = sum(explosive_play)
+  ) %>%
+  mutate(explosive_share = n_explosive_plays/n_plays) %>% 
+  ungroup() # always ungroup if you no longer need the grouping effect
+
+
+explosive_plays_plot <- explosive_plays %>% 
+  ggplot(aes(x = explosive_share, y = reorder(posteam, explosive_share))) +
+  geom_col(fill = if_else(explosive_plays$posteam == "CHI", "#C83803", "grey")) +
+  labs(
+    x = "Explosive Play Share (%)",
+    y = "",
+    caption = "Data: @nflscrapR | Plot: @steodosescu",
+    title = glue("The <span style = 'color:#c83803;'>Bears</span> were one of the *least* explosive teams last season"),
+    subtitle = "Explosive plays defined as anything gaining 15 yards or more on rushes, and 20 yards or more on pass plays. "
+  ) +
+  theme_custom() +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_markdown()) +
+  theme(legend.position = "none") +
+  theme(plot.title = element_markdown()) +
+  geom_vline(xintercept = mean(explosive_plays$explosive_share), color = "red", linetype = "dashed") +
+  annotate("text", x = 0.080, y = "PIT", label = "NFL Avg = 6.8%", color = "red") +
+  scale_x_continuous(labels = scales::percent_format(accuracy = 0.1, suffix = " %"))
+
+explosive_plays_plot
+
+ggsave("Explosive Plays.png")
+
+
+# Add logos instead of team names for the y axis
+
+# Define function to link to images
+link_to_img <- function(x, width = 30) {
+  glue::glue("<img src='{x}' width='{width}'/>")
+}
+
+explosive_plays2 <- explosive_plays %>% 
+  arrange(desc(explosive_share))
+
+# Plot with logos on y-xis
+explosive_plays_plot_logos <- explosive_plays %>% 
+  left_join(nflfastR::teams_colors_logos, by = c("posteam" = "team_abbr")) %>% 
+  mutate(logos = link_to_img(team_logo_espn)) %>%
+  ggplot(aes(x = explosive_share, y = reorder(logos, explosive_share))) +
+  geom_col(fill = if_else(explosive_plays$posteam == "CHI", "#C83803", "grey")) +
+  labs(
+    x = "Explosive Play Share (%)",
+    y = "",
+    caption = "Data: @nflscrapR | Plot: @steodosescu",
+    title = glue("The <span style = 'color:#c83803;'>Bears</span> were one of the *least* explosive teams last season"),
+    subtitle = "Explosive plays = 15 yards or more on rushes; 20 yards or more on pass plays.<span style = 'color:red;'> NFL Average = 6.8%</span>."
+  ) +
+  theme_custom() +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_markdown()) +
+  theme(plot.title = element_markdown()) +
+  geom_vline(xintercept = mean(explosive_plays$explosive_share), color = "red", linetype = "dashed") +
+  scale_x_continuous(labels = scales::percent_format(accuracy = 0.1, suffix = " %")) +
+  theme(axis.text.y = element_markdown(margin = margin(r = -25, unit = "pt"))) +
+  theme(legend.position = "none")
+
+explosive_plays_plot_logos
+
+ggsave("Explosive Plays with Logos.png", height = 10)
