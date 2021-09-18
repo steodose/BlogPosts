@@ -372,3 +372,195 @@ explosive_plays_plot_logos <- explosive_plays %>%
 explosive_plays_plot_logos
 
 ggsave("Explosive Plays with Logos.png", height = 10)
+
+
+##### Completion Rate by Depth of Target #####
+data_clean <- pbp_rp %>%
+  filter(pass == 1 & sack == 0 & qb_scramble == 0) %>%
+  select(
+    name, pass, desc, posteam, epa, defteam, complete_pass, incomplete_pass,
+    air_yards, down, success, complete_pass
+  )
+
+data_clean$down <- as_factor(data_clean$down) #Convert Down to ordered factor
+
+# EPA by Depth of Target plot
+data_clean %>% 
+  filter(between(air_yards, 1, 25)) %>%
+  ggplot(aes(x = air_yards, y = epa, fill = down)) +
+  geom_point(aes(group = air_yards), shape = 21, alpha = 0.2) +
+  geom_hline(yintercept = 0, size = 1, color = "black") +
+  stat_summary(fun.y = "mean", geom = "point", size = 3, aes(color = down), shape = 21, color = "white", stroke = 1) +
+  geom_smooth(color = "white", method = "loess", alpha = 0.5, span = 1) +
+  facet_grid(~down) +
+  labs(
+    x = "Air Yards",
+    y = "Expected Points Added (EPA)",
+    caption = "Data: @nflscrapR | Plot: @steodosescu",
+    title = glue("EPA by Depth of Target (DoT)"),
+    subtitle = "Expected Points Added typically decreases with deeper passes."
+  ) +
+  theme_custom() +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_markdown()) +
+  theme(plot.title = element_markdown())
+
+ggsave("EPA per Down by DoT.png")
+
+
+# QB Completion Rate by Depth of Target plot
+
+pass_comp <- data_clean %>%
+  filter(between(air_yards, 1, 25)) %>%
+  group_by(down, air_yards) %>%
+  summarize(
+    n = n(),
+    comp_rate = sum(complete_pass, na.rm = TRUE) / n,
+    epa = mean(epa, na.rm = TRUE)
+  )
+
+
+pass_comp_plot <- pass_comp %>%
+  ggplot(aes(x = air_yards, y = comp_rate, fill = down)) +
+  geom_point(aes(size = n), shape = 21, stroke = 0.5) +
+  geom_smooth(color = "white", method = "loess") +
+  geom_hline(yintercept = 0, size = 1, color = "black") +
+  geom_vline(xintercept = 25, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  geom_hline(yintercept = 0.5, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  facet_grid(~down) +
+  theme_custom() +
+  scale_fill_manual(
+    values = c("#00b159", "#003399", "#ff2b4f", "yellow"),
+    aesthetics = c("color", "fill")
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    x = "Air Yards (Depth of Target)",
+    y = "",
+    title = "Completion Rate by Down and DoT for all QBs, 2020",
+    subtitle = "Completion rate generally drops below 50% for passes > 20 air yards",
+    caption = "Data: @nflfastR | Plot: @steodosescu",
+    size = "N of Passes"
+  ) +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_markdown()) +
+  theme(plot.title = element_markdown()) +
+  theme(strip.text = element_text(face = "bold"))
+
+pass_comp_plot
+
+ggsave("EPA per Down by DoT.png")
+
+
+# Trubisky's Completion Rate by Depth of Target plot
+
+pass_comp_trubisky <- data_clean %>%
+  filter(name == "M.Trubisky") %>% 
+  filter(between(air_yards, 1, 25)) %>%
+  filter(down == 1 | down == 2 | down == 3) %>% 
+  group_by(down, air_yards) %>%
+  summarize(
+    n = n(),
+    comp_rate = sum(complete_pass, na.rm = TRUE) / n,
+    epa = mean(epa, na.rm = TRUE)
+  )
+
+
+pass_comp_trubisky_plot <- pass_comp_trubisky %>%
+  ggplot(aes(x = air_yards, y = comp_rate, fill = down)) +
+  geom_point(aes(size = n), shape = 21, stroke = 0.5) +
+  geom_smooth(color = "white", method = "loess") +
+  geom_hline(yintercept = 0, size = 1, color = "black") +
+  geom_vline(xintercept = 25, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  geom_hline(yintercept = 0.5, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  facet_grid(~down) +
+  theme_custom() +
+  scale_fill_manual(
+    values = c("#00b159", "#003399", "#ff2b4f"),
+    aesthetics = c("color", "fill")
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    x = "Air Yards (Depth of Target)",
+    y = "",
+    title = "Completion Rate by Down and DoT for <span style = 'color:#c83803;'>Mitch Trubisky</span>, 2020",
+    subtitle = "Completion rate generally drops below 50% for passes > 20 air yards",
+    caption = "Data: @nflfastR | Plot: @steodosescu",
+    size = "N of Passes"
+  ) +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_markdown()) +
+  theme(plot.title = element_markdown()) +
+  theme(strip.text = element_text(face = "bold"))
+
+pass_comp_trubisky_plot
+
+# Don't facet by down
+
+pass_comp_trubisky_plot2 <- pass_comp_trubisky %>%
+  ggplot(aes(x = air_yards, y = comp_rate)) +
+  geom_point(aes(size = n), alpha = 0.5) +
+  geom_smooth(color = "white", method = "loess") +
+  geom_hline(yintercept = 0, size = 1, color = "black") +
+  geom_vline(xintercept = 25, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  geom_hline(yintercept = 0.5, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  theme_custom() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    x = "Air Yards (Depth of Target)",
+    y = "",
+    title = "Completion Rate by Down and DoT for <span style = 'color:#c83803;'>Mitch Trubisky</span>, 2020",
+    subtitle = "Completion rate generally drops below 50% for passes > 20 air yards",
+    caption = "Data: @nflfastR | Plot: @steodosescu",
+    size = "N of Passes"
+  ) +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_markdown()) +
+  theme(plot.title = element_markdown()) +
+  theme(strip.text = element_text(face = "bold"))
+
+pass_comp_trubisky_plot2
+
+# Select Quarterbacks completion rate by DoT
+
+pass_comp_select <- data_clean %>%
+  filter(name == "M.Trubisky" | name == "A.Rodgers" | name == "P.Mahomes") %>% 
+  filter(between(air_yards, 1, 25)) %>%
+  group_by(name, air_yards) %>%
+  summarize(
+    n = n(),
+    comp_rate = sum(complete_pass, na.rm = TRUE) / n,
+    epa = mean(epa, na.rm = TRUE)
+  )
+
+pass_comp_select_plot <- pass_comp_select %>%
+  ggplot(aes(x = air_yards, y = comp_rate, fill = name)) +
+  geom_point(aes(size = n), shape = 21, stroke = 0.5) +
+  geom_smooth(color = "white", method = "loess") +
+  geom_hline(yintercept = 0, size = 1, color = "black") +
+  geom_vline(xintercept = 25, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  geom_hline(yintercept = 0.5, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  facet_grid(~name) +
+  theme_custom() +
+  scale_fill_manual(
+    values = c("#203731", "#003399", "#E31837"),
+    aesthetics = c("color", "fill")
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    x = "Air Yards (Depth of Target)",
+    y = "",
+    title = "Completion Rate by DoT for selected QBs, 2020",
+    subtitle = "Trubisky was not as accurate on deeper throws than the league's top echelon of QBs",
+    caption = "Data: @nflfastR | Plot: @steodosescu",
+    size = "N of Passes"
+  ) +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_markdown()) +
+  theme(plot.title = element_markdown()) +
+  theme(strip.text = element_text(face = "bold"))
+
+
+pass_comp_select_plot
+
+ggsave("CP per by DoT.png")
