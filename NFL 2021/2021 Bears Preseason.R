@@ -1,6 +1,6 @@
 ##### 2021 NFL Pre-Season Analysis #####
 ## By: Stephan Teodosescu
-## Updated November 29, 2020
+## Updated September, 2021
 
 # Using this as a tutorial: https://www.nflfastr.com/articles/beginners_guide.html
 
@@ -538,7 +538,7 @@ pass_comp_select_plot <- pass_comp_select %>%
   geom_point(aes(size = n), shape = 21, stroke = 0.5) +
   geom_smooth(color = "white", method = "loess") +
   geom_hline(yintercept = 0, size = 1, color = "black") +
-  geom_vline(xintercept = 25, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
+  geom_vline(xintercept = 20, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
   geom_hline(yintercept = 0.5, size = 1, color = "black", linetype = "dashed", alpha = 0.5) +
   facet_grid(~name) +
   theme_custom() +
