@@ -93,10 +93,6 @@ theme_custom <- function () {
         )
 }
 
-# Function to make logos transparent
-transparent <- function(img) {
-    magick::image_fx(img, expression = "0.5*a", channel = "alpha")
-}
 
 # Create 538 GT table theme from Thomas Mock's blog.Comes from this post: https://themockup.blog/posts/2020-09-26-functions-and-themes-for-gt-tables/?panelset3=theme-code2&panelset4=theme-code3 
 gt_nhl_theme_538 <- function(data,...) {
@@ -168,8 +164,8 @@ vegas_totals %>%
     theme(plot.title = element_text(face = "bold")) +
     theme(plot.subtitle = element_markdown()) +
     theme(plot.title = element_markdown()) +
-    scale_x_discrete(breaks = seq(0, 120, 10)) +
     theme(legend.position="none") +
+    scale_y_continuous(breaks = seq(0,120,10)) +
     scale_fill_manual(values = vegas_totals$manual_colors) +
     coord_flip()
 
@@ -196,8 +192,8 @@ link_to_img <- function(x, width = 30) {
     theme(plot.subtitle = element_markdown()) +
     theme(plot.title = element_markdown()) +
     scale_x_continuous(breaks = seq(0, 120, 10)) +
-    theme(axis.text.x = element_markdown(margin = margin(t = -25, unit = "pt"))) +
-    theme(legend.position="none")
+    theme(legend.position="none") +
+     theme(axis.text.x = element_markdown(margin = margin(t = -25, unit = "pt")))
 
 
 ggsave("Points Totals with Logos.png", height = 10)
@@ -225,50 +221,120 @@ vegas_totals %>%
 ggsave("Points Totals vs TV Games.png")
 
 
-## 3. Points total facet plot (WIP)
+## 3a. Points total facet plot with smoothed lines 
 
-# Opponent win totals when team is Visitor
-schedule_visitors <- schedule %>% 
-    left_join(vegas_totals, by = c("Home" = "Team")) %>%
-    group_by(Visitor) %>%
-    mutate(
-        gameno = row_number()) %>% 
-    select(Date, gameno, Visitor, `Win Total`, manual_colors, logo) %>% 
-    rename(Team = Visitor, opponent_win_total = `Win Total`)
-    
- 
-# Opponent win totals when team is Home
-schedule_home <- schedule %>% 
-    left_join(vegas_totals, by = c("Visitor" = "Team")) %>%
-    group_by(Home) %>% 
-    mutate(
-        gameno = row_number()) %>% 
-    select(Date, gameno, Home, `Win Total`, manual_colors, logo) %>% 
-    rename(Team = Home, opponent_win_total = `Win Total`)
+df <- schedule %>%
+    mutate(teama = Home,
+           teamb = Visitor) %>% 
+    pivot_longer(Home:Visitor) %>% 
+    mutate(opp = ifelse(value == teama, teamb, teama)) %>% 
+    rename(team = value) %>% 
+    select(-teama, -teamb, -name) 
 
-# Join data
-schedule2 <- schedule_home %>% 
-    bind_rows(schedule_visitors) %>% 
-    mutate(opp_ou_ra = rollmean(opponent_win_total, k = 10, na.pad = TRUE, align = 'right'),
-           gameno = row_number()) %>%
-    arrange(gameno) %>% 
-    ungroup()
+# add win totals for team and opponent 
+df <- left_join(df, vegas_totals, by = c("team" = "Team")) %>% 
+    left_join(., vegas_totals, by = c("opp" = "Team")) %>% 
+    rename(team_ou = `Win Total.x`, 
+           opp_ou = `Win Total.y`) %>% 
+    select(Date:team_ou, opp_ou)
+
+# calculate 10-game rolling average of opponent win total 
+df <- df %>% 
+    group_by(team) %>% 
+    mutate(opp_ou_ra = rollmean(opp_ou, k = 10, na.pad = TRUE, align = 'right'), 
+           gameno = row_number()) %>% 
+    ungroup() 
+
+# add team colors
+df <- left_join(df, vegas_totals, by = c("team" = "Team"))
+
+#Manually adjust some colors, just for readability purposes
+df <- df %>%
+    mutate(primary = case_when(
+        team == "Toronto Maple Leafs" ~ "#00205B",
+        team == "Winnipeg Jets" ~ "#041E42",
+        team == "Edmonton Oilers" ~ "#FF4C00",
+        team == "Montreal Canadiens" ~ "#AF1E2D",
+        team == "Calgary Flames" ~ "#F1BE48",
+        team == "Vancouver Canucks" ~ "#00843D",
+        team == "Ottawa Senators" ~ "#000000",
+        team == "Colorado Avalanche" ~ "#00205B",
+        team == "Vegas Golden Knights" ~ "#B4975A",
+        team == "Minnesota Wild" ~ "#154734",
+        team == "St. Louis Blues" ~ "#002F87",
+        team == "Arizona Coyotes" ~ "#8C2633",
+        team == "San Jose Sharks" ~ "#006D75",
+        team == "Los Angeles Kings" ~ "#000000",
+        team == "Anaheim Ducks" ~ "#F47A38",
+        team == "Tampa Bay Lightning" ~ "#002868",
+        team == "Carolina Hurricanes" ~ "#CC0000",
+        team == "Florida Panthers" ~ "#041E42",
+        team == "Dallas Stars" ~ "#006847",
+        team == "Nashville Predators" ~ "#FFB81C",
+        team == "Chicago Blackhawks" ~ "#CF0A2C",
+        team == "Columbus Blue Jackets" ~ "#002654",
+        team == "Detroit Red Wings" ~ "#CE1126",
+        team == "Boston Bruins" ~ "#000000",
+        team == "New York Islanders" ~ "#F47D30",
+        team == "Pittsburgh Penguins" ~ "#CFC493",
+        team == "Washington Capitals" ~ "#C8102E",
+        team == "New York Rangers" ~ "#0038A8",
+        team == "Philadelphia Flyers" ~ "#F74902",
+        team == "New Jersey Devils" ~ "#CE1126",
+        team == "Buffalo Sabres" ~ "#002654",
+        team == "Seattle Kraken" ~ "#99D9D9",
+        TRUE ~ primary
+    ))
+
 
 # set up duplicate team column for charting purposes 
-schedule2$teamDuplicate <- schedule2$Team
+df$teamDuplicate <- df$team 
 
-schedule2 %>% 
-    ggplot(aes(x=Date, y = opponent_win_total, color = Team, group = Team)) +
-    geom_line(size = 1.2) +
-    facet_wrap(Team ~ ., ncol = 4) +
-    labs(x = "", y = "Vegas Over/Under (Points)",
-         title = "Opponent's Vegas Point Totals, 2021-22",
-         subtitle = glue("Teams sorted by bookmakers' over/under point totals as of Sept. 26 (via BetMGM)."),
-         caption = "Data: BetMGM/Hockey-Reference.com | Plot: @steodosescu") +
-    scale_color_manual(name="", values = schedule2$manual_colors) +
-    theme_custom() +
-    theme(plot.title = element_text(face="bold")) +
-    theme(plot.subtitle = element_markdown()) +
-    theme(legend.position="none")
+# Make chart (snoothed version)
+df %>% 
+    ggplot(aes(x = gameno, y = opp_ou_ra)) + 
+    geom_smooth(data = mutate(df, team = NULL), aes(group = teamDuplicate), method = "lm", formula = y ~ splines::bs(x, 5), se = FALSE, colour = 'grey80', size = .25, alpha = .5) +
+    geom_smooth(aes(group = team, color = primary), method = "lm",  formula = y ~ splines::bs(x, 5), se = FALSE, size = .5, alpha = 1, show.legend = FALSE) +
+    #geom_line(data = mutate(df, team = NULL), aes(group = teamDuplicate), colour = 'grey80', size = .25, alpha = .5) +
+    #geom_line(aes(group = team, color = primary), size = .5, alpha = 1, show.legend = FALSE) +
+    scale_y_continuous(breaks = seq(30, 50, 10)) +
+    scale_x_continuous(breaks = seq(0, 80, 40), limits = c(0, 80, 40)) +
+    scale_color_identity() +
+    facet_wrap(~fct_reorder(team, -team_ou)) +
+    theme_custom() + 
+    theme(plot.title.position = 'plot', 
+          plot.title = element_text(face = 'bold'), 
+          plot.margin = margin(10, 10, 15, 10), 
+          panel.spacing = unit(0.5, 'lines')) +
+    labs(x = "Game Number", 
+         y = "Vegas Over/Under (Points)", 
+         title = "Opponent's Vegas Point Totals, 2021-22", 
+         subtitle = "Teams sorted by predicted win totals (via BetMGM). Lines smoothed using 10-game moving average.",
+         caption = "Data: BetMGM/Hockey-Reference.com | Plot: @steodosescu")
 
-ggsave("Team Point Totals Facet.png")
+ggsave("Team Point Totals Facet Smoothed.png")
+
+
+## 3b. Points total facet plot non-smoothed
+df %>% 
+    ggplot(aes(x = gameno, y = opp_ou_ra)) + 
+    #geom_smooth(data = mutate(df, team = NULL), aes(group = teamDuplicate), method = "lm", formula = y ~ splines::bs(x, 5), se = FALSE, colour = 'grey80', size = .25, alpha = .5) +
+    #geom_smooth(aes(group = team, color = primary), method = "lm",  formula = y ~ splines::bs(x, 5), se = FALSE, size = .5, alpha = 1, show.legend = FALSE) +
+    geom_line(data = mutate(df, team = NULL), aes(group = teamDuplicate), colour = 'grey80', size = .25, alpha = .5) +
+    geom_line(aes(group = team, color = primary), size = .5, alpha = 1, show.legend = FALSE) +
+    scale_y_continuous(breaks = seq(30, 50, 10)) +
+    scale_x_continuous(breaks = seq(0, 80, 40), limits = c(0, 80, 40)) +
+    scale_color_identity() +
+    facet_wrap(~fct_reorder(team, -team_ou)) +
+    theme_custom() + 
+    theme(plot.title.position = 'plot', 
+          plot.title = element_text(face = 'bold'), 
+          plot.margin = margin(10, 10, 15, 10), 
+          panel.spacing = unit(0.5, 'lines')) +
+    labs(x = "Game Number", 
+         y = "Vegas Over/Under (Points)", 
+         title = "Opponent's Vegas Point Totals, 2021-22", 
+         subtitle = "Teams sorted by their 2021-22 Vegas win totals (via BetMGM)",
+         caption = "Data: BetMGM/Hockey-Reference.com | Plot: @steodosescu")
+
+ggsave("Team Point Totals Facet Raw.png")
