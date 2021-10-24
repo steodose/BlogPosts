@@ -6,7 +6,7 @@ The projects are listed in reverse chronological order:
 NHL 2021-22 Season Schedule
 ------------
 
-From the October 11, 2021 blog post titled [Chartable takeaways for the upcoming NHL season schedule](https://betweenpipes.wordpress.com/2021/10/11/chartable-takeaways-for-the-upcoming-nhl-season-schedule/). The plots below were heavily inspired by Owen Phillips' work at his substack newsletter[The F5](https://thef5.substack.com/)
+From the October 11, 2021 blog post titled [Chartable takeaways for the upcoming NHL season schedule](https://betweenpipes.wordpress.com/2021/10/11/chartable-takeaways-for-the-upcoming-nhl-season-schedule/). The plots below were heavily inspired by Owen Phillips' work at his substack newsletter [The F5](https://thef5.substack.com/).
 
 2021-22 Win Totals based on various public models:![This one was generated as of Matchweek 9](https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/win_totals_2021_22.png).
 
