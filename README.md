@@ -10,3 +10,5 @@ From the October 11, 2021 blog post titled [Chartable takeaways for the upcoming
 
 2021-22 Win Totals based on various public models:![This one was generated as of Matchweek 9](https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/win_totals_2021_22.png).
 
+Each team's schedule based on opponent predicted win totals:!(https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/Team%20Point%20Totals%20Facet%20Smoothed.png).
+
