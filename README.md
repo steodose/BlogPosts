@@ -15,7 +15,7 @@ From the October 11, 2021 blog post titled [Chartable takeaways for the upcoming
 Does Justin Fields solve all the Chicago Bears’ QB issues of recent past?
 ------------
 
-From the September 17, 2021 blog post titled [Does Justin Fields solve all the Chicago Bears’ QB issues of recent past?](https://betweenpipes.wordpress.com/2021/09/17/does-justin-fields-solve-all-the-chicago-bears-qb-issues-of-recent-past/).
+From the September 17, 2021 [blog post](https://betweenpipes.wordpress.com/2021/09/17/does-justin-fields-solve-all-the-chicago-bears-qb-issues-of-recent-past/).
 
 ![Explosive Plays](https://raw.githubusercontent.com/steodose/BlogPosts/master/NFL%202021/Explosive%20Plays%20with%20Logos.png)
 
@@ -23,9 +23,12 @@ From the September 17, 2021 blog post titled [Does Justin Fields solve all the C
 
 Euro 2020 (in 2021): An Italian Renaissance
 ------------
+From the [July 25, 2021 blog post](https://betweenpipes.wordpress.com/2021/07/25/euro-2020-in-2021-an-italian-renaissance/).
 
 ![Forecast Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/euro_2021.png)
 
 ![Shot Quality Profiles](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/Expected%20Goals_with_logo.png)
 
 ![Forecast Distributions](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/Euro%202020%20Forecasts.png)
+
+![Scoring Profiles Target Plot](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/Expected%20Goals_target_plot.png)
