@@ -20,3 +20,12 @@ From the September 17, 2021 blog post titled [Does Justin Fields solve all the C
 ![Explosive Plays](https://raw.githubusercontent.com/steodose/BlogPosts/master/NFL%202021/Explosive%20Plays%20with%20Logos.png)
 
 ![Completion Rate by DoT](https://raw.githubusercontent.com/steodose/BlogPosts/master/NFL%202021/CP%20per%20by%20DoT.png)
+
+Euro 2020 (in 2021): An Italian Renaissance
+------------
+
+![Forecast Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/euro_2021.png)
+
+![Shot Quality Profiles](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/Expected%20Goals_with_logo.png)
+
+![Forecast Distributions](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/Euro%202020%20Forecasts.png)
