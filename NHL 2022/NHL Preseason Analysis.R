@@ -206,8 +206,7 @@ vegas_totals <- vegas_totals %>%
 
 vegas_totals %>% 
     ggplot(aes(x = televised_games, y = `Win Total`)) + 
-    geom_image(aes(image = logo), image_fun = transparent,
-               size = 0.075, by = "width", asp = asp_ratio) +
+    geom_image(aes(image = logo), size = 0.075, by = "width", asp = asp_ratio) +
     theme_custom() +
     labs(x = "Nationally Televised Games",
          y = "Vegas Over/Under (Points)",
@@ -338,3 +337,138 @@ df %>%
          caption = "Data: BetMGM/Hockey-Reference.com | Plot: @steodosescu")
 
 ggsave("Team Point Totals Facet Raw.png")
+
+
+## 4. Points table
+
+# read in data 
+df <- read_csv("https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/win_totals_2021_22.csv")
+
+# get team logos and fix Seattke Kraken
+nhl_colors <- nhl_colors %>% 
+  mutate(logo = case_when(
+    name == "Seattle Kraken" ~ "https://content.sportslogos.net/logos/1/6740/thumbs/674079522022.gif",
+    TRUE ~ as.character(logo))
+  )
+
+
+# western conference table
+wcf_tbl <- df %>% 
+  filter(conf == "Western Conference") %>% 
+  mutate(avg = (x538 + vegas + href + athletic + moneypuck) / 5) %>% 
+  arrange(desc(avg)) %>% 
+  select(-avg, -conf) %>% 
+  left_join(., nhl_colors, by = c("team" = "name")) %>%
+  mutate(logo = case_when(
+    team == "Seattle Kraken" ~ "https://content.sportslogos.net/logos/1/6740/thumbs/674079522022.gif",
+    TRUE ~ as.character(logo))
+  ) %>% 
+  mutate(rank = row_number()) %>% 
+  select(rank, team, logo, vegas:moneypuck) %>% 
+  gt() %>%
+  tab_header(
+    title = md("**Western Conference**"),
+    subtitle = "") %>% 
+  cols_label(rank = "",
+             team = "Team", 
+             logo  = "",
+             vegas = "Vegas",
+             x538 = "538",
+             href = "Hockey Ref",
+             athletic = "The Athletic",
+             moneypuck = "MPuck")  %>% 
+  gt_img_rows(logo) %>% 
+  cols_width(team ~ 150, 
+             everything() ~ 50) %>% 
+  fmt_number(columns = c(x538, athletic, moneypuck), 
+             decimals = 1) %>% 
+  data_color(
+    columns = c(x538, vegas, href, athletic, moneypuck),
+    colors = scales::col_numeric(
+      palette = paletteer::paletteer_d(
+        palette = "Redmonder::dPBIRdGn",
+        direction = 1
+      ) %>% as.character(),
+      domain = NULL, 
+      na.color = "#005C55FF"
+    )) %>%
+  tab_options(
+    heading.title.font.size = 18,
+    heading.subtitle.font.size = 10,
+    heading.title.font.weight = 'bold',
+    column_labels.font.size = 12,
+    column_labels.font.weight = 'bold',
+    table.font.size = 12,
+    table.font.names = "Chivo", 
+    source_notes.font.size = 7,
+    data_row.padding = px(.5)
+  ) %>%
+  tab_source_note(
+    source_note = md("Vegas = Vegas over/under totals via BetMGM<br>538 = NHL prediction model via fivethirtyeight.com<br>Hockey Ref = Preseason win totals based on the href model at Hockey-Reference.com<br>Table: @steodosescu | Inspired by Owen Phillips (The F5)")
+  )
+
+# eastern conference table
+
+ecf_tbl <- df %>% 
+  filter(conf == "Eastern Conference") %>% 
+  mutate(avg = (x538 + vegas + href + athletic + moneypuck) / 5) %>% 
+  arrange(desc(avg)) %>% 
+  select(-avg, -conf) %>% 
+  left_join(., nhl_colors, by = c("team" = "name")) %>%
+  mutate(logo = case_when(
+    team == "Seattle Kraken" ~ "https://content.sportslogos.net/logos/1/6740/thumbs/674079522022.gif",
+    TRUE ~ as.character(logo))
+  ) %>% 
+  select(rank, team, logo, vegas:moneypuck) %>% 
+  gt() %>%
+  tab_header(
+    title = md("**Eastern Conference**"),
+    subtitle = "") %>% 
+  cols_label(rank = "",
+             team = "Team", 
+             logo  = "",
+             vegas = "Vegas",
+             x538 = "538",
+             href = "Hockey Ref",
+             athletic = "The Athletic",
+             moneypuck = "MPuck")  %>% 
+  gt_img_rows(logo) %>% 
+  cols_width(team ~ 150, 
+             everything() ~ 50) %>% 
+  fmt_number(columns = c(x538, athletic, moneypuck), 
+             decimals = 1) %>% 
+  data_color(
+    columns = c(x538, vegas, href, athletic, moneypuck),
+    colors = scales::col_numeric(
+      palette = paletteer::paletteer_d(
+        palette = "Redmonder::dPBIRdGn",
+        direction = 1
+      ) %>% as.character(),
+      domain = NULL, 
+      na.color = "#005C55FF"
+    )) %>%
+  tab_options(
+    heading.title.font.size = 18,
+    heading.subtitle.font.size = 10,
+    heading.title.font.weight = 'bold',
+    column_labels.font.size = 12,
+    column_labels.font.weight = 'bold',
+    table.font.size = 12,
+    table.font.names = "Chivo", 
+    source_notes.font.size = 7,
+    data_row.padding = px(.5)
+  ) %>%
+  tab_source_note(
+    source_note = md("Vegas = Vegas over/under totals via BetMGM<br>538 = NHL prediction model via fivethirtyeight.com<br>Hockey Ref = Preseason win totals based on the href model at Hockey-Reference.com<br>Table: @steodosescu | Inspired by Owen Phillips (The F5)")
+  )
+
+# combine both tables into one using {gtExtras}
+
+two_tables <- list(wcf_tbl, ecf_tbl)
+
+gt_two_column_layout(tables = two_tables, 
+                     output = 'save', 
+                     filename = 'win_totals_2021_22.png', 
+                     vwidth = 925, 
+                     vheight = 475)
+
