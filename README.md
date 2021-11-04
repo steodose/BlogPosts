@@ -38,3 +38,5 @@ Who holds the title ‘City of Champions’ in North American sports?
 From the [July 21, 2021 blog post](https://betweenpipes.wordpress.com/2021/07/21/who-holds-the-title-city-of-champions-in-north-american-sports/)
 
 ![Championships Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/Sports%20Titles%20Data/championships_table.png)
+
+![Actual vs Expected](https://raw.githubusercontent.com/steodose/BlogPosts/master/Sports%20Titles%20Data/Actual%20vs.%20Expected.png)
