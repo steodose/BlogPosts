@@ -32,3 +32,9 @@ From the [July 25, 2021 blog post](https://betweenpipes.wordpress.com/2021/07/25
 ![Forecast Distributions](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/Euro%202020%20Forecasts.png)
 
 ![Scoring Profiles Target Plot](https://raw.githubusercontent.com/steodose/BlogPosts/master/Euro%202020/Expected%20Goals_target_plot.png)
+
+Who holds the title ‘City of Champions’ in North American sports?
+------------
+From the [July 21, 2021 blog post](https://betweenpipes.wordpress.com/2021/07/21/who-holds-the-title-city-of-champions-in-north-american-sports/)
+
+![Championships Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/Sports%20Titles%20Data/championships_table.png)
