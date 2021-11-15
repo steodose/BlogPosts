@@ -3,6 +3,12 @@ Data and scripts for my blog posts. Original work can be found at [Between the P
 
 The projects are listed in reverse chronological order:
 
+A Week 1 tilt in (my opinion) America’s best college football town
+------------
+
+From the November 14, 2021 [blog post](https://betweenpipes.wordpress.com/2021/11/14/a-week-1-tilt-in-my-opinion-americas-best-college-town/).
+
+
 Chartable takeaways for the upcoming NHL season schedule
 ------------
 
