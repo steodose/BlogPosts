@@ -8,6 +8,8 @@ A Week 1 tilt in (my opinion) America’s best college football town
 
 From the November 14, 2021 [blog post](https://betweenpipes.wordpress.com/2021/11/14/a-week-1-tilt-in-my-opinion-americas-best-college-town/).
 
+![CFB Stadiums](https://raw.githubusercontent.com/steodose/BlogPosts/master/CFB%20Stadiums/Big%20Ten%20Summary%20Table.png)
+
 
 Chartable takeaways for the upcoming NHL season schedule
 ------------
