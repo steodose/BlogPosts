@@ -3,6 +3,15 @@ Data and scripts for my blog posts. Original work can be found at [Between the P
 
 The projects are listed in reverse chronological order:
 
+Quick Hits: Early season NHL takeaways
+------------
+
+From the November 17, 2021 [blog post](https://betweenpipes.wordpress.com/2021/11/17/quick-hits-early-season-nhl-takeaways/)
+
+![Winning Percentage](https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/Winning%20Percentage.png)
+
+![Injuries(https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/spotrac.png)
+
 A Week 1 tilt in (my opinion) America’s best college football town
 ------------
 
