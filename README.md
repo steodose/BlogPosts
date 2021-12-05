@@ -10,7 +10,7 @@ From the November 17, 2021 [blog post](https://betweenpipes.wordpress.com/2021/1
 
 ![Winning Percentage](https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/Winning%20Percentage.png)
 
-![Injuries(https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/spotrac.png)
+![Injuries](https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202022/spotrac.png)
 
 A Week 1 tilt in (my opinion) America’s best college football town
 ------------
