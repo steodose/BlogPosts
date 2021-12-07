@@ -15,6 +15,7 @@ library(ggimage) #for working with logos
 library(zoo)
 library(janitor)
 library(prismatic)
+library(gghighlight)
 
 
 ##### Get the Data #####
@@ -32,7 +33,7 @@ library(prismatic)
 
 #results <- tuesdata$results
 
-# Or read in the data manually
+# Or read in the data manually (my method)
 
 circuits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-07/circuits.csv')
 constructor_results <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-09-07/constructor_results.csv')
@@ -60,6 +61,8 @@ theme_custom <- function () {
         )
 }
 
+# Define an aspect ratio to use throughout. This value is the golden ratio which provides a wider than tall rectangle
+asp_ratio <- 1.618 
 
 ##### Data Processing #####
 
@@ -75,7 +78,7 @@ driver_results_2021 <- driver_results_df %>%
     mutate(Driver = paste(forename, surname)) %>%
     mutate(country = case_when(
         driverRef == "max_verstappen" ~ "Netherlands.png", 
-        driverRef == "hamilton" ~ "England.png",
+        driverRef == "hamilton" ~ "united-kingdom.png",
         driverRef == "alonso" ~ "Spain.png",
         driverRef == "bottas" ~ "Finland.png",
         driverRef == "gasly" ~ "France.png",
@@ -84,12 +87,12 @@ driver_results_2021 <- driver_results_df %>%
         driverRef == "latifi" ~ "Canada.png",
         driverRef == "leclerc" ~ "Poland.png",
         driverRef == "mazepin" ~ "Russia.png",
-        driverRef == "norris" ~ "England.png",
+        driverRef == "norris" ~ "united-kingdom.png",
         driverRef == "ocon" ~ "France.png",
         driverRef == "perez" ~ "Mexico.png",
         driverRef == "raikkonen" ~ "Finland.png",
         driverRef == "ricciardo" ~ "Australia.png",
-        driverRef == "russell" ~ "England.png",
+        driverRef == "russell" ~ "united-kingdom.png",
         driverRef == "sainz" ~ "Spain.png",
         driverRef == "mick_schumacher" ~ "Germany.png",
         driverRef == "stroll" ~ "Canada.png",
@@ -208,15 +211,27 @@ f1_points_age %>%
     filter(driver_name == "Max Verstappen") %>% 
     summarise(max(age))
 
+f1_points_age_top_3 <- f1_points_age %>% 
+    filter(driver_name == "Max Verstappen" |
+               driver_name == "Lewis Hamilton" |
+               driver_name == "Sebastian Vettel")
+
+f1_points_age_not_top_3 <- f1_points_age %>% 
+    filter(driver_name != "Max Verstappen" |
+               driver_name != "Lewis Hamilton" |
+               driver_name != "Sebastian Vettel")
+
+top_3_colors <- c("Max Verstappen" = "#FF9B00",
+                  "Lewis Hamilton" = "#00D2BE",
+                  "Sebastian Vettel" = "#DC0000")
+
 # Make plot
 
 f1_points_age %>% 
-    ggplot(aes(x = age, y = cumulative_points)) +
+    ggplot(aes(x = age, y = cumulative_points, group = driver_name, color = driver_name)) +
     scale_x_continuous(breaks = c(20, 30, 40, 50), labels = paste(seq(20, 50, by = 10), "years old")) +
-    geom_line(aes(group = driver_name, color = driver_name)) +
-    scale_color_manual(values = c("Max Verstappen" = "#FF9B00",
-                                  "Lewis Hamilton" = "#00D2BE",
-                                  "Sebastian Vettel" = "#DC0000")) +
+    geom_line(aes(age, cumulative_points, group = driver_name), data = f1_points_age_not_top_3, colour = alpha("grey", 0.7), size = 1.1) +
+    geom_line(aes(age, cumulative_points, colour = driver_name), data = f1_points_age_top_3, size = 1.1) + # colourise only the filtered data
     annotate("text", y = 1400, x = 23, label = "Max Verstappen", family = "Chivo", fontface = "bold", color = "#FF9B00", vjust = 0, hjust = 1, lineheight = 1) +
     annotate("text", y = 3950, x = 37.5, label = "Lewis Hamilton", family = "Chivo", fontface = "bold", color = "#00D2BE", vjust = 0, hjust = 0, lineheight = 1) +
     annotate("text", y = 3000, x = 35, label = "Sebastian Vettel", family = "Chivo", fontface = "bold", color = "#DC0000", vjust = 0, hjust = 0, lineheight = 1) +
@@ -227,14 +242,16 @@ f1_points_age %>%
     annotate("point", y = 207, x = 23.9, color = "#00D2BE", size = 3) +
     labs(x = "Driver Age",
          y = "Cumulative F1 Points",
-         title = "Will <span style = 'color:#FF9B00;'>Max Verstappen's</span> quick rise at a young age lead him to <br>be the all time points leader in Formula 1 history?",
-         subtitle = "The chart below shows the cumulative points earned by age for each F1 driver since 1950.<br>Lewis Hamilton and Sebastian Vettel have the highest point totals in F1 history. Where will Max end up when he is their age?",
+         title = "Max Verstappen's Rapid Rise in Formula 1",
+         subtitle = "Cumulative points earned by age for each F1 driver since 1950. Lewis Hamilton and Sebastian Vettel have the highest point totals in F1 history.",
          caption = "note: points are based on points scoring system at the time and do not include
        points for fastest lap or sprint qualifying.
        
        Data source: Ergast API
        Plot: @steodosescu") +
     theme_custom() +
-    theme(plot.title = element_markdown(),
+    theme(plot.title = element_text(face = "bold"),
           plot.subtitle = element_markdown(),
           legend.position = "none")
+
+ggsave("Drivers Line Chart.png", height = 6, width = 6 * asp_ratio, dpi = "retina") 
