@@ -1,8 +1,20 @@
 # BlogPosts
 Data and scripts for my blog posts. Original work can be found at [Between the Pipes](https://betweenpipes.wordpress.com/).
 
-The projects are listed in reverse chronological order:
+The projects are listed in reverse chronological order going back to mid-2021:
 
+Drama fit for a Netflix show, Formula One championship comes down to the wire
+------------
+
+From the December 10, 2021 [blog post](https://betweenpipes.wordpress.com/2021/12/10/drama-fit-for-a-netflix-show-formula-one-championship-comes-down-to-the-wire/)
+
+![Top 20 Drivers](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/Top%2020%20Drivers%20with%20Logo.png)
+
+![2021 Constructor Standings](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/2021%20Constructors%20Standings.png)
+
+![Drivers by Age](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/Drivers%20Line%20Chart%20with%20Logo.png)
+
+![2021 Drivers Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/2021%20F1%20Driver%20Table.png)
 Quick Hits: Early season NHL takeaways
 ------------
 
