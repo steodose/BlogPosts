@@ -40,7 +40,9 @@ library(httr)
 
 # Or read in the data manually (my method)
 
-# Read in from Working Directory (accessed on Dec 8th)
+# Read in from Working Directory (accessed on Dec 8th). Got lazy and downloaded CSV tables directly 
+# from the ergast API instead of using something like dbplyr:https://ergast.com/mrd/db/
+
 circuits <- readr::read_csv("/Users/Stephan/Desktop/R Projects/Formula 1/f1db_csv/circuits.csv")
 constructor_results <- readr::read_csv("/Users/Stephan/Desktop/R Projects/Formula 1/f1db_csv/constructor_results.csv")
 constructor_standings <- readr::read_csv("/Users/Stephan/Desktop/R Projects/Formula 1/f1db_csv/constructor_standings.csv")
@@ -575,10 +577,10 @@ magick::image_write(plot_with_logo3, "2021 Constructors Standings.png")
 
 ## Make Constructors line plot
 constructor_points2 <- constructor_points %>%
-    group_by(raceId, race, round, name, constructorRef) %>% 
+    group_by(round, race, name, constructorRef) %>% 
     summarise(points = sum(points)) %>% 
     mutate('round_race' = paste0(round,' - ',race)) %>% 
-    arrange(raceId) %>% 
+    arrange(round) %>% 
     group_by(name) %>% 
     mutate(cumulative_points = cumsum(points)) %>% 
     arrange(round)
