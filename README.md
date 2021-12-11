@@ -10,11 +10,14 @@ From the December 10, 2021 [blog post](https://betweenpipes.wordpress.com/2021/1
 
 ![Top 20 Drivers](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/Top%2020%20Drivers%20with%20Logo.png)
 
-![2021 Constructor Standings](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/2021%20Constructors%20Standings.png)
-
 ![Drivers by Age](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/Drivers%20Line%20Chart%20with%20Logo.png)
 
+![2021 Constructor Standings](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/2021%20Constructors%20Standings.png)
+
+![2021 Constructors Cumulative Points](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/Constructors%20Line%20Chart%20with%20Logo.png)
+
 ![2021 Drivers Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/Formula%201/2021%20F1%20Driver%20Table.png)
+
 Quick Hits: Early season NHL takeaways
 ------------
 
