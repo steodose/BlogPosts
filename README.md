@@ -3,6 +3,19 @@ Data and scripts for my blog posts. Original work can be found at [Between the P
 
 The projects are listed in reverse chronological order going back to mid-2021:
 
+DeMar DeRozan is the Chicago Bulls’ fourth quarter, mid-range assassin
+------------
+
+From the December 30, 2021 [blog post](https://betweenpipes.wordpress.com/2021/12/30/demar-derozan-is-the-chicago-bulls-fourth-quarter-mid-range-assassin/)
+
+![Four Factors](https://raw.githubusercontent.com/steodose/BlogPosts/master/DeMar%20DeRozan/DeRozan%20Four%20Factors%20Chart%20with%20Logo.png)
+
+![Midrange](https://raw.githubusercontent.com/steodose/BlogPosts/master/DeMar%20DeRozan/Midrange%20Bar%20Chart%20with%20Logo.png)
+
+![Win Percentage](https://raw.githubusercontent.com/steodose/BlogPosts/master/DeMar%20DeRozan/Win%20Percentage%20Plot%20with%20Logo.png)
+
+![Midrange Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/DeMar%20DeRozan/Mid%20Range%20Table.png)
+
 Drama fit for a Netflix show, Formula One championship comes down to the wire
 ------------
 
