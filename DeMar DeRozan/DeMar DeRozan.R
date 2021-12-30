@@ -26,6 +26,7 @@ library(ggsci)
 library(rsvg)
 library(jsonlite)
 library(scales)
+library(ggchicklet) #for stylized bar charts
 
 
 ##### Load data #####
@@ -139,7 +140,7 @@ df_nba <- df_nba %>%
     ))
 
 # Visualize in bar graph with logos as points. Inspired by this tutorial Thomas Mock put together on plotting images as points in ggplot2.
-win_perc_plot <- df_nba %>% 
+df_nba %>% 
     ggplot(aes(x = fct_reorder(team, -pct_diff), y = pct_diff)) +
     geom_col(
         aes(
@@ -168,8 +169,8 @@ win_perc_plot <- df_nba %>%
     labs(x = "", 
          y = "Win Percentage Difference (%)", 
          title = "Performance Relative to Expectations", 
-         subtitle = paste0("Difference between current win percentage and expected win percentage, based on Vegas over/unders. As of ", format.Date(Sys.Date(), "%b. %d, %Y")), 
-         caption = "Source: nbastatR/BetMGM\nPlot: @steodosescu")
+         subtitle = paste0("Difference between current win % and expected win %, based on Vegas over/unders. As of ", format.Date(Sys.Date(), "%b. %d, %Y")), 
+         caption = "Source: nbastatR/Owen Phillips\nPlot: @steodosescu")
 
 ggsave("Win Percentage Expectations Chart.png")
 
@@ -226,25 +227,27 @@ midrange <- midrange %>%
     mutate(color = case_when(
         year == "2021-22" ~ "#C9082A",
         TRUE ~ "#17408B"
-    ))
+    )) %>% 
+    mutate(fg_attempts = fg_attempts*100)
 
 midrange %>% 
     ggplot(aes(x = year, y = fg_attempts)) +
-    geom_col(aes(fill= color)) +
-    geom_text(aes(label=fg_attempts), position=position_dodge(width=0.9), vjust=-0.25) +
+    geom_chicklet(aes(fill= color)) + #same as geom_col or geom_bar
+    geom_text(aes(label = paste0(fg_attempts, "%")), family = "Chivo", position=position_dodge(width=0.9), vjust=-0.25) +
     scale_color_identity(aesthetics =  c("fill"))  +
     scale_y_continuous(
         labels = scales::comma_format()) +
     theme_custom() + 
     theme(panel.grid.major.x = element_blank(),
+          axis.text.y = element_blank(),
           plot.title = element_text(face = 'bold'), 
-          plot.title.position = 'plot') + 
+          plot.title.position = 'plot') +
     theme(legend.position = "none") +
     theme(axis.text.x = element_text(angle = 45)) +
     labs(x = "", 
-         y = "Percentage of Total FGA from Mid-Range", 
+         y = "Percentage of NBA FGA from Mid-Range", 
          title = "The Mid-Range is Making a Comeback", 
-         subtitle = paste0("Relative to league average attendance and sorted by overall average home game attendance. Data through December 14."), 
+         subtitle = paste0("Shots from in between the paint and 3-point arc have steadily declined in favor of 3-pointers, but the rate has slowed. Data thru mid-Dec."), 
          caption = "Data:NBA.com/Stats\nPlot: @steodosescu")
 
 ggsave("Midrange Bar Chart.png")
@@ -303,20 +306,20 @@ df_bref %>%
     ggplot() + 
     geom_line(aes(x = season, y = ts_percent, group = 1), color = "#17408B", linetype = 'dashed') + 
     geom_point(color = 'black', fill = "#17408B", shape = 21, size = 4.5, alpha = .75, aes(x = season, y = ts_percent)) + 
-    geom_line(aes(x = season, y = ast_percent/100, group = 1), color = "#c4ced4", linetype = 'dashed') + 
-    geom_point(color = 'black', fill = "#c4ced4", shape = 21, size = 4.5, alpha = .75, aes(x = season, y = ast_percent/100)) + 
+    geom_line(aes(x = season, y = f_tr, group = 1), color = "#c4ced4", linetype = 'dashed') + 
+    geom_point(color = 'black', fill = "#c4ced4", shape = 21, size = 4.5, alpha = .75, aes(x = season, y = f_tr)) + 
     geom_line(aes(x = season, y = tov_percent/100, group = 1), color = "#ce1141", linetype = 'dashed') + 
     geom_point(color = 'black', fill = "#ce1141", shape = 21, size = 4.5, alpha = .75, aes(x = season, y = tov_percent/100)) +
-    geom_line(aes(x = season, y = trb_percent/100, group = 1), color = "black", linetype = 'dashed') + 
-    geom_point(color = 'black', fill = "black", shape = 21, size = 4.5, alpha = .75, aes(x = season, y = trb_percent/100)) + 
+    geom_line(aes(x = season, y = orb_percent/100, group = 1), color = "black", linetype = 'dashed') + 
+    geom_point(color = 'black', fill = "black", shape = 21, size = 4.5, alpha = .75, aes(x = season, y = orb_percent/100)) + 
     theme_custom() +
     scale_y_continuous(limits = c(0, .70), breaks = seq(0, .70, .05), labels = scales::percent_format(accuracy = 1L)) +
     scale_x_continuous(breaks = seq(2010, 2022, 1)) +
     labs(x = "", 
          y = "Rates") + 
     labs(title = "DeRozan's Four Factors", 
-         subtitle = "DeMar DeRozan's career performance according to Dean Oliver's Four Factors | 2010 - 2022", 
-         caption = "1. True Shooting percentage measures a player's efficiency at shooting the ball\n2. Assist percentage is an estimate of the percentage of teammate field goals a player assisted while he was on the floor.\n3. Turnover percentage is an estimate of turnovers per 100 plays.\n4. Free Throw Attempt Rate is the number of free throw attempts per field goal attempts.") +
+         subtitle = "DeMar DeRozan's career performance according to Dean Oliver's Four Factors of basketball success | Data: basketball-reference", 
+         caption = "1. True Shooting percentage measures a player's efficiency at shooting the ball taking into account field goals, 3-pointers, and free throws.\n2. Offensive rebound percentage is an estimate of the percentage of available offensive rebounds a player grabbed while he was on the floor.\n3. Turnover percentage is an estimate of turnovers per 100 plays.\n4. Free Throw Attempt Rate is the number of free throw attempts per field goal attempts.") +
     theme(plot.title = element_text(face = 'bold'), 
           plot.subtitle = element_text(size = 10), 
           plot.title.position = "plot", 
@@ -324,9 +327,9 @@ df_bref %>%
           plot.caption = element_text(size = 8, hjust = 0, vjust = 2.5),
           plot.margin = unit(c(.5, .5, 1, .5), "lines")) +
     annotate(geom = 'label', x = 2020, y = .5, hjust = 0.75, label = "True Shooting %", family = "Chivo", fill = "#17408B", fontface = 'bold', alpha = .5) +
-    annotate(geom = 'label', x = 2020, y = max(df_bref$ast_percent/100), hjust = 0.75, label = "Assist %", family = "Chivo", fill = "#c4ced4", fontface = 'bold', alpha = .5) +
+    annotate(geom = 'label', x = 2020, y = min(df_bref$f_tr), hjust = 0.75, label = "FTA %", family = "Chivo", fill = "#c4ced4", fontface = 'bold', alpha = .5) +
     annotate(geom = 'label', x = 2020, y = .18,  hjust = 0.75, label = "Turnover %", family = "Chivo", fill = "#ce1141", fontface = 'bold', alpha = .5) +
-    annotate(geom = 'label', x = 2019, y = min(df_bref$orb_percent/100),  hjust = 0.75, label = "Reb %", family = "Chivo", fill = "black", fontface = 'bold', alpha = .5)
+    annotate(geom = 'label', x = 2019.5, y = .07,  hjust = 0.75, label = "Off Reb %", family = "Chivo", fill = "black", fontface = 'bold', alpha = .5)
 
 ggsave("Four Factors Chart.png")
 
@@ -345,9 +348,9 @@ four_factors_logo <- add_logo(
 magick::image_write(four_factors_logo, "DeRozan Four Factors Chart with Logo.png")
 
 
-##### Fourth Quarter Clutch Tables #####
+##### Mid-Range Shooting Stats Table #####
 
-# Tutorial for the below come from Owen Phillip's The F5 blog: https://thef5.substack.com/p/tutorial-gt-clutch
+# Tutorial for the below comes from Owen Phillip's The F5 blog: https://thef5.substack.com/p/tutorial-gt-clutch
 
 ## Set Connections
 headers = c(
@@ -367,7 +370,6 @@ headers = c(
 # find url of custom filters on NBA stats page...comes from this page: https://www.nba.com/stats/players/shooting/?Season=2021-22&SeasonType=Regular%20Season&DistanceRange=By%20Zone&sort=Mid-Range%20FGM&dir=1&PerMode=Totals
 nba_mid_range <- "https://stats.nba.com/stats/leaguedashplayershotlocations?College=&Conference=&Country=&DateFrom=&DateTo=&DistanceRange=By+Zone&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=Totals&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2021-22&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&VsConference=&VsDivision=&Weight="
 
-# https://stats.nba.com/stats/leaguedashplayershotlocations?College=&Conference=&Country=&DateFrom=&DateTo=&DistanceRange=By+Zone&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2021-22&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&VsConference=&VsDivision=&Weight=
 
 res <- GET(url = nba_mid_range, add_headers(.headers=headers))
 json_resp <- jsonlite::fromJSON(content(res, "text"))
@@ -399,6 +401,46 @@ nba_mid_range <- nba_mid_range %>%
     select(player_id, player_name, team_abbreviation, fgm, fga, fg_perc)
 
 
+# find High Leverage stats page from pbpstats.com (note the below code is not working)
+pbp_high_leverage <- "https://api.pbpstats.com/get-totals/nba?Season=2021-22&SeasonType=Regular%2BSeason&Leverage=High&Type=Player"
+
+json_data <- fromJSON(paste(readLines(pbp_high_leverage), collapse=""))
+pbp_high_leverage <- json_data[["multi_row_table_data"]]
+
+
+# can export directly from pbp stats website into csv
+pbp_high_leverage <- read_csv("pbpstats_export.csv")
+
+pbp_high_leverage <- pbp_high_leverage %>%
+    clean_names() 
+
+pbp_high_leverage <- pbp_high_leverage %>% 
+    select(name, team_abbreviation, efg_pct, minutes, fg2a, fg3a, fg2m, fg3m)
+
+pbp_high_leverage[is.na(pbp_high_leverage)] <- 0
+
+pbp_high_leverage <- pbp_high_leverage %>% 
+    retype()
+
+pbp_high_leverage$fga <- pbp_high_leverage$fg3a + pbp_high_leverage$fg2a
+pbp_high_leverage$fgm <- pbp_high_leverage$fg3m + pbp_high_leverage$fg2m
+
+#calculate averages for later
+pbp_high_leverage_league_average <- (sum(pbp_high_leverage$fg2m) + (1.5 * sum(pbp_high_leverage$fg3m))) / (sum(pbp_high_leverage$fga))
+pbp_high_leverage_average_fg2 <- sum(pbp_high_leverage$pbpFg2m) / sum(pbp_high_leverage$pbpFg2a)
+
+pbp_high_leverage <- pbp_high_leverage %>% 
+    rename("pbpEFG" = "efg_pct", 
+           "pbpMin" = "minutes", 
+           "pbpFga" = "fga",
+           "pbpFgm" = "fgm",
+           "pbpFg2a" = "fg2a",
+           "pbpFg3a" = "fg3a",
+           "pbpFg2m" = "fg2m",
+           "pbpFg3m" = "fg3m") %>% 
+    arrange(desc(pbpFg2m))
+
+
 #get nba playerIds and headshots
 players <- nbastatR::nba_players()
 players <- players %>% 
@@ -407,17 +449,30 @@ players <- players %>%
 #combine mid-range stats from NBA.com with headshots
 df <- left_join(nba_mid_range, players, by = c("player_id" = "idPlayer"))
 
+#add in team logos
+df <- left_join(df, logos, by = c("team_abbreviation" = "slugTeam"))
+
+#combine with pbpstats data
+df <- left_join(df, pbp_high_leverage, by = c("player_name" = "name"))
+
 df <- df %>% 
-    select(urlPlayerHeadshot, team_abbreviation, player_name, fga, fgm, fg_perc)
+    select(urlPlayerHeadshot, team_abbreviation.x, player_name, urlThumbnailTeam, fga, fgm, fg_perc, pbpEFG, pbpFg2a, pbpFg2m, pbpFga, pbpFgm)
+
 
 # calculate league averages for summary line in table
 league_averages <- data.frame(urlPlayerHeadshot = "", 
-                              team_abbreviation = "", 
+                              team_abbreviation.x = "",
                               player_name = "League Average",
+                              urlThumbnailTeam = "",
                               fga = "",
                               fgm = "",
                               fg_perc = nba_midrange_league_average,
-                              vs_avg = "")
+                              vs_avg = "",
+                              pbpEFG = pbp_high_leverage_league_average,
+                              pbpFg2a = "",
+                              pbpFg2m = "",
+                              pbpFga = "",
+                              pbpFgm = "")
 
 nba_midrange_league_average <- as.numeric(nba_midrange_league_average) 
 
@@ -429,19 +484,25 @@ x <- df %>%
                               "Seth Curry", "Bradley Beal"))  %>% 
     mutate(vs_avg = fg_perc - nba_midrange_league_average) %>% 
     arrange(desc(fgm)) %>% 
-    rbind(., league_averages)
+    rbind(., league_averages) %>% 
+    select(urlPlayerHeadshot:fg_perc, vs_avg, pbpFg2m, pbpFgm, pbpEFG)
 
 x$vs_avg <- as.numeric(as.character(x$vs_avg)) #change vs Avg% column to a numeric
+x$pbpEFG <- as.numeric(as.character(x$pbpEFG))
 
 x %>%
     gt()  %>% 
     cols_label(urlPlayerHeadshot = "",
                player_name = "", 
-               team_abbreviation = "", 
+               team_abbreviation.x = "",
+               urlThumbnailTeam = "",
                fga = "FGA",
                fgm = "FGM",
                fg_perc = "FG%",
-               vs_avg = "vs Avg%") %>% 
+               vs_avg = "vs Avg%",
+               pbpFg2m = "FG2M",
+               pbpFgm = "FGM",
+               pbpEFG = "EFG%") %>% 
     tab_header(
         title = md("**Mid-Range Sharp Shooters**"), 
         subtitle = paste0("2021-22 Reg. Season | Updated ", format(Sys.Date(), format="%B %d, %Y"))
@@ -453,8 +514,15 @@ x %>%
                       height = px(22.5)) 
         }
     ) %>%
+    text_transform(
+        locations = cells_body(vars(urlThumbnailTeam)),
+        fn = function(x) {
+            web_image(url = x, 
+                      height = px(22.5)) 
+        }
+    ) %>%
     cols_merge(
-        columns = vars(player_name, team_abbreviation)
+        columns = vars(player_name, team_abbreviation.x)
     ) %>% 
     text_transform(
         locations = cells_body(
@@ -470,8 +538,12 @@ x %>%
         }
     ) %>% 
     tab_spanner(
-        label =  gt::html("<span style='font-weight:bold;font-size:12px'>NBA<br></span><span style='font-size:10px'>Mid Range Attempts</span>"),
+        label =  gt::html("<span style='font-weight:bold;font-size:12px'>NBA.com<br></span><span style='font-size:10px'>Mid Range Attempts</span>"),
         columns = vars(fga, fgm, fg_perc, vs_avg)
+    ) %>% 
+    tab_spanner(
+        label =  gt::html("<span style='font-weight:bold;font-size:12px'>PBP Stats<br></span><span style='font-size:10px'>High Leverage</span>"),
+        columns = vars(pbpFg2m, pbpFgm, pbpEFG)
     ) %>% 
     fmt_percent(
         columns = vars(fg_perc),
@@ -479,6 +551,10 @@ x %>%
     )  %>%
     fmt_percent(
         columns = vars(vs_avg),
+        decimals = 1
+    )  %>%
+    fmt_percent(
+        columns = vars(pbpEFG),
         decimals = 1
     )  %>%
     data_color(
@@ -493,13 +569,13 @@ x %>%
         )
     ) %>%
     data_color(
-        columns = vars(vs_avg),
+        columns = vars(pbpEFG),
         colors = scales::col_numeric(
             palette = paletteer::paletteer_d(
-                palette = "RColorBrewer::RdYlBu",
+                palette = "RColorBrewer::PRGn",
                 direction  = 1
             ) %>% as.character(),
-            domain = c(-1, 1), 
+            domain = c(0, 1), 
             na.color = "#00441BFF"
         )
     ) %>%
@@ -559,8 +635,27 @@ x %>%
         source_notes.font.size = 9,
         footnotes.padding = px(1), 
     ) %>%
+    tab_source_note(
+        source_note = md("Table: @steodosescu | Inspired by Owen Phillips.")
+    ) %>%
     tab_footnote(
         footnote = "Two point field goals from outside the paint as defined by stats.nba.com",
-        locations = cells_column_spanners(spanners = "<span style='font-weight:bold;font-size:12px'>NBA<br></span><span style='font-size:10px'>Mid Range Attempts</span>")
+        locations = cells_column_spanners(spanners = "<span style='font-weight:bold;font-size:12px'>NBA.com<br></span><span style='font-size:10px'>Mid Range Attempts</span>")
+    ) %>%
+    tab_footnote(
+        footnote = "High leverage field goals based on how much each possession impacts win probability. Via pbpstats.com",
+        locations = cells_column_spanners(spanners = "<span style='font-weight:bold;font-size:12px'>PBP Stats<br></span><span style='font-size:10px'>High Leverage</span>")
+    ) %>%
+    tab_footnote(
+        footnote = "2-point field goals in high leverage situations.",
+        locations = cells_column_labels(vars(pbpFg2m))
+    ) %>%
+    tab_footnote(
+        footnote = "All field goals in high leverage situations, including 2-pointers and 3-pointers.",
+        locations = cells_column_labels(vars(pbpFgm))
+    ) %>%
+    tab_footnote(
+        footnote = "Effective Field Goal percentage: adjusts for 3-point field goals being worth more than a 2-point field goal.",
+        locations = cells_column_labels(vars(pbpEFG))
     ) %>%
     gtsave("Mid Range Table.png")
