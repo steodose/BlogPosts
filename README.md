@@ -3,6 +3,22 @@ Data and scripts for my blog posts. Original work can be found at [Between the P
 
 The projects are listed in reverse chronological order going back to mid-2021:
 
+A few charts to close out 2021 and stroll into the new year
+------------
+
+From the January 15, 2021 [blog post](https://betweenpipes.wordpress.com/2022/01/15/a-few-charts-to-close-out-2021-and-stroll-into-the-new-year/)
+
+![2021 vs 2021 animated](https://raw.githubusercontent.com/steodose/BlogPosts/master/Health/2020%20vs%202021%20Line%20Plot.gif)
+
+![2021 vs 2021 Line Plot](https://raw.githubusercontent.com/steodose/BlogPosts/master/Health/2020%20vs%202021%20Line%20Plot%20with%20Logo.png)
+
+![Step Count Bar Chart](https://raw.githubusercontent.com/steodose/BlogPosts/master/Health/Step%20Count%20Chart%20with%20Logo.png)
+
+![Step Count Ridge Plot](https://raw.githubusercontent.com/steodose/BlogPosts/master/Health/Step%20Count%20Ridge%20Plot.png)
+
+![Weekly Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/Health/Step%20Count%20Table.png)
+
+
 DeMar DeRozan is the Chicago Bulls’ fourth quarter, mid-range assassin
 ------------
 
