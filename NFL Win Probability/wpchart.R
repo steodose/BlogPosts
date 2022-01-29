@@ -103,21 +103,20 @@ ot_games <- pbp_wp %>%
   group_by(game_id) %>% 
   summarise(ot_length = max(game_seconds_remaining) - min(game_seconds_remaining))
 
-#join in the OT game length data and calculate Game Excitement Index
+#calculate raw GEI
 games_gei <- pbp_wp %>%
   group_by(game_id) %>% 
-  left_join(ot_games) %>% 
-  mutate(game_length = 3600 + ot_length) %>% 
-  mutate(game_length = replace_na(game_length, 3600)) %>% 
-  mutate(normalization = 3600/game_length) %>% 
-  group_by(game_id) %>% 
-  summarise(gei = round(normalization*(sum(abs(wpa))),2)) %>% #this is how I'm calculating GEI
+  summarise(gei = round(sum(abs(wpa)),2)) %>% #this is how I'm calculating GEI
   relocate(gei)
 
-
-
-
-
+# now join in OT game lengths to calculate GEIs normalized for game length
+games_gei <- games_gei %>% 
+  left_join(ot_games) %>% 
+  mutate(game_length = 3600 + ot_length, 
+         game_length = replace_na(game_length, 3600),
+         normalization = 3600/game_length,
+         gei = round(gei*normalization, digits = 2))
+  
 
 #Load Lee Sharpe's games data and join GEI calculations
 games <- load_sharpe_games() %>% 
@@ -523,4 +522,26 @@ magick::image_write(plot_with_logo, "Game Excitement Index Table with Logo.png")
 
 ##### GEI Summary Statistics #####
 
+# Average GEI for 2021 season
+games %>% 
+  filter(game_type == "REG") %>% 
+  mutate(median_gei = median(gei)) %>% 
+  pull(unique(median_gei))
 
+home_team_gei <- games %>% 
+  filter(game_type == "REG") %>% 
+  group_by(home_team) %>% 
+  summarise(median_gei = median(gei)) %>% 
+  arrange(desc(median_gei))
+
+away_team_gei <- games %>% 
+  filter(game_type == "REG") %>% 
+  group_by(away_team) %>% 
+  summarise(median_gei = median(gei)) %>% 
+  arrange(desc(median_gei))
+
+team_gei <- left_join(home_team_gei, away_team_gei, by = c("home_team" = "away_team"))
+
+team_gei %>% 
+  mutate(median_gei = (median_gei.x + median_gei.y)/2) %>% 
+  arrange(desc(median_gei))
