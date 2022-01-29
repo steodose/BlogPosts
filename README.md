@@ -3,6 +3,16 @@ Data and scripts for my blog posts. Original work can be found at [Between the P
 
 The projects are listed in reverse chronological order going back to mid-2021:
 
+Divisional Round was on of the most exciting weekends in NFL history
+------------
+
+From the January 29, 2021 [blog post](https://betweenpipes.wordpress.com/2022/01/15/a-few-charts-to-close-out-2021-and-stroll-into-the-new-year/)
+
+![Win Probability Graphs](https://raw.githubusercontent.com/steodose/BlogPosts/master/NFL%20Win%20Probability/Win%20Probability%20Patchwork%20Plot%20with%20Logo.png)
+
+![GEI Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/NFL%20Win%20Probability/Game%20Excitement%20Index%20Table%20with%20Logo.png)
+
+
 A few charts to close out 2021 and stroll into the new year
 ------------
 
