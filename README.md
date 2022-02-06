@@ -3,10 +3,23 @@ Data and scripts for my blog posts. Original work can be found at [Between the P
 
 The projects are listed in reverse chronological order going back to mid-2021:
 
-Divisional Round was one of the most exciting weekends in NFL history
+Revisiting Super Bowl Squares Strategy
 ------------
 
-From the January 29, 2021 [blog post](https://betweenpipes.wordpress.com/2022/01/15/a-few-charts-to-close-out-2021-and-stroll-into-the-new-year/)
+From the February 5, 2022 [blog post](https://between-the-pipes.com/2022/02/05/revisiting-super-bowl-squares-strategy/
+
+![Squares Heatmap](https://raw.githubusercontent.com/steodose/BlogPosts/master/Super%20Bowl%20Squares/Squares%20Heatmap%20with%20Logo.png)
+
+![Squares Heatmap Quarters](https://raw.githubusercontent.com/steodose/BlogPosts/master/Super%20Bowl%20Squares/Heatmap%20by%20Quarter%20with%20Logo.png)
+
+![Squares Histogram](https://raw.githubusercontent.com/steodose/BlogPosts/master/Super%20Bowl%20Squares/Scores%20Histogram%20with%20Logo.png)
+
+![Payout Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/Super%20Bowl%20Squares/SB%20Squares%20Payout%20Tabl%20with%20Logo.png)
+
+The Divisional Round was one of the most exciting weekends in NFL history
+------------
+
+From the January 29, 2022 [blog post](https://betweenpipes.wordpress.com/2022/01/15/a-few-charts-to-close-out-2021-and-stroll-into-the-new-year/)
 
 ![Win Probability Graphs](https://raw.githubusercontent.com/steodose/BlogPosts/master/NFL%20Win%20Probability/Win%20Probability%20Patchwork%20Plot%20with%20Logo.png)
 
@@ -16,7 +29,7 @@ From the January 29, 2021 [blog post](https://betweenpipes.wordpress.com/2022/01
 A few charts to close out 2021 and stroll into the new year
 ------------
 
-From the January 15, 2021 [blog post](https://betweenpipes.wordpress.com/2022/01/15/a-few-charts-to-close-out-2021-and-stroll-into-the-new-year/)
+From the January 15, 2022 [blog post](https://betweenpipes.wordpress.com/2022/01/15/a-few-charts-to-close-out-2021-and-stroll-into-the-new-year/)
 
 ![2021 vs 2021 animated](https://raw.githubusercontent.com/steodose/BlogPosts/master/Health/2020%20vs%202021%20Line%20Plot.gif)
 
