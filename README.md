@@ -6,7 +6,7 @@ The projects are listed in reverse chronological order going back to mid-2021:
 Revisiting Super Bowl Squares Strategy
 ------------
 
-From the February 5, 2022 [blog post](https://between-the-pipes.com/2022/02/05/revisiting-super-bowl-squares-strategy/
+From the February 5, 2022 [blog post](https://between-the-pipes.com/2022/02/05/revisiting-super-bowl-squares-strategy/)
 
 ![Squares Heatmap](https://raw.githubusercontent.com/steodose/BlogPosts/master/Super%20Bowl%20Squares/Squares%20Heatmap%20with%20Logo.png)
 
