@@ -38,6 +38,58 @@ theme_custom <- function () {
 }
 
     
+# Function for logo generation
+
+add_logo <- function(plot_path, logo_path, logo_position, logo_scale = 10){
+    
+    # Requires magick R Package https://github.com/ropensci/magick
+    
+    # Useful error message for logo position
+    if (!logo_position %in% c("top right", "top left", "bottom right", "bottom left")) {
+        stop("Error Message: Uh oh! Logo Position not recognized\n  Try: logo_positon = 'top left', 'top right', 'bottom left', or 'bottom right'")
+    }
+    
+    # read in raw images
+    plot <- magick::image_read(plot_path)
+    logo_raw <- magick::image_read(logo_path)
+    
+    # get dimensions of plot for scaling
+    plot_height <- magick::image_info(plot)$height
+    plot_width <- magick::image_info(plot)$width
+    
+    # default scale to 1/10th width of plot
+    # Can change with logo_scale
+    logo <- magick::image_scale(logo_raw, as.character(plot_width/logo_scale))
+    
+    # Get width of logo
+    logo_width <- magick::image_info(logo)$width
+    logo_height <- magick::image_info(logo)$height
+    
+    # Set position of logo
+    # Position starts at 0,0 at top left
+    # Using 0.01 for 1% - aesthetic padding
+    
+    if (logo_position == "top right") {
+        x_pos = plot_width - logo_width - 0.01 * plot_width
+        y_pos = 0.01 * plot_height
+    } else if (logo_position == "top left") {
+        x_pos = 0.01 * plot_width
+        y_pos = 0.01 * plot_height
+    } else if (logo_position == "bottom right") {
+        x_pos = plot_width - logo_width - 0.01 * plot_width
+        y_pos = plot_height - logo_height - 0.01 * plot_height
+    } else if (logo_position == "bottom left") {
+        x_pos = 0.01 * plot_width
+        y_pos = plot_height - logo_height - 0.01 * plot_height
+    }
+    
+    # Compose the actual overlay
+    magick::image_composite(plot, logo, offset = paste0("+", x_pos, "+", y_pos))
+    
+}
+
+
+
 # Count number of championships for each metro area
 metro_championships <- champs %>% 
     group_by(Metro) %>% 
@@ -108,19 +160,13 @@ champs_table_gt <- gt(championships_joined) %>%
     ### Colors
     data_color(columns = 7,
                colors = scales::col_numeric(
-                   palette = c("white", "#FAAB18"),
+                   palette = c("white", "#3fc1c9"),
                    domain = NULL)) %>%
     tab_style(
         style = list(
-            cell_fill(color = "#ABEBC6") #highlighting the Tampa row
+            cell_fill(color = "#FFFAA0") #highlighting the Atlanta row
         ),
-        locations = cells_body(rows = 7)
-    ) %>% 
-    tab_style(
-        style = list(
-            cell_fill(color = "#ABEBC6") #highlighting the Phoenix row
-        ),
-        locations = cells_body(rows = 21) 
+        locations = cells_body(rows = Metro == "Los Angeles")
     ) %>% 
     tab_spanner(label = "No. Titles by Sport", 
                 columns = 3:6) %>%
@@ -130,7 +176,7 @@ champs_table_gt <- gt(championships_joined) %>%
                columns = 8) %>%
     fmt_percent(columns = vars(`Share (%)`), 
                 decimals = 1) %>% 
-    tab_header(title = md("**City of Champions**"),
+    tab_header(title = md("**Tinseltown is Titletown**"),
                subtitle = glue("North American metropolitan areas with at least one title since 1991, by Titles over Expected (ToE).\nShare refers to the percentage of available championships to it each metro area has won.")) %>%
     tab_source_note(
         source_note = md("DATA: Sports-Reference.com/Wikipedia<br>TABLE: @steodosescu"))
@@ -139,6 +185,19 @@ champs_table_gt #Display table in RStudio viewer
 
 #Save table in working directory
 gtsave(champs_table_gt, filename = 'championships_table.png')
+
+plot_with_logo <- add_logo(
+    plot_path = "/Users/Stephan/Desktop/R Projects/Sports Droughts/championships_table.png", # url or local file for the plot
+    logo_path = "/Users/Stephan/Desktop/R Projects/Sports Droughts/hex-BTP.png", # url or local file for the logo
+    logo_position = "top right", # choose a corner
+    # 'top left', 'top right', 'bottom left' or 'bottom right'
+    logo_scale = 30
+)
+
+# save the image and write to working directory
+magick::image_write(plot_with_logo, "City Titles with Logo.png")
+
+
 
 
 # Constrain to just the 21st century
