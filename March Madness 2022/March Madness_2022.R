@@ -17,6 +17,7 @@ library(ggtext)
 library(ggimage) #for working with team logos
 library(webshot) #saving high quality images of gt tables
 library(grid) # For drawing arrows
+library(janitor)
 
 ##### Get the data + Pre-process for analysis #####
 
@@ -184,13 +185,6 @@ asp_ratio <- 1.618
 big_ten_colors <- ncaa_colors %>%
     filter(conference == "Big 10")
 
-# Fix team names to match what they are in the Ken Pom dataset in order to join later
-#big_ten_colors$name <- recode(big_ten_colors$name, `Indiana Hoosiers` = "Indiana", `Iowa Hawkeyes` = "Iowa", 
- #                             `Michigan State Spartans` = "Michigan St.", `Michigan Wolverines` = "Michigan",
-  #                            `Minnesota Golden Gophers` = "Minnesota", `Northwestern Wildcats` = "Northwestern",
-   #                           `Ohio State` = "Ohio St.", `Penn State` = "Penn St.",
-    #                          `Purdue Boilermakers` = "Purdue", `Rutgers Scarlet Knights` = "Rutgers")
-
 # Filter for Big Ten team in Ken Pom dataset
 ncaa_big_ten <- ncaa_2022 %>%
     filter(Conference == "B10")
@@ -215,7 +209,7 @@ big_ten_2022 %>%
          caption = "Data: kenpom.com\nGraphic: @steodosescu",
          title = "Big Ten Efficiency Ratings",
          subtitle = "<span style = 'color:#E84A27;'>**Illinois**</span> possesses one of the most potent offenses and stifling defenses in the league.<br>As measured by Ken Pomeroy's efficiency ratings. Thru 2020-21 regular season.") +
-    theme_minimal() +
+    theme_custom() +
     theme(plot.title = element_text(face = "bold")) +
     theme(plot.subtitle = element_markdown()) +
     scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
@@ -249,7 +243,7 @@ big_ten_2022 %>%
     cols_align(align = "left",
                columns = 1) %>%
     tab_header(title = md("**The Big Ten is built different this year**"),
-               subtitle ="Thru 2021-22 Regular Season") %>%
+               subtitle ="Thru 2021-22 Regular Season and conference tournament") %>%
     tab_source_note(
         source_note = md("DATA: kenpom.com<br>TABLE: @steodosescu")) %>%
     tab_footnote(
@@ -305,7 +299,7 @@ ncaa_conferences %>%
     geom_line(colour = "grey", size = 1.2) +
     geom_line(data = big_ten_conf, color = "#0088ce", size = 1.2) + 
     geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
-    annotate("text", x = 19, y = 19, label = 'atop(bold("+21.0"))', 
+    annotate("text", x = 19.5, y = 19, label = 'atop(bold("+13.6 AdjEM"))', 
              color = "#0088ce", parse = TRUE) +
     theme_custom() +
     labs(x = "", y = "Average Conf. AdjEM",
@@ -336,20 +330,32 @@ magick::image_write(conf_adjem_plot_with_logo, "Conference AdjEm with Logo.png")
 illinois <- ncaa_2022 %>%
     filter(Team == "Illinois") 
 
+iowa <- ncaa_2022 %>%
+  filter(Team == "Iowa") 
+
+purdue <- ncaa_2022 %>%
+  filter(Team == "Purdue") 
+
 ncaa %>%
     ggplot(aes(x = AdjO, y = AdjD, group = Team)) +
     geom_point(alpha = .3) +
     geom_point(colour = "black", alpha = 0.1) +
-    geom_point(data = illinois, color = "#E84A27", size = 2, alpha = 0.8) +
-    annotate("segment", x = 127, xend = 115, y = 86.5, yend = 94,
-             colour = "#E84A27", size = 1, arrow = arrow()) +
-    annotate("text", x = 127, y = 86.5, label = 'atop(bold("+19.6 AdjEM"))', 
-             color = "#E84A27", parse = TRUE) +
+    geom_point(data = iowa, color = "#FFCD00", size = 2, alpha = 0.8) +
+    annotate("segment", x = 127, xend = 122, y = 86.5, yend = 98,
+             colour = "#FFCD00", size = 1, arrow = arrow()) +
+    annotate("text", x = 127, y = 86.5, label = 'atop(bold("+22.3 AdjEM"))', 
+             color = "#FFCD00", parse = TRUE) +
+  geom_curve(x = 127, y = 86.5,
+             xend = 122, yend = 98,
+             color = "#FFCD00",
+             curvature = -.2,
+             angle = 90,
+             arrow = arrow(length = unit(0.25,"cm"))) +
     labs(x = "Adjusted Offensive Rating (AdjO)",
          y = "Adjusted Defenive Rating (AdjD)",
          caption = "Data: kenpom.com\nGraphic: @steodosescu",
          title = "NCAA Men's Basketball Efficiency Ratings",
-         subtitle = "<span style = 'color:#E84A27;'>**Illinois**</span> possesses one of the most potent offenses and stifling defenses in the country.<br>As measured by Ken Pomeroy's efficiency ratings. Thru 2021-22 regular season and conference tournaments.") +
+         subtitle = "The <span style = 'color:#FFCD00;'>**Iowa Hawkeyes**</span> possess one of the most potent offenses in the country and above average defense.<br>As measured by Ken Pomeroy's efficiency ratings. Thru 2021-22 regular season and conference tournaments.") +
     theme_custom() +
     theme(plot.title = element_text(face = "bold")) +
     theme(plot.subtitle = element_markdown()) +
@@ -433,4 +439,293 @@ magick::image_write(pac_12_table_with_logo, "Pac 12 Summary Table with Logo.png"
 
 ##### Conference strength analysis #####
 
+# Load champions data
+ncaa_champions <- 'https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/NCAA_Tournament_Champions.csv' %>% 
+  read_csv()
 
+# join data using a composite key (not working correctly)
+ncaa_champions <- ncaa_champions %>% 
+  mutate(year_conference = paste0(year,"-",conference))
+
+ncaa_conferences <- ncaa_conferences %>% 
+  mutate(year_conference = paste0(year,"-",Conference))
+
+ncaa_champions <- left_join(ncaa_champions, ncaa_conferences, 
+                            by = "year_conference")
+
+
+# Look at average AdjEM for each conference
+View(ncaa_conferences %>% 
+  filter(year == 2022))
+
+
+
+
+##### Experts vs Crowds analysis #####
+
+# download csv from fivethirtyeight website: https://projects.fivethirtyeight.com/2022-march-madness-predictions/
+
+forecasts <- 'https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/ncaa_forecasts.csv' %>% 
+  read_csv()
+
+
+# scrape ESPN national bracket
+url_espn <- "https://fantasy.espn.com/tournament-challenge-bracket/2022/en/whopickedwhom"
+
+# Scrape Who Picked Whom table from ESPN.com
+espn_bracket <- url_espn %>% 
+  read_html() %>% 
+  html_elements('table') %>% 
+  html_table() %>% 
+  .[1] %>% 
+  as.data.frame()
+
+espn_bracket <- as_tibble(espn_bracket)
+
+# Regex to isolate component parts (not working properly)
+espn_bracket2 <- espn_bracket %>% 
+  select(NCG) %>% 
+  separate(NCG, 
+           into = c("team", "prob"), 
+           sep = "-",
+           convert = TRUE
+           )
+
+# removing % sign from data frame column
+espn_bracket2$prob <- gsub("\\%", "", espn_bracket2$prob)
+espn_bracket2$prob <- as.numeric(espn_bracket2$prob)
+
+espn_bracket2 <- espn_bracket2 %>% 
+  mutate(prob = prob/100)
+    
+espn_bracket2 <- espn_bracket2 %>% 
+  extract(team, 
+    into = c("seed", "team"),
+    # any amount of consecutive numbers at the start
+    regex = "(^\\d+)(.*)", 
+    convert = TRUE
+  )
+
+#align naming conventions to fivethirtyeight data
+espn_bracket2$team <- recode(espn_bracket2$team, `Saint Mary's` = "Saint Mary's (CA)", 
+         `Loyola Chicago` = "Loyola (IL)", `UNC` = "North Carolina",
+         `USC` = "Southern California", `TCU` = "Texas Christian",
+         `UAB` = "Alabama-Birmingham", `Miami` = "Miami (FL)",
+         `S Dakota St` = "South Dakota State",`New Mexico St` = "New Mexico State",
+         `J'Ville St` = "Jacksonville State", `TXSO` = "Texas Southern",
+         `CSU Fullerton` = "Cal State Fullerton", `UConn` = "Connecticut",
+         `LSU` = "Louisiana State")
+
+
+
+# scrape Yahoo national bracket
+url_yahoo <- "https://tournament.fantasysports.yahoo.com/t1/pickdistribution"
+
+# Scrape pick distribution table from yahoo.com using rvest
+yahoo_bracket <- url_yahoo %>% 
+  read_html() %>% 
+  html_elements('table') %>% 
+  html_table() %>% 
+  .[1] %>% 
+  as.data.frame()
+
+# tidy yahoo data frame
+yahoo_bracket2 <- yahoo_bracket %>% 
+  select(2:3) %>% 
+  rename(seed = Team..Seed., prob = X..Picked)
+
+
+
+
+# Load Luke Benz predictions csv from my Github
+recspecs_forecasts <- 'https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/recspecs_forecasts.csv' %>% 
+  read_csv()
+
+# Tidy data
+recspecs_forecasts <- recspecs_forecasts %>% 
+  janitor::clean_names() %>% 
+  select(team, champion) 
+
+recspecs_forecasts$champion <- gsub("\\%", "", recspecs_forecasts$champion)
+recspecs_forecasts$champion <- as.numeric(recspecs_forecasts$champion)
+
+recspecs_forecasts <- recspecs_forecasts %>% 
+  mutate(champion = champion/100)
+
+# align naming conventions
+recspecs_forecasts$team <- str_replace(recspecs_forecasts$team, "St.", "State")
+recspecs_forecasts$team <- recode(recspecs_forecasts$team, 
+                                  `UConn` = "Connecticut",
+                                  `LSU` = "Louisiana State")
+  
+  
+
+
+## join expert forecasts into original forecast data set
+forecasts <- left_join(forecasts, espn_bracket2, by = c("team_name" = "team"))
+
+forecasts <- forecasts %>% 
+  select(-seed) %>% 
+  rename(espn = prob)
+
+# join in Kenpom's AdjEM stats
+# but first recode the name to aling naming conventions
+ncaa_2022$Team <- recode(ncaa_2022$Team, `Saint Mary's` = "Saint Mary's (CA)", 
+                         `Loyola Chicago` = "Loyola (IL)", `UNC` = "North Carolina",
+                         `USC` = "Southern California", `TCU` = "Texas Christian",
+                         `UAB` = "Alabama-Birmingham", `Miami FL` = "Miami (FL)",
+                         `S Dakota St` = "South Dakota State",`New Mexico St` = "New Mexico State",
+                         `J'Ville St` = "Jacksonville State", `TXSO` = "Texas Southern",
+                         `CSU Fullerton` = "Cal State Fullerton", `UConn` = "Connecticut",
+                         `LSU` = "Louisiana State", `Ohio St.` = "Ohio State")
+
+# ncaa_2022$Team <- str_replace(ncaa_2022$Team, "St.", "State")
+
+forecasts <- left_join(forecasts, ncaa_2022, by = c("team_name" = "Team"))
+
+
+# join in logos
+ncaa_colors$espn_name <- recode(ncaa_colors$espn_name, 
+                                `LSU` = "Louisiana State", 
+                                `UConn` = "Connecticut",
+                                `UNC` = "North Carolina")
+
+forecasts <- left_join(forecasts, ncaa_colors, by = c("team_name" = "espn_name"))
+
+
+
+# join in Luke Benz' predictions
+forecasts <- left_join(forecasts, recspecs_forecasts, by = c("team_name" = "team"))
+
+forecasts <- forecasts %>% 
+  rename(recspecs = champion)
+
+
+# join in Ken Pomeroy's predictions
+kenpom_forecasts <- 'https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/kenpom_forecasts.csv' %>% 
+  read_csv() %>% 
+  mutate(champ = champ/100)
+
+forecasts <- left_join(forecasts, kenpom_forecasts, by = c("team_name" = "team"))
+
+forecasts <- forecasts %>% 
+  rename(kenpom = champ)
+
+
+# filter for just top 20 to make things easier
+
+forecasts <- forecasts %>% 
+  mutate(rank = row_number()) %>%
+  filter(rank <= 20)
+
+# finalize dataframe for gt table
+forecasts <- forecasts %>% 
+  mutate(experts = (fivethirtyeight + recspecs + kenpom)/3,
+         difference = experts - espn) %>% 
+  arrange(desc(experts)) %>% 
+  mutate(rank = row_number(),
+         record = paste0(Wins,"-", Losses)) %>% 
+  relocate(rank)
+
+
+
+## create experts vs crowd logo plot (geom_image not working)
+forecasts %>%
+  ggplot(aes(x = experts, y = espn)) +
+  geom_image(aes(image = logo_url), asp = 16/9) +
+  labs(x = "Expert Predictions",
+       y = "Wisdom of the Crowds",
+       caption = "Data: fivethirtyeight.com, espn.com, kenpom.com\nGraphic: @steodosescu",
+       title = "Bracketology: Hunting for Value",
+       subtitle = "<span style = 'color:#E84A27;'>**Illinois**</span> possesses one of the most potent offenses and stifling defenses in the league.<br>As measured by Ken Pomeroy's efficiency ratings. Thru 2020-21 regular season.") +
+  theme_custom() +
+  theme(plot.title = element_text(face = "bold")) +
+  theme(plot.subtitle = element_markdown()) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  geom_hline(yintercept = mean(big_ten_2022$AdjD, na.rm = T), color = "red", linetype = "dashed", alpha=0.5) +
+  geom_vline(xintercept = mean(big_ten_2022$AdjO, na.rm = T), color = "red", linetype = "dashed", alpha=0.5) +
+  theme(panel.grid.minor = element_blank())
+
+
+# create table instead
+forecasts %>%
+  select(rank, logo_url, team_name, team_region, team_seed, conference, 
+         record, AdjEM:AdjT, experts, espn, difference) %>%
+  gt() %>%
+  cols_label(rank = "Rank",
+             team_name = "Team",
+             team_region = "Region",
+             team_seed = "Seed",
+             espn = "Crowds",
+             difference = "Diff") %>% 
+  data_color(columns = 12,
+             colors = scales::col_numeric(
+               palette = c("white", "#3fc1c9"),
+               domain = NULL)) %>%
+  gt_theme_538() %>%
+  cols_align(align = "left",
+             columns = 1) %>%
+  tab_spanner(
+    label =  "via KenPom.com",
+    columns = vars(AdjEM:AdjT)
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_text(color = "blue")
+    ),
+    locations = cells_body(
+      columns = vars(difference),
+      rows = difference > 0
+    )
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(color = "red")
+    ),
+    locations = cells_body(
+      columns = vars(difference),
+      rows = difference < 0
+    )
+  ) %>% 
+  fmt_percent(
+    columns = vars(experts),
+    decimals = 1
+  )  %>%
+  fmt_percent(
+    columns = vars(espn),
+    decimals = 1
+  )  %>%
+  fmt_percent(
+    columns = vars(difference),
+    decimals = 1
+  )  %>%
+  tab_header(title = md("**Bracketology: Hunting for Value**"),
+             subtitle ="Difference between experts' predictions and America's predictions. Only top 20 most picked teams shown.") %>%
+  tab_source_note(
+    source_note = md("DATA: fivethirtyeight.com, espn.com, kenpom.com<br>TABLE: @steodosescu")) %>%
+  tab_footnote(
+    footnote = "Adjusted Efficiency Margin (AdjEM) is the difference between a team's offensive and defensive efficiency ratings, and represents the number of points a team would be expected to outscore the average Division I team over 100 possessions.",
+    locations = cells_column_labels(vars(AdjEM))
+  ) %>%
+  tab_footnote(
+    footnote = " Arithmetic average of fivethirtyright, Ken Pomeroy, and Luke Benz's win probability models.",
+    locations = cells_column_labels(vars(experts))
+  ) %>%
+  tab_footnote(
+    footnote = "A wisdom of the crowds measure showing the percentage of participants who selected each team to win in ESPN's Tournament Challenge.",
+    locations = cells_column_labels(vars(espn))
+  ) %>%
+  gtsave("Experts vs Crowds Table.png")
+
+# Add March Madness logo
+experts_crowds_table_with_logo <- add_logo(
+  plot_path = "/Users/Stephan/Desktop/R Projects/College Basketball/2021-22/Experts vs Crowds Table.png", # url or local file for the plot
+  logo_path = "/Users/Stephan/Desktop/R Projects/College Basketball/2021-22/march-madness-logo.png", # url or local file for the logo
+  logo_position = "top right", # choose a corner
+  # 'top left', 'top right', 'bottom left' or 'bottom right'
+  logo_scale = 12
+)
+
+# save the image and write to working directory
+magick::image_write(experts_crowds_table_with_logo, "Experts vs Crowds Table with Logo.png")
