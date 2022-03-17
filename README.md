@@ -3,6 +3,17 @@ Data and scripts for my blog posts. Original work can be found at [Between the P
 
 The projects are listed in reverse chronological order going back to mid-2021:
 
+A data-driven approach to why I’m picking Iowa to win the NCAA tourney
+------------
+
+From the March 17, 2022 [blog post](https://between-the-pipes.com/2022/03/17/a-data-driven-approach-to-why-im-picking-iowa-to-win-the-ncaa-tourney/)
+
+![Experts vs Crowds Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/Big%20Ten%20Summary%20Table%20with%20Logo.png)
+
+![Efficiency Ratings](https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/NCAA%20Efficiency%20Ratings%20with%20Logo.png)
+
+![Conference Ratings](https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/Conference%20AdjEm%20with%20Logo.png)
+
 Revisiting Super Bowl Squares Strategy
 ------------
 
