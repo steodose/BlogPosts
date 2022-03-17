@@ -303,8 +303,8 @@ ncaa_conferences %>%
              color = "#0088ce", parse = TRUE) +
     theme_custom() +
     labs(x = "", y = "Average Conf. AdjEM",
-         title = "**The <span style = 'color:#0088ce;'>Big Ten</span> is the strongest conference of the last two decades**",
-         subtitle = "Thru 2021-2022 regular season. Measured by Adjusted Efficiency Margin (AdjEM).",
+         title = "**The <span style = 'color:#0088ce;'>Big Ten</span> is among the strongest conferences**",
+         subtitle = "Thru 2021-2022 regular season and conference tournament. Measured by Adjusted Efficiency Margin (AdjEM).",
          caption = "Data: kenpom.com\nGraphic: @steodosescu") +
     theme(plot.title = element_markdown()) +
     theme(legend.position="none") +
@@ -341,9 +341,9 @@ ncaa %>%
     geom_point(alpha = .3) +
     geom_point(colour = "black", alpha = 0.1) +
     geom_point(data = iowa, color = "#FFCD00", size = 2, alpha = 0.8) +
-    annotate("segment", x = 127, xend = 122, y = 86.5, yend = 98,
+    annotate("segment", x = 127, xend = 122, y = 86.5, yend = 97,
              colour = "#FFCD00", size = 1, arrow = arrow()) +
-    annotate("text", x = 127, y = 86.5, label = 'atop(bold("+22.3 AdjEM"))', 
+    annotate("text", x = 127, y = 86.5, label = 'atop(bold("+23.5 AdjEM"))', 
              color = "#FFCD00", parse = TRUE) +
   geom_curve(x = 127, y = 86.5,
              xend = 122, yend = 98,
