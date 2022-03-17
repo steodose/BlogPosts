@@ -8,7 +8,7 @@ A data-driven approach to why I’m picking Iowa to win the NCAA tourney
 
 From the March 17, 2022 [blog post](https://between-the-pipes.com/2022/03/17/a-data-driven-approach-to-why-im-picking-iowa-to-win-the-ncaa-tourney/)
 
-![Experts vs Crowds Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/Big%20Ten%20Summary%20Table%20with%20Logo.png)
+![Experts vs Crowds Table](https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/Experts%20vs%20Crowds%20Table%20with%20Logo.png)
 
 ![Efficiency Ratings](https://raw.githubusercontent.com/steodose/BlogPosts/master/March%20Madness%202022/NCAA%20Efficiency%20Ratings%20with%20Logo.png)
 
