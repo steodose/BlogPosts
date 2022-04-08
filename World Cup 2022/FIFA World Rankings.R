@@ -94,6 +94,7 @@ add_logo <- function(plot_path, logo_path, logo_position, logo_scale = 10){
 
 #fifaURL <- "https://www.fifa.com/fifa-world-ranking/men?dateId=id13372"
 
+# rvest not working as expected on the actual website thus had to download to HTML and read in from my desktop
 fifaURL <- "/Users/Stephan/Desktop/R Projects/Soccer/World Cup 2022/FIFA_Rankings.html"
 
 fifa_raw <- fifaURL %>% 
