@@ -115,35 +115,117 @@ groups <- left_join(groups, fifa_ranks, by = "Team")
 # fix team rankings for Ghana and Qatar (outside the Top 50)
 groups <- groups %>% 
     mutate(RK = case_when(
-        Team == "Ghana" ~ as.numeric(51), 
-        Team == "Qatar" ~ as.numeric(63), 
+        Team == "Ghana" ~ as.numeric(63), 
+        Team == "Qatar" ~ as.numeric(51), 
         TRUE ~ as.numeric(RK)
     ))
 
 # join in flags
 groups <- groups %>% 
-    mutate('logo' = paste0('/Users/Stephan/Desktop/R Projects/Soccer/World Cup 2022/flags/', 
-                           Team, ''))
+    mutate('logo' = paste0('https://raw.githubusercontent.com/steodose/BlogPosts/master/World%20Cup%202022/flags/', 
+                           Team, '.png'))
 
 ##### Create GT Rankings table
 
 groups_clean <- groups %>% 
-    relocate(group, RK, logo) %>% 
+    relocate(group, logo, Team, RK) %>% 
     arrange(group, RK)
 
-groups_clean %>% 
+groups_clean_a_d <- groups_clean %>% 
+    filter(group == 'A' | group == 'B' | group == 'C' | group == 'D')
+
+groups_clean_e_h <- groups_clean %>% 
+    filter(group == 'E' | group == 'F' | group == 'G' | group == 'H')
+
+rankings_table_a_d <- groups_clean_a_d %>% 
     gt(groupname_col = "group") %>% 
-    gt_img_rows(columns = logo, height = 25) %>% 
+    cols_label(group = "Group",
+               Team = "Team", 
+               logo  = "",
+               RK = "Rank")  %>% 
+    gt_img_rows(columns = logo, height = 30) %>% 
+    gtExtras::gt_theme_538() %>%
+    data_color(
+        columns = vars(RK),
+        colors = scales::col_numeric(
+            palette = paletteer::paletteer_d(
+                palette = "ggsci::amber_material",
+                direction  = -1
+            ) %>% as.character(),
+            domain = c(1,63), #63rd is the worst ranked team in this WC
+            na.color = "#005C55FF"
+        )) %>%
+    cols_width(
+        Team ~ px(50)
+        ) %>% 
+    tab_header(title = md("**2022 World Cup Group Strength**"),
+               subtitle = glue("Based on FIFA World Rankings as of March 31, 2022. Groups A thru D.")) %>% 
+    tab_footnote(
+        footnote = "Assumes higher rated team wins remaining play-offs.",
+        locations = cells_column_labels(vars(Team))
+    ) %>% 
+    tab_source_note(
+        source_note = md("Table: @steodosescu | Data: FIFA.com")) %>%
+    summary_rows(
+        groups = TRUE,
+        columns = RK,
+        missing_text = "",
+        formatter = fmt_number,
+        decimals = 0,
+        fns = list(
+            AVG = ~mean(., na.rm = TRUE)
+        )
+    )
+
+
+rankings_table_e_h <- groups_clean_e_h %>% 
+    gt(groupname_col = "group") %>% 
+    gt_img_rows(columns = logo, height = 30) %>% 
     gtExtras::gt_theme_538() %>% 
     cols_label(
         RK = "Rank",
+        logo = "",
         group = "Group",
     ) %>%
+    data_color(
+        columns = vars(RK),
+        colors = scales::col_numeric(
+            palette = paletteer::paletteer_d(
+                palette = "ggsci::amber_material",
+                direction  = -1
+            ) %>% as.character(),
+            domain = c(1,63), #63rd is the worst ranked team in this WC
+            na.color = "#005C55FF"
+        )) %>%
+    cols_width(
+        Team ~ px(50)
+    ) %>% 
     tab_header(title = md("**2022 World Cup Group Strength**"),
-               subtitle = glue("Based on FIFA World Rankings as of March 31, 2022")) %>% 
-    tab_source_note(
-        source_note = md("Table: @steodosescu | Data: FIFA.com")) %>%
-    gtsave("FIFA World Cup Rankings Table.png")
+               subtitle = glue("Based on FIFA World Rankings as of March 31, 2022. Groups E thru H.")) %>% 
+    tab_footnote(
+        footnote = "Assumes higher rated team wins remaining play-offs.",
+        locations = cells_column_labels(vars(Team))
+    ) %>% 
+    summary_rows(
+        groups = TRUE,
+        columns = RK,
+        missing_text = "",
+        formatter = fmt_number,
+        decimals = 0,
+        fns = list(
+            AVG = ~mean(., na.rm = TRUE)
+        )
+    )
+
+
+# combine both tables into one using {gtExtras}
+two_tables <- list(rankings_table_a_d, rankings_table_e_h)
+
+gt_two_column_layout(tables = two_tables, 
+                     output = 'save', 
+                     filename = 'FIFA World Cup Rankings Table.png', 
+                     vwidth = 975, 
+                     vheight = 475)
 
 
 # Add World Cup logo
@@ -152,7 +234,7 @@ table_with_logo <- add_logo(
     logo_path = "/Users/Stephan/Desktop/R Projects/Soccer/World Cup 2022/2022_FIFA_World_Cup.png", # url or local file for the logo
     logo_position = "bottom right", # choose a corner
     # 'top left', 'top right', 'bottom left' or 'bottom right'
-    logo_scale = 15
+    logo_scale = 30
 )
 
 # save the image and write to working directory
