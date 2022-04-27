@@ -30,8 +30,10 @@ library(rsvg)
 library(signs)
 library(ggchicklet) #for stylized bar charts
 library(data.table)
+#library(gganimate)
 
-
+# install.packages('devtools')
+devtools::install_github('thomasp85/gganimate') #install dev version to make gganimate work with ggbump
 
 ##### Set up themes #####
 
@@ -149,13 +151,6 @@ add_logo <- function(plot_path, logo_path, logo_position, logo_scale = 10){
 
 #matchday_table <- tm_matchday_table(country_name="England", start_year="2021", matchday=c(1:33))
 
-
-url <- "https://www.transfermarkt.com/j-league-division-1/startseite/wettbewerb/JAP1/saison_id/2017"
-
-session <- bow(url)
-
-
-
 # Alternatively load 2020-21 Premier League Game Data from football-data.com
 epl_results <- read.csv("https://www.football-data.co.uk/mmz4281/2122/E0.csv", 
                stringsAsFactors = FALSE)
@@ -193,35 +188,34 @@ team_mapping <- 'https://raw.githubusercontent.com/steodose/Club-Soccer-Forecast
 
 matchday_table <- left_join(matchday_table, team_mapping)
 
+
 # create rank column
-matchday_table$rank <- matchday_table %>%
-    group_by(team, match_count) %>% 
-    data.table::frank(-Pts, -goal_diff, ties.method = "dense")
+matchday_table <- matchday_table %>% 
+    arrange(match_count, -gd_running) %>% 
+    group_by(match_count) %>%
+    mutate(rank = rank(-points_running, ties.method = "min")) %>% 
+    relocate(rank)
 
 matchday_table <- matchday_table %>%
     relocate(rank)
-
-
-# testing
-matchday_table_test <- matchday_table %>% 
-    group_by(match_count, points_running) %>%
-    mutate(rank = rank(-Pts)) %>%
-    ungroup() %>% 
-    relocate(rank)
-
 
 
 ##### Create Brentford Matchday Rankings plot #####
 
 ## Creating a new dataset of the teams we want to highlight in the viz
 brentford <- matchday_table %>%
-    filter(team == "Brentford")
+    filter(team == "Brentford") %>% 
+    filter(match_count <= 33)
+
+# Limit to only 33 matchweeks for now
+matchday_table2 <- matchday_table %>% 
+    filter(match_count <= 33)
 
 
-brentford_plot <- matchday_table %>% 
+brentford_plot <- matchday_table2 %>% 
     ggplot() +
     geom_bump(aes(x = match_count, y = rank, group = team), size = 1, colour = "#525252") +
-    geom_point(data = matchday_table, aes(x = match_count, y = rank, group = team), size = 2, colour = "#525252") +
+    geom_point(data = matchday_table2, aes(x = match_count, y = rank, group = team), size = 2, colour = "#525252") +
     geom_bump(data = brentford, aes(x = match_count, y = rank, group = team, colour = team), size = 1) +
     geom_point(data = brentford, aes(x = match_count, y = rank, group = team, colour = team), size = 2) +
     #scale_colour_manual(values = met.brewer(name = "Signac", type = "continuous")) +
@@ -230,7 +224,7 @@ brentford_plot <- matchday_table %>%
     labs(x = "Match No.",
          y = "Rank",
          title = "Brentford Matchday Rankings",
-         subtitle = "Premier League 2021-22",
+         subtitle = "Premier League 2021-22. Teams' first 33 matches show.",
          caption = "Data: www.football-data.co.uk | Graphic: @steodosescu")
 
 ggsave("Brentford Rankings Evolution.png")
@@ -259,6 +253,31 @@ brentford_plot_with_logo2 <- add_logo(
 
 # save the image and write to working directory
 magick::image_write(brentford_plot_with_logo2, "Brentford Rankings Evolution with Logo2.png")
+
+
+## Animate it! Not working...sad
+brentford_plot_animated <- matchday_table2 %>% 
+    ggplot() +
+    geom_bump(aes(x = match_count, y = rank, group = team), size = 1, colour = "#525252") +
+    geom_point(data = matchday_table2, aes(x = match_count, y = rank, group = team), size = 2, colour = "#525252") +
+    geom_bump(data = brentford, aes(x = match_count, y = rank, group = team, colour = team), size = 1) +
+    geom_point(data = brentford, aes(x = match_count, y = rank, group = team, colour = team), size = 2) +
+    #scale_colour_manual(values = met.brewer(name = "Signac", type = "continuous")) +
+    scale_y_reverse(breaks = c(1:20)) +
+    theme_athletic() +
+    labs(x = "Match No.",
+         y = "Rank",
+         title = "Brentford Matchday Rankings",
+         subtitle = "Premier League 2021-22. Teams' first 33 matches show.",
+         caption = "Data: www.football-data.co.uk | Graphic: @steodosescu") +
+    transition_reveal(match_count)
+
+
+animate(brentford_plot_with_logo2, height = 461, width = 644)
+
+# Save in gif format:
+anim_save("Brentford Rankings Evolution Animated.gif")
+
 
 
 ##### Goal Differential Facet Plots #####
@@ -467,7 +486,7 @@ p_bars <- league_table_values %>%
 # Combine charts using patchwork and clean up theming 
 p_images / p_bars +
     plot_annotation(
-        title = glue::glue("In Frank We Trust"),
+        title = glue::glue("In Frank We Trust: Doing More with Less"),
         subtitle = glue("On pitch performance relative to market values. As of **Matchweek {matches_played}**."),
         caption = "Data: FBref and Transfermarkt\nGraphic: @steodosescu"
     ) &
@@ -499,6 +518,8 @@ magick::image_write(market_values_with_logo, "Market Values with Logo.png")
 
 # Function to extract Premier League match results data from FBREF
 EPL_2022 <- get_match_results(country = "ENG", gender = "M", season_end_year = 2022, tier = "1st")
+
+test <- get_season_team_stats(country = "ENG", gender = "M", season_end_year = 2022, tier = "1st", stat_type = "league_table")
 
 ##### Set up themes for table #####
 
