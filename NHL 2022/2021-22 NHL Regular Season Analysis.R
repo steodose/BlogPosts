@@ -32,10 +32,10 @@ library(ggchicklet) #for stylized bar charts
 
 # Custom ggplot theme (inspired by Owen Phillips at the F5 substack blog)
 theme_custom <- function () { 
-    theme_minimal(base_size=11, base_family="Chivo") %+replace% 
+    theme_minimal(base_size=11, base_family="Outfit") %+replace% 
         theme(
             panel.grid.minor = element_blank(),
-            plot.background = element_rect(fill = 'floralwhite', color = "floralwhite")
+            plot.background = element_rect(fill = '#F8F8FF', color = "#F8F8FF")
         )
 }
 
@@ -151,7 +151,7 @@ team_games <- team_games %>%
     ))
 
 # Join logos and colors dataframe
-nhl_logos_colors <- nhl_logos_colors %>% 
+nhl_logos_colors <- hockeyR::team_logos_colors %>% 
     rename(team = full_team_name)
 
 team_games <- team_games %>% 
@@ -250,7 +250,7 @@ for (i in 1:length(facet_id)) {
             x = unit(0, 'npc'),
             gp = grid::gpar(
                 col = 'black',
-                fontfamily = 'Chivo',
+                fontfamily = 'Outfit',
                 fontface = 'bold',
                 fontsize = 8
             ),
@@ -280,7 +280,7 @@ p1_with_logo <- add_logo(
     logo_path = "/Users/Stephan/Desktop/R Projects/NHL /2021-22/NHL.png", # url or local file for the logo
     logo_position = "bottom left", # choose a corner
     # 'top left', 'top right', 'bottom left' or 'bottom right'
-    logo_scale = 30
+    logo_scale = 20
 )
 
 # save the image and write to working directory
@@ -301,7 +301,7 @@ pts_perc_df <- records %>%
 
 # Join in team colors and logos
 pts_perc_df <- pts_perc_df %>% 
-    left_join(nhl_logos_colors)
+    left_join(nhl_logos_colors, by = c("team_name" = "team"))
 
 # Visualize in bar graph with logos as points. Inspired by this tutorial Thomas Mock put together on plotting images as points in ggplot2.
 p2 <- pts_perc_df %>% 
@@ -334,7 +334,7 @@ p2 <- pts_perc_df %>%
     labs(x = "", 
          y = "Points Percentage Difference (%)", 
          title = "Performance Relative to Expectations", 
-         subtitle = paste0("Difference between actuals points % and expected points %, according to bookmakers. As of ", format.Date(Sys.Date(), "%b. %d, %Y")), 
+         subtitle = paste0("Difference between actuals points % and expected points %, according to bookmakers. As of ", format.Date(Sys.Date(), "%b %d, %Y")), 
          caption = "Source: hockeyR/NHL.com/BetMGM\nPlot: @steodosescu")
 
 ggsave("Performance vs Expectations.png", p2)
@@ -512,10 +512,10 @@ plot_fn <- function(team_name) {
         geom_bar(stat = "identity") +
         scale_fill_manual(values = c("#E2DED4","#AD9490")) + 
         annotate("text", x = max(single_team$pts_per_60) * 1.1, y = 11, vjust = 1.5,
-                 label = "Games", size = 3.5, family = "Chivo") +
+                 label = "Games", size = 3.5, family = "Outfit") +
         geom_label(data = single_team, aes(x = max(single_team$pts_per_60) * 1.1, 
                                            label = GP), 
-                   fill = "#d3d3d3",family = "Chivo") +
+                   fill = "#d3d3d3",family = "Outfit") +
         labs(x = "Points per 60 minutes",
              y = "",
              title = glue::glue("**Scoring rate leaders**: {unique(single_team$full_team_name)}"),
@@ -523,14 +523,14 @@ plot_fn <- function(team_name) {
         geom_vline(xintercept = pts_rate_avg$avg, 
                    linetype = "dashed", color = "#a39d9d") +
         annotate("text", x = pts_rate_avg$avg, y = 11, label = "Team avg.", size = 3, 
-                 hjust = -0.1, vjust = 1.5, family = "Chivo") +
-        geom_text(aes(label = label), x = 0.1, hjust = 0, family = "Chivo") +
+                 hjust = -0.1, vjust = 1.5, family = "Outfit") +
+        geom_text(aes(label = label), x = 0.1, hjust = 0, family = "Outfit") +
         geom_text(aes(label = round(pts_per_60, 1)), vjust = 0.5, hjust = 1.5,
-                  family = "Chivo") +
+                  family = "Outfit") +
         annotate("text", x = max(single_team$pts_per_60) * 0.8, y = 3, 
                  label = glue::glue("Record: {team_record$record}
                               Division rank: {team_record$rank}"), 
-                 family = "Chivo") +
+                 family = "Outfit") +
         scale_x_continuous(expand = expansion(mult = c(0, .1))) +
         theme_custom() +
         theme(panel.grid.major.y = element_blank(),
@@ -546,7 +546,7 @@ plot_fn <- function(team_name) {
 }
 
 #test it out (select a team abbreviation to replace the existing plot)
-plot_fn("TOR")
+plot_fn("COL")
 
 ggsave("Team Scoring Rate Leaders.png")
 
@@ -562,117 +562,9 @@ CAR_plot <- plot_fn("CAR")
 
 ggsave("Team Patchwork Plots.png")
 
-## 4. --------- Ovechkin vs Gretzky -----------
-
-game_goals <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-03/game_goals.csv")
-
-game_goals <- game_goals %>%
-    filter(player %in% c("Alex Ovechkin", "Wayne Gretzky")) %>%
-    select(player, season, date, goals) %>%
-    bind_rows(
-        tribble(
-            ~player, ~season, ~date, ~goals,
-            "Alex Ovechkin", 2020, lubridate::ymd("2020-02-27"), 0,
-            "Alex Ovechkin", 2020, lubridate::ymd("2020-03-01"), 2,
-            "Alex Ovechkin", 2020, lubridate::ymd("2020-03-04"), 0,
-            "Alex Ovechkin", 2020, lubridate::ymd("2020-03-05"), 2,
-            "Alex Ovechkin", 2020, lubridate::ymd("2020-03-07"), 0
-        )
-    ) %>%
-    group_by(player) %>%
-    mutate(game_num = as.numeric(factor(date)),
-           season_num = as.numeric(factor(season))) %>%
-    ungroup() 
 
 
-cumulative_career_goals <- game_goals %>%
-    group_by(player) %>%
-    mutate(goals = cumsum(goals)) %>%
-    ungroup()
-
-cumulative_career_goals %>%
-    group_by(player) %>%
-    summarize(max_goals = max(goals), max_game_num = max(game_num)) %>%
-    ungroup()
-
-# Depict as a forecast and plot
-ovechkin_goals_forecast <- tibble(
-    player = "Alex Ovechkin",
-    x1 = 1151,
-    y1 = 705,
-    x2 = 1479, # 1151 games + 4 seasons * 82 games per season
-    y2 = 897   #  705 goals + 4 seasons * 48 goals per season
-)
-
-ao_color <- "#9D02D7"
-wg_color <- "#FFB14E"
-
-p_career <- ggplot(cumulative_career_goals, aes(x = game_num, y = goals, color = player)) +
-    geom_step() +
-    geom_segment(data = ovechkin_goals_forecast, aes(x = x1, y = y1, xend = x2, yend = y2), linetype = "dashed") +
-    scale_x_continuous(breaks = seq(0, 1500, by = 250)) +
-    scale_y_continuous(breaks = seq(0, 900, by = 100)) + 
-    scale_color_manual(values = c(ao_color, wg_color)) +
-    theme_custom() +
-    guides(color = FALSE) +
-    labs(subtitle = "Cumulative career goals by number of games played", x = NULL, y = NULL)
-
-p_career
-
-# Goals per season
-season_goals <- game_goals %>%
-    group_by(player, season_num) %>%
-    summarize(goals = sum(goals)) %>%
-    ungroup() %>%
-    mutate(forecast = FALSE) %>%
-    bind_rows(
-        tribble(
-            ~player, ~season_num, ~goals, ~forecast,
-            "Alex Ovechkin", 16, 48, TRUE,
-            "Alex Ovechkin", 17, 48, TRUE,
-            "Alex Ovechkin", 18, 48, TRUE, 
-            "Alex Ovechkin", 19, 48, TRUE,
-            "Alex Ovechkin", 20,  0, TRUE
-        )
-    )
-
-
-# make plot
-ao_season_labels <- glue::glue("<span style='color:{ao_color}'>{2006:2025}</span>")
-wg_season_labels <- glue::glue("<span style='color:{wg_color}'>{1980:1999}</span>")
-season_labels <- glue::glue("{ao_season_labels}<br>{wg_season_labels}")
-
-p_season <- ggplot(season_goals, aes(x = season_num, y = goals, color = player, fill = player, alpha = forecast, linetype = forecast)) +
-    geom_col(position = position_dodge(width = 0.8), width = 0.6, size = 0.3) +
-    scale_x_continuous(breaks = 1:20, labels = season_labels) +
-    scale_y_continuous(breaks = seq(0, 90, by = 10)) +
-    scale_color_manual(values = c(ao_color, wg_color)) +
-    scale_fill_manual(values = c(ao_color, wg_color)) +
-    scale_alpha_manual(values = c(0.8, 0.2)) +
-    scale_linetype_manual(values = c("solid", "dashed")) +
-    theme_custom() +
-    guides(color = FALSE, fill = FALSE, alpha = FALSE, linetype = FALSE) +
-    labs(subtitle = "Goals per season", x = NULL, y = NULL)
-
-# Combine charts using patchwork and clean up theming 
-p_season / p_career
-
-ggsave("hockey-goals-forecast.png", width = 8, height = 10)
-
-# add NHL logo to plot
-p4_with_logo <- add_logo(
-    plot_path = "/Users/Stephan/Desktop/R Projects/NHL /2021-22/hockey-goals-forecast.png", # url or local file for the plot
-    logo_path = "/Users/Stephan/Desktop/R Projects/NHL /2021-22/NHL.png", # url or local file for the logo
-    logo_position = "bottom left", # choose a corner
-    # 'top left', 'top right', 'bottom left' or 'bottom right'
-    logo_scale = 20
-)
-
-# save the image and write to working directory
-magick::image_write(p4_with_logo, "hockey-goals-forecast with Logo.png")
-
-
-## 5. ----------- NHL Goal Scoring --------------
+## 4. ----------- NHL Goal Scoring --------------
 
 # scrape NHL league averages from Hockey-Reference
 hrefURL <- "https://www.hockey-reference.com/leagues/stats.html"
@@ -699,15 +591,15 @@ nhl_goals <- nhl_goals %>%
     ))
 
 # determine average goals during this timeframe
-goals_average <- mean(nhl_goals$g)
-#goals_average <- format(round(goals_average, 2), nsmall = 2) #format to two decimals
+goals_average <- format(round(mean(nhl_goals$g),2)) #format to two decimals
+goals_average <- as.numeric(goals_average) #convert back to numeric from character
 
 
 # make plot
 nhl_goals %>% 
     ggplot(aes(x = season, y = g)) +
     geom_chicklet(aes(fill= color)) + #same as geom_col or geom_bar
-    geom_text(aes(label = g), family = "Chivo", position=position_dodge(width=0.9), vjust=-0.25) +
+    geom_text(aes(label = g), family = "Outfit", position=position_dodge(width=0.9), vjust=-0.25) +
     scale_color_identity(aesthetics =  c("fill"))  +
     scale_y_continuous(
         labels = scales::comma_format()) +
@@ -722,9 +614,10 @@ nhl_goals %>%
     geom_hline(yintercept = goals_average, linetype = "dashed", color = "red") +
     labs(x = "",
          y = "Average team goals per game", 
-         title = "Most Goals Scored in Past Two Decades", 
+         title = "The Best of Times", 
          subtitle = glue("Scoring across the league was up during the 2021-22 season, especially against an average of <span style = 'color:red;'>**{goals_average}**</span> goals since 2001-02."), 
          caption = "Data: hockey-reference.com\nPlot: @steodosescu")
+
 
 ggsave("League Averages Bar Chart.png")
 
