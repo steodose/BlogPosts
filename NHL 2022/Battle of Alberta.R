@@ -229,6 +229,8 @@ elo_lineplot_with_logo_flag <- add_logo(
 
 magick::image_write(elo_lineplot_with_logo_flag, "Elo Lineplot with Logo.png")
 
+# note post-processing was done in Figma to get Stanley Cup logos into the image
+
 
 ## Make variation of plot looking at end-of-season elo ratings
 
