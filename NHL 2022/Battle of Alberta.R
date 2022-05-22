@@ -186,11 +186,13 @@ elo_lineplot <- nhl_elo_modern2 %>%
     ggplot(aes(x = date, y = team_elo_rating, group = team, color = team)) +
     geom_line(aes(group = team), data = other_teams, colour = alpha("grey", 0.7), size = 1.1) +
     geom_line(aes(colour = team), data = alberta_teams, size = 1.1) + # colorize only the filtered data
+    geom_hline(yintercept = 1500, linetype= 'dashed', color = 'black') +
+    annotate("text", y = 1340, x = as.Date("2004-06-06"), label = "2005 Lockout", family = "Outfit", color = "#292929", vjust = 1, hjust = 0, lineheight = 1) +
     scale_color_manual(values=c("#C8102E", "#041E42")) +
     labs(x = "",
          y = "Elo Ratings",
          title = "The Battle of Alberta is Back",
-         subtitle = "Elo Ratings for each team since the 1980s. The <span style = 'color:#C8102E;'>**Calgary Flames**</span> and <span style = 'color:#041E42;'>**Edmonton Oilers**</span> are highlighted.",
+         subtitle = "Elo Ratings for each team since the 1980s. The <span style = 'color:#C8102E;'>**Calgary Flames**</span> and <span style = 'color:#041E42;'>**Edmonton Oilers**</span> are on the rise again.",
          caption = "Data source: Neil Paine (fivethirthyeight.com)
          Plot: @steodosescu") +
     theme_custom() +
