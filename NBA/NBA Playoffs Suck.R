@@ -158,14 +158,14 @@ blowouts <- blowout_df %>%
           axis.title.y=element_blank(),
           axis.text.y=element_blank(),
           axis.text.x = element_text(angle = 45),
-          plot.title = element_text(face = 'bold', size = 16, hjust = .5), 
-          plot.subtitle = element_text(size = 10, hjust = .5), 
+          plot.title = element_text(face = 'bold', size = 18), 
+          plot.subtitle = element_text(size = 10), 
           plot.caption = element_text(size = 10)
     ) + 
     labs(x = "",
          y = "",
          title = "NBA Playoff Basketball Kinda Sucks", 
-         subtitle = "Blowout defined as % of games ending with 20+ point margin; Meh games = 10-19 points; Good games = 0-9 points.",
+         subtitle = "This season's playoffs have seen more blowouts and less good games than any other in the last two decades. Blowouts defined as \npercent of games ending with 20+ point margin; Meh games = 10-19 points; Good games = 0-9 points.",
          caption = "Data: nbastatR | Graphic: @steodosescu") +
     guides(fill=guide_legend(
         keywidth= .5,
@@ -186,7 +186,7 @@ ggsave("Blowouts Chicklet Chart.png")
 blowouts_chicklet_logo <- add_logo(
     plot_path = "/Users/Stephan/Desktop/R Projects/NBA/Blowouts Chicklet Chart.png", # url or local file for the plot
     logo_path = "/Users/Stephan/Desktop/R Projects/NBA/2021/nba-logo.png", # url or local file for the logo
-    logo_position = "top left", # choose a corner
+    logo_position = "top right", # choose a corner
     # 'top left', 'top right', 'bottom left' or 'bottom right'
     logo_scale = 30
 )
