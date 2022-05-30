@@ -137,12 +137,16 @@ playoffs2 <- playoffs %>%
         TRUE ~ "Good"
     ))
 
+# Remove last few games as blog post didn't address these
+#playoffs2 <- playoffs2 %>% 
+ # slice(1:(n() - 2))
+
 # finalize dataframe for our chart
 blowout_df <- playoffs2 %>% 
     group_by(slugSeason) %>% 
     count(quality) %>% 
     mutate(share = n/sum(n)) %>% 
-    mutate(quality = fct_relevel(quality, c("Blowout", "Meh", "Good")))
+    mutate(quality = fct_relevel(quality, c("Blowout", "Good", "Meh")))
 
 
 blowouts <- blowout_df %>% 
@@ -165,7 +169,7 @@ blowouts <- blowout_df %>%
     labs(x = "",
          y = "",
          title = "NBA Playoff Basketball Kinda Sucks", 
-         subtitle = "This season's playoffs have seen more blowouts and less good games than any other in the last two decades. Blowouts defined as \npercent of games ending with 20+ point margin; Meh games = 10-19 points; Good games = 0-9 points.",
+         subtitle = "This season's playoffs are tied for the highest share of blowouts vs. any other year in the last two decades. Blowouts defined as \npercent of games ending with 20+ point margin; Meh games = 10-19 points; Good games = 0-9 points. Data thru May 26 games.",
          caption = "Data: nbastatR | Graphic: @steodosescu") +
     guides(fill=guide_legend(
         keywidth= .5,
@@ -174,7 +178,7 @@ blowouts <- blowout_df %>%
         label.position = 'top', 
         nrow = 1) 
     ) +
-    scale_fill_manual(values = c("#C9082A", "#a9a9a9", "#17408B"))
+    scale_fill_manual(values = c("#C9082A", "#17408B", "#a9a9a9")) 
 
 blowouts
 
