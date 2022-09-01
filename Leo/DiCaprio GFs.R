@@ -1,4 +1,6 @@
 ###### Leo's Girlfriends #####
+###### By: Stephan Teodosescu #####
+##### August 2022 #####
 
 library(tidyverse)
 library(ggtext)
@@ -15,8 +17,8 @@ showtext_auto()
 
 #create main dataframe 
 df <- data.frame(
-    year = 1999:2022,
-    age_leo = 24:47,
+    year = 1998:2022,
+    age_leo = 24:48,
     gf = c(
         rep("Gisele Bundchen",6),
         rep("Bar Refaeli",6),
@@ -25,7 +27,7 @@ df <- data.frame(
         rep("Toni Garrn",2),
         "Kelly Rohrbach",
         rep("Nina Agdal",2),
-        rep("Camila Morrone",5)
+        rep("Camila Morrone",6)
     ),
     age_gf = c(
         18:23,
@@ -35,12 +37,12 @@ df <- data.frame(
         20:21,
         25,
         24:25, 
-        20:24
+        20:25
     )
 )
 
 #data for annotations about max age limit
-max_points <- data.frame(x=c(2010, 2015, 2017), y=rep(25,3))
+max_points <- data.frame(x=c(2009, 2014, 2016, 2022), y=rep(25,4))
 
 #data for year segments by girlfriend
 by_gf <- df|>
@@ -64,8 +66,8 @@ images<-data.frame(name=c("Leonardo DiCaprio", unique(df$gf)),
 
 #data frame for connector segments from images to years
 connectors<-data.frame(
-    x= c(2001.5,2004,2005.5,2006.5, 2006.5,2011,2009,2009,2012,2011.5,2013.5,2014,2015,2016.5,2019,2018.5),
-    xend = c(2001.5, 2005.5,2005.5,2006.5,2011,2011,2009,2012,2012,2013.5,2013.5,2015,2015,2016.5,2018.5,2018.5),
+    x= c(2001.5,2004,2005.5,2006.5, 2006.5,2010,2009,2009,2011,2011.5,2012.5,2015.5,2014,2015.5,2019,2019.5),
+    xend = c(2001.5, 2005.5,2005.5,2006.5,2010,2010,2009,2011,2011,2012.5,2012.5,2016.5,2014,2015.5,2019.5,2019.5),
     y= c(-10,-10,-10,-10,-6,-6,-10,-8,-8,-10,-10,-10,-10,-10,-10,-10),
     yend= c(-4,-10,-4,-6,-6,-4,-8,-8,-4,-10,-4,-10,-4,-4,-10,-4)
 )
@@ -89,8 +91,8 @@ ggplot(data=df, aes(x=year))+
     #create new x axis labels
     geom_text(mapping=aes(x=year, label=paste0("'",substr(year,3,4)), y=-1.5), color="white", size = 10)+
     #max age limit annotations
-    annotate(geom="text", label="Leo's Age Limit", x=2013.5, y=32, color=pal_annotate, size = 10)+
-    geom_segment(mapping=aes(x=2010, xend=2017, y=30, yend=30), color=pal_annotate, size=0.15)+
+    annotate(geom="text", label="Leo's Age Limit", x=2016, y=32, color=pal_annotate, size = 10)+
+    geom_segment(mapping=aes(x=2009, xend=2022, y=30, yend=30), color=pal_annotate, size=0.15)+
     geom_segment(data=max_points, mapping=aes(x=x, xend=x, y=30, yend=26), color=pal_annotate, size=0.3)+
     geom_point(data=max_points, mapping=aes(x=x, y=y+1.5),
                shape=21, fill=pal_bg, color=pal_annotate, size=11)+
@@ -100,8 +102,8 @@ ggplot(data=df, aes(x=year))+
                  mapping=aes(x=x,xend=xend,y=y, yend=y, color=color, size=size))+
     geom_point(mapping=aes(x=2001, y=40), shape=21, color=pal_leo, fill=pal_bg, size=3)+
     annotate(geom="text", y=45, x=2002.5, label="Leo's Girlfriend's Age", color=pal_gf, hjust=0, size = 10)+
-    annotate(geom="text", y=40, x=2002.5, label="Leo's Age", color=pal_leo, hjust=0, size = 10)+
-    scale_size_identity()+
+    annotate(geom="text", y=40, x=2002.5, label="Leo's Age (~48)", color=pal_leo, hjust=0, size = 10)+
+    scale_size_identity() +
     #x axis girlfriend groupings
     geom_segment(data=by_gf, mapping=aes(x=min_year, xend=max_year, y=-4, yend=-4), color=pal_gf)+
     geom_segment(data=by_gf, mapping=aes(x=min_year, xend=min_year, y=-4, yend=-3), color=pal_gf)+
