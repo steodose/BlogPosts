@@ -22,6 +22,8 @@ library(prismatic)
 library(rvest)
 library(ggchicklet)
 library(webshot2)
+library(zoo)
+library(patchwork)
 
 
 #Install the development version of hockeyR (requires R 3.5) from GitHub with:
@@ -226,6 +228,8 @@ combined_df <- joined_df %>%
 
 
 ### Data Visualization ###
+
+## 1. NHL points totals bar chart
 combined_df %>% 
     ggplot(aes(x = fct_reorder(team, -vegas_win_total), y = vegas_win_total)) +
     geom_col(
@@ -254,7 +258,7 @@ combined_df %>%
           plot.title.position = 'plot') + 
     labs(x = "", 
          y = "Expected Point Totals", 
-         title = "2022-23 NHL Points Totals", 
+         title = "2022-23 NHL Point Totals", 
          subtitle = paste0("Preseason points totals, according to Vegas bookmakers. As of Oct. 3rd."), 
          caption = "Source: Draftkings\nPlot: @steodosescu") +
     theme(plot.title.position = "plot",
@@ -270,7 +274,7 @@ combined_df %>%
 ggsave("NHL Points Totals 2022-23.png") 
 
 
-# Add logo to plot
+# Add NHL logo to plot
 win_totals_barplot_with_logo <- add_logo(
     plot_path = "/Users/Stephan/Desktop/R Projects/NHL /2022-23/NHL Points Totals 2022-23.png", # url or local file for the plot
     logo_path = "/Users/Stephan/Desktop/R Projects/NHL /2022-23/NHL.png", # url or local file for the logo
@@ -283,9 +287,9 @@ win_totals_barplot_with_logo <- add_logo(
 magick::image_write(win_totals_barplot_with_logo, "NHL Points Totals 2022-23 with Logo.png")
 
 
-### Make table ###
+## 2. Stanley Cup vegas odds table
 combined_df |>
-    arrange(desc(vegas_win_total)) |> 
+    arrange(desc(implied_odds)) |> 
     mutate(rank = row_number()) |> 
     select(rank, team_logo_espn, team, conference, division, vegas_win_total:implied_odds) |> 
     gt() |> 
@@ -296,7 +300,7 @@ combined_df |>
     ) %>%
     tab_header(
         title = md("**Stanley Cup Odds**"),
-        subtitle = paste0("Odds as of October 3rd.")) %>% 
+        subtitle = paste0("Preseason odds courtesy of Draftkings. As of October 3rd.")) %>% 
     cols_label(team = "",
                rank = "Rank",
                team_logo_espn  = "Team",
@@ -311,9 +315,250 @@ combined_df |>
     fmt_percent(implied_odds, decimals = 1) %>% 
     #gt_theme_538 %>% 
     tab_options(
+        heading.title.font.size = 22,
         table.font.names = "Outfit", 
         data_row.padding = px(.25), 
         footnotes.font.size = 10) %>%
     tab_source_note(source_note = md("Source: Draftkings.com<br>TABLE: @steodosescu")) %>% 
     gtsave("2022-23 NHL Points Table.png")
+
+
+##  3. Combined models table
+
+# read in data 
+df <- read_csv("https://raw.githubusercontent.com/steodose/BlogPosts/master/NHL%202023/win%20totals_22-23.csv")
+elo_latest <- read_csv("https://projects.fivethirtyeight.com/nhl-api/nhl_elo_latest.csv")
+
+
+ensemble_df <- df %>% 
+    left_join(nhl_logos_colors, by = c("team" = "full_team_name"))
+
+# western conference table
+wcf_tbl <- ensemble_df %>% 
+    filter(conference == "Western") %>% 
+    mutate(avg = (x538 + vegas + athletic + moneypuck) / 4) %>% 
+    arrange(desc(avg)) %>% 
+    select(-conference) %>% 
+    mutate(rank = row_number()) %>% 
+    select(rank, team, team_logo_espn, vegas:athletic, avg) %>% 
+    gt() %>%
+    tab_header(
+        title = md("**Western Conference**"),
+        subtitle = "") %>% 
+    cols_label(rank = "",
+               team = "Team", 
+               team_logo_espn  = "",
+               vegas = "Vegas",
+               x538 = "538",
+               athletic = "The Athletic",
+               moneypuck = "MPuck",
+               avg = "Avg")  %>% 
+    gt_img_rows(team_logo_espn) %>% 
+    cols_width(team ~ 150, 
+               everything() ~ 50) %>% 
+    fmt_number(columns = c(x538, athletic, moneypuck, avg), 
+               decimals = 1) %>% 
+    data_color(
+        columns = c(x538, vegas, athletic, moneypuck, avg),
+        colors = scales::col_numeric(
+            palette = paletteer::paletteer_d(
+                palette = "Redmonder::dPBIRdGn",
+                direction = 1
+            ) %>% as.character(),
+            domain = NULL, 
+            na.color = "#005C55FF"
+        )) %>%
+    tab_options(
+        heading.title.font.size = 18,
+        heading.subtitle.font.size = 10,
+        heading.title.font.weight = 'bold',
+        column_labels.font.size = 12,
+        column_labels.font.weight = 'bold',
+        table.font.size = 12,
+        table.font.names = "Outfit", 
+        source_notes.font.size = 7,
+        data_row.padding = px(.5)
+    ) %>%
+    tab_source_note(
+        source_note = md("Vegas = Vegas over/under totals via DraftKings<br>538 = NHL prediction model via fivethirtyeight.com<br>MPuck = Preseason win totals based on Peter Tanner's model at Moneypuck.com<br>The Athletic = Preseason win totals based on Dom Luszczyszyn's model at The Athletic<br>Table: @steodosescu | Inspired by Owen Phillips (The F5)")
+    )
+
+
+# eastern conference table
+ecf_tbl <- ensemble_df %>% 
+    filter(conference == "Eastern") %>% 
+    mutate(avg = (x538 + vegas + athletic + moneypuck) / 4) %>% 
+    arrange(desc(avg)) %>% 
+    select(-conference) %>% 
+    mutate(rank = row_number()) %>% 
+    select(rank, team, team_logo_espn, vegas:athletic, avg) %>% 
+    gt() %>%
+    tab_header(
+        title = md("**Eastern Conference**"),
+        subtitle = "") %>% 
+    cols_label(rank = "",
+               team = "Team", 
+               team_logo_espn  = "",
+               vegas = "Vegas",
+               x538 = "538",
+               athletic = "The Athletic",
+               moneypuck = "MPuck",
+               avg = "Avg")  %>% 
+    gt_img_rows(team_logo_espn) %>% 
+    cols_width(team ~ 150, 
+               everything() ~ 50) %>% 
+    fmt_number(columns = c(x538, athletic, moneypuck, avg), 
+               decimals = 1) %>% 
+    data_color(
+        columns = c(x538, vegas, athletic, moneypuck, avg),
+        colors = scales::col_numeric(
+            palette = paletteer::paletteer_d(
+                palette = "Redmonder::dPBIRdGn",
+                direction = 1
+            ) %>% as.character(),
+            domain = NULL, 
+            na.color = "#005C55FF"
+        )) %>%
+    tab_options(
+        heading.title.font.size = 18,
+        heading.subtitle.font.size = 10,
+        heading.title.font.weight = 'bold',
+        column_labels.font.size = 12,
+        column_labels.font.weight = 'bold',
+        table.font.size = 12,
+        table.font.names = "Outfit", 
+        source_notes.font.size = 7,
+        data_row.padding = px(.5)
+    ) %>%
+    tab_source_note(
+        source_note = md("Vegas = Vegas over/under totals via DraftKings<br>538 = NHL prediction model via fivethirtyeight.com<br>MPuck = Preseason win totals based on Peter Tanner's model at Moneypuck.com<br>The Athletic = Preseason win totals based on Dom Luszczyszyn's model at The Athletic<br>Table: @steodosescu | Inspired by Owen Phillips (The F5)")
+    )
+
+# combine both tables into one using {gtExtras}
+
+two_tables <- list(wcf_tbl, ecf_tbl)
+
+gt_two_column_layout(two_tables, 
+                     output = 'save', 
+                     filename = 'win_totals_2022_23.png', 
+                     vwidth = 1025, 
+                     vheight = 475)
+
+
+## 4. Points total facet plot non-smoothed
+schedule <- elo_latest %>%
+    mutate(teama = home_team,
+           teamb = away_team) %>% 
+    pivot_longer(home_team:away_team) %>% 
+    mutate(opp = ifelse(value == teama, teamb, teama)) %>% 
+    rename(team = value) %>% 
+    select(-teama, -teamb, -name) 
+
+# add win totals for team and opponent 
+schedule <- inner_join(schedule, ensemble_df, by = c("team" = "team")) %>% 
+    inner_join(., ensemble_df, by = c("opp" = "team")) %>% 
+    rename(team_ou = `vegas.x`, 
+           opp_ou = `vegas.y`) %>% 
+    select(date:team_ou, opp_ou)
     
+
+# calculate 10-game rolling average of opponent win total 
+schedule <- schedule %>% 
+    group_by(team) %>% 
+    mutate(opp_ou_ra = rollmean(opp_ou, k = 10, na.pad = TRUE, align = 'right'), 
+           gameno = row_number()) %>% 
+    ungroup() 
+
+# add team colors back in 
+schedule <- left_join(schedule, nhl_logos_colors, by = c("team" = "full_team_name"))
+
+# set up duplicate team column for charting purposes 
+schedule$teamDuplicate <- schedule$team 
+
+# Make chart (snoothed version)
+p1 <- schedule %>% 
+    ggplot(aes(x = gameno, y = opp_ou_ra)) + 
+    geom_smooth(data = mutate(schedule, team_abbr = NULL), aes(group = teamDuplicate), method = "lm", formula = y ~ splines::bs(x, 5), se = FALSE, colour = 'grey80', size = .25, alpha = .5) +
+    geom_smooth(aes(group = team, color = team_color1), method = "lm",  formula = y ~ splines::bs(x, 5), se = FALSE, size = .5, alpha = 1, show.legend = FALSE) +
+    #geom_line(data = mutate(schedule, team = NULL), aes(group = teamDuplicate), colour = 'grey80', size = .25, alpha = .5) +
+    #geom_line(aes(group = team, color = team_color1), size = .5, alpha = 1, show.legend = FALSE) +
+    scale_y_continuous(breaks = seq(30, 50, 10)) +
+    scale_x_continuous(breaks = seq(0, 80, 40), limits = c(0, 80, 40)) +
+    scale_color_identity() +
+    facet_wrap(~fct_reorder(team_abbr, -team_ou)) +
+    theme_custom() + 
+    theme(plot.title.position = 'plot', 
+          plot.title = element_text(face = 'bold',
+                                    size = 16,
+                                    hjust = 0.5),
+          plot.subtitle = element_text(
+                                    size = 10,
+                                    hjust = 0.5),
+          #plot.margin = margin(10, 10, 15, 10), 
+          panel.spacing = unit(0.5, 'lines')) +
+    labs(x = "Game No.", 
+         y = "Ten-Game Rolling Avg. Opponent Point Totals", 
+         title = "NHL Strength of Schedule, 2022-23", 
+         subtitle = "Sorted by predicted win totals (via Draftkings). Lines smoothed using 10-game moving avg.",
+         caption = "Data: Draftkings.com | Plot: @steodosescu")
+
+
+# add logos to each facet 
+
+## Reference: https://github.com/tonyelhabr/sports_viz/blob/master/42-202122_new_players/01-main.R
+p_bld <- ggplot_gtable(ggplot_build(p1))
+grob_strip_index <- which(sapply(p_bld$grob, function(x) x$name)=='strip')
+facet_id <- sapply(grob_strip_index, function(grb) {
+    p_bld$grobs[[grb]]$grobs[[1]]$children[[2]]$children[[1]]$label
+})
+# p_bld$layout$z[grob_strip_index] <- 0 ## not sure what the point of this is...
+
+for (i in 1:length(facet_id)) {
+    id <- facet_id[i]
+    url <-
+        nhl_logos_colors %>% filter(team_abbr == !!id) %>% pull(team_logo_espn)
+    lab <-
+        grid::textGrob(
+            id,
+            x = unit(0, 'npc'),
+            gp = grid::gpar(
+                col = 'black',
+                fontfamily = 'Outfit',
+                fontface = 'bold',
+                fontsize = 8
+            ),
+            hjust = 0
+        )
+    img <-
+        grid::rasterGrob(
+            image = magick::image_read(url),
+            # just = 'right',
+            hjust = 1,
+            x = unit(1, 'npc'),
+            ## 1 and 0.75 is also fine
+            vp = grid::viewport(height = 1, width = 0.75)
+        )
+    tot_tree <- grid::grobTree(lab, img)
+    p_bld$grobs[[grob_strip_index[i]]] <- tot_tree
+}
+
+p1 <- cowplot::ggdraw(p_bld)
+
+ggsave("Team Point Totals Facet Smoothed.png", p1, w = 6, h = 6, dpi = 300)
+
+
+# Add NHL logo to plot
+p1_with_logo <- add_logo(
+    plot_path = "/Users/Stephan/Desktop/R Projects/NHL /2022-23/Team Point Totals Facet Smoothed.png", # url or local file for the plot
+    logo_path = "/Users/Stephan/Desktop/R Projects/NHL /2022-23/NHL.png", # url or local file for the logo
+    logo_position = "top left", # choose a corner
+    # 'top left', 'top right', 'bottom left' or 'bottom right'
+    logo_scale = 25
+)
+
+# save the image and write to working directory
+magick::image_write(p1_with_logo, "NHL Points Totals 2022-23 with Logo.png")
+
+
+
+
