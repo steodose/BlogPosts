@@ -152,7 +152,7 @@ unzip(zipfile = "/Users/Stephan/Desktop/R Projects/Health/export 3.zip", exdir =
 
 # needed a workaround to get to this point. Apparently it's messed up in iOS16: https://discussions.apple.com/thread/254202523
 
-xml_in <- read_xml(file.path("/Users/Stephan/Desktop/R Projects/Health/apple_health_export/export-fixed.xml"))
+xml_in <- read_xml(file.path("/Users/Stephan/Downloads/apple_health_export/export-fixed.xml"))
 
 
 #let’s grab all the ‘record’ nodes and preview the first one (can take a while)
@@ -237,7 +237,7 @@ avg_df_2022 <- records_out %>%
     filter(year == 2022)
 
 
-p1 <- records_out_summary %>% 
+records_out_summary %>% 
     ggplot(aes(x = month, y = steps_per_day)) +
     geom_chicklet(stat = 'identity', aes(fill = rank == 1)) + #same as geom_col or geom_bar
     geom_text(aes(label = steps_per_day_label), size = 3, family = "Outfit", 
@@ -263,7 +263,7 @@ p1 <- records_out_summary %>%
     theme(plot.subtitle = element_text(hjust = 0.5)) +
     theme(plot.subtitle = element_markdown())
 
-ggsave(p1, "2022 Step Count Bar Chart.png")
+ggsave("2022 Step Count Bar Chart.png")
 
 # Add logo to plot
 step_count_bar_char_logo <- add_logo(
@@ -280,7 +280,7 @@ magick::image_write(step_count_bar_char_logo, "2022 Step Count Chart with Logo.p
 
 ## 2. ggridges by day of week plot
 
-p2 <- records_out %>% 
+records_out %>% 
     filter(year == 2022) %>% 
     ggplot(aes(x = steps_adj, y = fct_reorder(weekday, steps_adj), fill = stat(x))) +
     geom_density_ridges_gradient(quantile_lines = TRUE, quantiles = 2, show.legend = FALSE) +
@@ -325,13 +325,13 @@ records_month <- records_out %>%
     summarise(month_steps = mean(steps_adj))
 
 #make line plot
-p3 <- records_month %>% 
+records_month %>% 
     ggplot(aes(x=month, y = month_steps, color = year, group = year)) +
     geom_line(size = 1.3) +
     geom_point(size = 2) +
     labs(x = "", y = "Steps",
          title = glue("Average Steps per Month, <span style = 'color:#E64B35FF';'>**2020**</span> vs. <span style = 'color:#AF1E2D';'>**2021**</span> vs. <span style = 'color:#6b1eaf';'>**2022**</span>"),
-         subtitle = glue("The latter averaged more steps than the previous year in most months outside of the early part of the year."),
+         subtitle = glue("2022 averaged the highest step count over the past three years. June 2022 registered as the highest month in that timeframe."),
          caption = "Data: iPhone Health App\nGraphic: @steodosescu",
          color = "") +
     theme_custom() +
@@ -389,7 +389,7 @@ p <- records_month %>%
     geom_point(size = 2) +
     labs(x = "", y = "Steps",
          title = "Average Steps per Month, <span style = 'color:#E64B35FF';'>**2020**</span> vs. <span style = 'color:#AF1E2D';'>**2021**</span> vs. <span style = 'color:#6b1eaf';'>**2022**</span>",
-         subtitle = glue("The latter averaged more steps than the previous year in most months outside of the early part of the year."),
+         subtitle = glue("2022 averaged the highest step count over the past three years. June 2022 registered as the highest month in that timeframe."),
          caption = "Data: iPhone Health App\nGraphic: @steodosescu",
          color = "") +
     theme_custom() +
@@ -412,12 +412,12 @@ p <- records_month %>%
     theme(plot.title = element_text(face = "bold", size = 18, hjust = 0.5)) +
     theme(plot.title = element_markdown()) +
     theme(plot.subtitle = element_text(hjust = 0.5)) +
-    theme(plot.subtitle = element_markdown())
+    theme(plot.subtitle = element_markdown()) +
     transition_reveal(month_no)
 
 p
 
-animate(p, height = 461, width = 644)
+animate(p, height = 461, width = 700)
 
 # Save in gif format:
 anim_save("YoY Line Plot.gif")
@@ -425,7 +425,7 @@ anim_save("YoY Line Plot.gif")
 
 ## 4. Heat Map using gt
 
-p4 <- records_out %>%
+records_out %>%
     filter(year == "2022") %>%
     group_by(weekday, month) %>% 
     summarise(month_steps = mean(steps_adj)) %>% 
