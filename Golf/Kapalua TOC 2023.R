@@ -205,9 +205,11 @@ leaderboard %>%
         )
     ) %>%
     gt_theme_538() %>%
+    tab_spanner(label = "Jan 5 thru Jan 8, 2023", 
+                columns = Thursday:Sunday) %>%
     gt_img_rows(url, height = 40) %>%
     tab_header(title = md("**2023 Sentry Tournament of Champions**"),
-               subtitle = glue("Final leaderboard, Plantation Cours at Kapalua, Maui.")) %>%
+               subtitle = glue("Final leaderboard, Plantation Course at Kapalua, Maui.")) %>%
     opt_align_table_header(align = "center") %>%
     tab_source_note(
         source_note = md("DATA: PGA Tour/Data Golf<br>TABLE: @steodosescu")) %>% 
