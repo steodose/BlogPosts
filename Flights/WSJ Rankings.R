@@ -4,27 +4,16 @@
 
 library(tidyverse)
 library(magick)
-library(rvest) # for webscraping
-library(polite)
 library(gt) #for 538-themed tables
 library(gtExtras)
 library(glue)
 library(ggtext)
-library(gganimate)
-library(rlang)
-library(RCurl)
 library(ggimage) #for working with logos
-library(gtExtras)
-library(zoo)
 library(janitor)
-library(prismatic)
-library(patchwork)
-library(ggsci)
-library(rsvg)
 library(ggbump)
 
 
-# don't forget to set your working directory
+# don't forget to set your working directory and install these packages on your machine
 
 
 #### Load data and Data preprocessing ##### 
@@ -229,7 +218,7 @@ airline_rankings %>%
     labs(
         x = "",
         y = "",
-        title = "2023 WSJ Airline Rankings",
+        title = "2022 WSJ Airline Rankings",
         subtitle = "The overall performances of the largest U.S. airlines on the WSJ scorecard, from 2020 to 2022.",
         caption = "Data: WSJ.com\nPlot: @steodosescu"
     )
@@ -258,15 +247,15 @@ rankings_table <- read_csv("https://raw.githubusercontent.com/steodose/BlogPosts
 
 # make dataframe with airline hex images
 airline_logos <- data.frame(airline = c("Southwest", "Delta", "Alaska", "Spirit", "Allegiant", "Frontier", "United", "JetBlue", "American"),
-                        url = c('https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/southwest-airlines-logo-tail.png', 
-                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/delta-logo-tail.png', 
-                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/alaska-airlines-logo-tail.png', 
+                        url = c('https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/southwest-airlines-logo.png', 
+                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/delta-logo.png', 
+                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/alaska-airlines-logo.png', 
                                 'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/spirit-airlines-logo-tail.png', 
-                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/allegiant-air-logo-tail.png',
-                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/frontier-airlines-logo-tail.png',
-                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/united-airlines-logo-tail.png',
-                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/jetblue-logo-tail.png',
-                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/american-airlines-logo-tail.png')
+                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/allegiant-air-logo.png',
+                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/frontier-airlines-logo.png',
+                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/united-airlines-logo.png',
+                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/jetblue-logo.png',
+                                'https://raw.githubusercontent.com/steodose/BlogPosts/master/Flights/Airline%20Logos/american-airlines-logo.png')
 )
 
 
@@ -302,11 +291,11 @@ rankings_table %>%
         avg = "Average",
         adj_avg = "Adjusted Avg."
     ) %>%
-    cols_width(
-        rank ~ px(50),
-        url ~ px(50),
-        everything() ~ px(100)
-    ) %>%
+    # cols_width(
+    #     rank ~ px(50),
+    #     url ~ px(50),
+    #     everything() ~ px(100)
+    # ) %>%
     data_color(
         columns = c("on_time_arrivals":"amenities"), 
         colors = scales::col_numeric(
@@ -334,7 +323,7 @@ rankings_table %>%
                 columns = on_time_arrivals:complaints) %>%
     tab_spanner(label = "My Rank", 
                 columns = amenities) %>%
-    gt_img_rows(url, height = 40) %>%
+    gt_img_rows(url, height = 30) %>%
     tab_header(title = md("**2022 WSJ Airline Scorecard**"),
                subtitle = glue("Rankings of major U.S. carriers in key operational areas, best to worst.")) %>%
     opt_align_table_header(align = "center") %>%
