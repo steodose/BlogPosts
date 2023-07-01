@@ -17,20 +17,10 @@ library(ggalt) #for dumbbell plot
 library(googlesheets4)
 
 
-##### Import data from Sports Reference family of websites, and Wikipedia
-
-champs <- read_csv("champions.csv") #Available on my GitHub page
-expected_championships <- read_csv("expected_championships.csv") #Available on my GitHub page
-
-# Un-comment the below code if you use the Google sheets import function
-
-# champs <- read_sheet("https://docs.google.com/spreadsheets/d/1SXLHvtSzbCp3C8Ungk6uE8soowlxL3wh8pfzYOJi-0E/edit#gid=0")
-# expected_championships <- read_sheet("https://docs.google.com/spreadsheets/d/1wl7O5U-K67YvDVDkDjQbkbPz3TNdvoQ9gJTmnVDqaGo/edit#gid=0")
-
 
 ##### Custom ggplot theme (inspired by Owen Phillips at the F5) #####
 theme_custom <- function () { 
-    theme_minimal(base_size=11, base_family="Chivo") %+replace% 
+    theme_minimal(base_size=11, base_family="Outfit") %+replace% 
         theme(
             panel.grid.minor = element_blank(),
             plot.background = element_rect(fill = 'floralwhite', color = "floralwhite")
@@ -89,6 +79,11 @@ add_logo <- function(plot_path, logo_path, logo_position, logo_scale = 10){
 }
 
 
+##### Import data and data cleansing #####
+
+champs <- read_csv("champions.csv") #Available on my GitHub page
+expected_championships <- read_csv("expected_championships.csv") #Available on my GitHub page
+
 
 # Count number of championships for each metro area
 metro_championships <- champs %>% 
@@ -97,16 +92,21 @@ metro_championships <- champs %>%
     arrange(desc(n))
 
 # Wrangle expected championships dataset
-expected_championships$`Expected Championships` <- as.numeric(expected_championships$`Expected Championships`)
-expected_championships[is.na(expected_championships)] <- 0 #Replace NA values with zeroes so you can sum across
+expected_championships <- expected_championships %>%
+    mutate(exp_chips = (MLB/MLB_teams) + (NFL/NFL_teams) + (NBA/NBA_teams) + (NHL/NHL_teams),
+           available_titles = MLB+NBA+NFL+NHL)
+
+#expected_championships$`Expected Championships` <- as.numeric(expected_championships$`Expected Championships`)
+#expected_championships[is.na(expected_championships)] <- 0 #Replace NA values with zeroes so you can sum across
+
 
 ##### Workflow to create Championships over expected table #####
 
 # Structure and aggregate the Champions and Expected Titles datasets
 expected_agg <- expected_championships %>%
-    select(Metro, Available_Titles, `Expected Championships`) %>% 
+    select(Metro, available_titles, exp_chips) %>% 
     group_by(Metro) %>% 
-    summarise(`Available Titles` = sum(Available_Titles), `Expected Championships` = sum(`Expected Championships`))
+    summarise(available_titles = sum(available_titles), exp_chips = sum(exp_chips))
 
 champs_table <- champs %>% 
     drop_na() %>%  #remove NA rows
@@ -126,10 +126,10 @@ champs_table <- champs_table %>%
 # Join the datasets
 championships_joined <- champs_table %>% 
     left_join(expected_agg, by = "Metro") %>% 
-    mutate(ToE = round(Total - `Expected Championships`,2)) %>%
-    mutate(`Share (%)` = round(Total/`Available Titles`,3)) %>% 
+    mutate(ToE = round(Total - exp_chips,2)) %>%
+    mutate(`Share (%)` = round(Total/available_titles,3)) %>% 
     mutate(Rank = min_rank(-ToE)) %>% #Come up with a Ranking variable
-    select(Rank, everything(),-`Available Titles`, -`Expected Championships`) %>% 
+    select(Rank, everything(),- available_titles, - exp_chips) %>% 
     arrange(desc(ToE))
 
 championships_joined$ToE <- paste0(ifelse(championships_joined$ToE >= 0, "+", ""), championships_joined$ToE, "")
@@ -153,9 +153,9 @@ champs_table_gt <- gt(championships_joined) %>%
         column_labels.border.bottom.width = px(3),
         column_labels.border.bottom.color = "black",
         data_row.padding = px(3),
+        heading.title.font.size = 30,
         source_notes.font.size = 12,
         table.font.size = 16,
-        heading.align = "left",
     ) %>%
     ### Colors
     data_color(columns = 7,
@@ -164,9 +164,15 @@ champs_table_gt <- gt(championships_joined) %>%
                    domain = NULL)) %>%
     tab_style(
         style = list(
-            cell_fill(color = "#FFFAA0") #highlighting the Atlanta row
+            cell_fill(color = "#FFFAA0") #highlighting a particular row
         ),
-        locations = cells_body(rows = Metro == "Los Angeles")
+        locations = cells_body(rows = Metro == "Las Vegas")
+    ) %>% 
+    tab_style(
+        style = list(
+            cell_fill(color = "#FFFAA0") #highlighting a particular row
+        ),
+        locations = cells_body(rows = Metro == "Denver")
     ) %>% 
     tab_spanner(label = "No. Titles by Sport", 
                 columns = 3:6) %>%
@@ -176,7 +182,7 @@ champs_table_gt <- gt(championships_joined) %>%
                columns = 8) %>%
     fmt_percent(columns = vars(`Share (%)`), 
                 decimals = 1) %>% 
-    tab_header(title = md("**Tinseltown is Titletown**"),
+    tab_header(title = md("**Where is Titletown?**"),
                subtitle = glue("North American metropolitan areas with at least one title since 1991, by Titles over Expected (ToE).\nShare refers to the percentage of available championships to it each metro area has won.")) %>%
     tab_source_note(
         source_note = md("DATA: Sports-Reference.com/Wikipedia<br>TABLE: @steodosescu"))
@@ -188,8 +194,8 @@ gtsave(champs_table_gt, filename = 'championships_table.png')
 
 plot_with_logo <- add_logo(
     plot_path = "/Users/Stephan/Desktop/R Projects/Sports Droughts/championships_table.png", # url or local file for the plot
-    logo_path = "/Users/Stephan/Desktop/R Projects/Sports Droughts/hex-BTP.png", # url or local file for the logo
-    logo_position = "top right", # choose a corner
+    logo_path = "/Users/Stephan/Desktop/R Projects/personal-website/BTP (3).png", # url or local file for the logo
+    logo_position = "top left", # choose a corner
     # 'top left', 'top right', 'bottom left' or 'bottom right'
     logo_scale = 30
 )
