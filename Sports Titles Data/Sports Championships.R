@@ -1,6 +1,6 @@
 ##### Sports City Championships #####
 ## By: Stephan Teodosescu
-## Updated July 2021
+## Updated November 2023
 
 library(tidyverse)
 library(gt) #for 538-themed tables
@@ -166,14 +166,14 @@ champs_table_gt <- gt(championships_joined) %>%
         style = list(
             cell_fill(color = "#FFFAA0") #highlighting a particular row
         ),
-        locations = cells_body(rows = Metro == "Las Vegas")
+        locations = cells_body(rows = Metro == "Philadelphia")
     ) %>% 
-    tab_style(
-        style = list(
-            cell_fill(color = "#FFFAA0") #highlighting a particular row
-        ),
-        locations = cells_body(rows = Metro == "Denver")
-    ) %>% 
+    # tab_style(
+    #     style = list(
+    #         cell_fill(color = "#FFFAA0") #highlighting a particular row
+    #     ),
+    #     locations = cells_body(rows = Metro == "Miami")
+    # ) %>% 
     tab_spanner(label = "No. Titles by Sport", 
                 columns = 3:6) %>%
     cols_align(align = "left",
@@ -182,7 +182,7 @@ champs_table_gt <- gt(championships_joined) %>%
                columns = 8) %>%
     fmt_percent(columns = vars(`Share (%)`), 
                 decimals = 1) %>% 
-    tab_header(title = md("**Where is Titletown?**"),
+    tab_header(title = md("**Philly is still a title starved sports town**"),
                subtitle = glue("North American metropolitan areas with at least one title since 1991, by Titles over Expected (ToE).\nShare refers to the percentage of available championships to it each metro area has won.")) %>%
     tab_source_note(
         source_note = md("DATA: Sports-Reference.com/Wikipedia<br>TABLE: @steodosescu"))
@@ -194,7 +194,7 @@ gtsave(champs_table_gt, filename = 'championships_table.png')
 
 plot_with_logo <- add_logo(
     plot_path = "/Users/Stephan/Desktop/R Projects/Sports Droughts/championships_table.png", # url or local file for the plot
-    logo_path = "/Users/Stephan/Desktop/R Projects/personal-website/BTP (3).png", # url or local file for the logo
+    logo_path = "/Users/Stephan/Desktop/R Projects/personal-website/BTP (5).png", # url or local file for the logo
     logo_position = "top left", # choose a corner
     # 'top left', 'top right', 'bottom left' or 'bottom right'
     logo_scale = 30
