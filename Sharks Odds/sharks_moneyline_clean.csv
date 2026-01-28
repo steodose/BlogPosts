@@ -1,0 +1,215 @@
+season,season_year_url,game_no,game_no_global,game_date,date,moneyline,moneyline_num,implied_win_prob,sharks_favored,source_url,opponent,score,spread,total (o/u)
+2023-24,2024,1,1,2023-10-13,"Fri, Oct 13, 23'",l+200,200,0.3333333333333333,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsVEG,L 1 - 4,l+1.5,u6.5
+2023-24,2024,2,2,2023-10-15,"Sun, Oct 15, 23'",l+236,236,0.2976190476190476,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsCOL,L 1 - 2 SO,w+1.5,u6.5
+2023-24,2024,3,3,2023-10-18,"Wed, Oct 18, 23'",l+251,251,0.2849002849002849,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsCAR,L 3 - 6,l+1.5,o6
+2023-24,2024,4,4,2023-10-20,"Fri, Oct 20, 23'",l+220,220,0.3125,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsBOS,L 1 - 3,l+1.5,u6
+2023-24,2024,5,5,2023-10-22,"Sun, Oct 22, 23'",l+200,200,0.3333333333333333,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@NAS,L 1 - 5,l+1.5,P6
+2023-24,2024,6,6,2023-10-24,"Tue, Oct 24, 23'",l+206,206,0.32679738562091504,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@FLA,L 1 - 3,l+1.5,u6.5
+2023-24,2024,7,7,2023-10-26,"Thu, Oct 26, 23'",l+233,233,0.3003003003003003,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@TB,L 0 - 6,l+1.5,u6.5
+2023-24,2024,8,8,2023-10-27,"Fri, Oct 27, 23'",l+324,324,0.2358490566037736,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@CAR,L 0 - 3,l+1.5,u6.5
+2023-24,2024,9,9,2023-10-29,"Sun, Oct 29, 23'",l+180,180,0.35714285714285715,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@WAS,L 1 - 3,l+1.5,u6
+2023-24,2024,10,10,2023-11-03,"Fri, Nov 03, 23'",l+189,189,0.3460207612456747,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsVAN,L 1 - 10,l+1.5,o6
+2023-24,2024,11,11,2023-11-05,"Sun, Nov 05, 23'",l+211,211,0.3215434083601286,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsPIT,L 2 - 10,l+1.5,o6.5
+2023-24,2024,12,12,2023-11-08,"Wed, Nov 08, 23'",w+174,174,0.36496350364963503,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsPHI,W 2 - 1,w+1.5,u6.5
+2023-24,2024,13,13,2023-11-10,"Fri, Nov 10, 23'",w+271,271,0.2695417789757412,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsEDM,W 3 - 2,w+1.5,u7
+2023-24,2024,14,14,2023-11-11,"Sat, Nov 11, 23'",l+392,392,0.2032520325203252,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@VEG,L 0 - 5,l+1.5,u6.5
+2023-24,2024,15,15,2023-11-13,"Mon, Nov 13, 23'",l+164,164,0.3787878787878788,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@ANA,L 1 - 4,l+1.5,u6.5
+2023-24,2024,16,16,2023-11-15,"Wed, Nov 15, 23'",l+227,227,0.3058103975535168,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsFLA,L 3 - 5,l+1.5,o6.5
+2023-24,2024,17,17,2023-11-17,"Fri, Nov 17, 23'",w+184,184,0.352112676056338,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsSTL,W 5 - 1,w+1.5,P6
+2023-24,2024,18,18,2023-11-21,"Tue, Nov 21, 23'",l+286,286,0.25906735751295334,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@VAN,L 1 - 3,l+1.5,u6.5
+2023-24,2024,19,19,2023-11-23,"Thu, Nov 23, 23'",l+235,235,0.29850746268656714,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@SEA,L 1 - 7,l+1.5,o6
+2023-24,2024,20,20,2023-11-24,"Fri, Nov 24, 23'",l+122,122,0.45045045045045046,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsMON,L 2 - 3 SO,w+1.5,u6
+2023-24,2024,21,21,2023-11-26,"Sun, Nov 26, 23'",w+222,222,0.3105590062111801,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsVAN,W 4 - 3,w+1.5,o6.5
+2023-24,2024,22,22,2023-11-28,"Tue, Nov 28, 23'",w+191,191,0.3436426116838488,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsWAS,W 2 - 1,w+1.5,u6
+2023-24,2024,23,23,2023-12-01,"Fri, Dec 01, 23'",l+367,367,0.21413276231263384,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@BOS,L 0 - 3,l+1.5,u6
+2023-24,2024,24,24,2023-12-02,"Sat, Dec 02, 23'",w+352,352,0.22123893805309736,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@NJ,W 6 - 3,w+1.5,o6.5
+2023-24,2024,25,25,2023-12-03,"Sun, Dec 03, 23'",l+312,312,0.24271844660194175,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@NYR,L 5 - 6,w+1.5,o6
+2023-24,2024,26,26,2023-12-06,"Wed, Dec 06, 23'",w+252,252,0.2840909090909091,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@NYI,W 5 - 4 OT,w+1.5,o5.5
+2023-24,2024,27,27,2023-12-08,"Fri, Dec 08, 23'",w+232,232,0.30120481927710846,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@DET,W 6 - 5 OT,w+1.5,o6.5
+2023-24,2024,28,28,2023-12-11,"Mon, Dec 11, 23'",l+251,251,0.2849002849002849,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@VEG,L 4 - 5 SO,w+1.5,o6.5
+2023-24,2024,29,29,2023-12-13,"Wed, Dec 13, 23'",w+174,174,0.36496350364963503,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsWPG,W 2 - 1,w+1.5,u6
+2023-24,2024,30,30,2023-12-16,"Sat, Dec 16, 23'",l+161,161,0.3831417624521073,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@ARI,L 0 - 1,w+1.5,u6
+2023-24,2024,31,31,2023-12-18,"Mon, Dec 18, 23'",l+221,221,0.3115264797507788,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@COL,L 2 - 6,l+1.5,o6
+2023-24,2024,32,32,2023-12-20,"Wed, Dec 20, 23'",l+216,216,0.31645569620253167,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsLA,L 1 - 4,l+1.5,u6.5
+2023-24,2024,33,33,2023-12-22,"Fri, Dec 22, 23'",l+128,128,0.43859649122807015,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsARI,L 2 - 5,l+1.5,o6.5
+2023-24,2024,34,34,2023-12-24,"Sun, Dec 24, 23'",l+246,246,0.28901734104046245,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@VAN,L 4 - 7,l+1.5,o6.5
+2023-24,2024,35,35,2023-12-28,"Thu, Dec 28, 23'",l+274,274,0.26737967914438504,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@LA,L 1 - 5,l+1.5,P6
+2023-24,2024,36,36,2023-12-29,"Fri, Dec 29, 23'",l+329,329,0.2331002331002331,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsEDM,L 0 - 5,l+1.5,u7
+2023-24,2024,37,37,2024-01-01,"Mon, Jan 01, 24'",l+310,310,0.24390243902439024,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@COL,L 1 - 3,l+1.5,u6.5
+2023-24,2024,38,38,2024-01-03,"Wed, Jan 03, 24'",l+159,159,0.3861003861003861,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsDET,L 3 - 5,l+1.5,o6.5
+2023-24,2024,39,39,2024-01-05,"Fri, Jan 05, 24'",l+220,220,0.3125,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsWPG,L 1 - 2,w+1.5,u6
+2023-24,2024,40,40,2024-01-07,"Sun, Jan 07, 24'",l+230,230,0.30303030303030304,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsTOR,L 1 - 4,l+1.5,u6
+2023-24,2024,41,41,2024-01-10,"Wed, Jan 10, 24'",l+324,324,0.2358490566037736,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@TOR,L 1 - 7,l+1.5,o6
+2023-24,2024,42,42,2024-01-12,"Fri, Jan 12, 24'",w+136,136,0.423728813559322,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@MON,W 3 - 2,w+1.5,u6
+2023-24,2024,43,43,2024-01-13,"Sat, Jan 13, 24'",l+207,207,0.3257328990228013,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@OTT,L 4 - 5,w+1.5,o6.5
+2023-24,2024,44,44,2024-01-15,"Mon, Jan 15, 24'",l+223,223,0.30959752321981426,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@BUF,L 0 - 3,l+1.5,u6.5
+2023-24,2024,45,45,2024-01-17,"Wed, Jan 17, 24'",l+120,120,0.45454545454545453,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@CHI,L 1 - 2 SO,w+1.5,u5.5
+2023-24,2024,46,46,2024-01-21,"Sun, Jan 21, 24'",w+105,105,0.4878048780487805,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsANA,W 5 - 3,w+1.5,o6
+2023-24,2024,47,47,2024-01-23,"Tue, Jan 23, 24'",w+302,302,0.24875621890547264,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@LA,W 4 - 3 SO,w+1.5,o6
+2023-24,2024,48,48,2024-01-24,"Wed, Jan 24, 24'",w+271,271,0.2695417789757412,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsNYR,W 3 - 2 OT,w+1.5,u6
+2023-24,2024,49,49,2024-01-27,"Sat, Jan 27, 24'",l+164,164,0.3787878787878788,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsBUF,L 2 - 5,l+1.5,o6
+2023-24,2024,50,50,2024-01-31,"Wed, Jan 31, 24'",w+197,197,0.3367003367003367,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsSEA,W 2 - 0,w+1.5,u5.5
+2023-24,2024,51,51,2024-02-01,"Thu, Feb 01, 24'",l+150,150,0.4,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@ANA,L 2 - 3 OT,w+1.5,u6
+2023-24,2024,52,52,2024-02-15,"Thu, Feb 15, 24'",l+338,338,0.228310502283105,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@WPG,L 0 - 1,w+1.5,u5.5
+2023-24,2024,53,53,2024-02-16,"Fri, Feb 16, 24'",w+259,259,0.2785515320334262,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@CGY,W 6 - 3,w+1.5,o5.5
+2023-24,2024,54,54,2024-02-18,"Sun, Feb 18, 24'",l+123,123,0.4484304932735426,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsCBJ,L 3 - 4,w+1.5,o6
+2023-24,2024,55,55,2024-02-19,"Mon, Feb 19, 24'",l+218,218,0.31446540880503143,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsVEG,L 0 - 4,l+1.5,u5.5
+2023-24,2024,56,56,2024-02-25,"Sun, Feb 25, 24'",l+187,187,0.34843205574912894,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsNAS,L 2 - 4,l+1.5,o5.5
+2023-24,2024,57,57,2024-02-28,"Wed, Feb 28, 24'",l+213,213,0.3194888178913738,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsNJ,L 2 - 7,l+1.5,o6.5
+2023-24,2024,58,58,2024-03-01,"Fri, Mar 01, 24'",l+108,108,0.4807692307692308,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsANA,L 4 - 6,l+1.5,o6
+2023-24,2024,59,59,2024-03-03,"Sun, Mar 03, 24'",l+442,442,0.18450184501845018,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@DAL,L 2 - 3 SO,w+1.5,u6.5
+2023-24,2024,60,60,2024-03-04,"Mon, Mar 04, 24'",l+273,273,0.2680965147453083,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@MIN,L 3 - 4,w+1.5,o6
+2023-24,2024,61,61,2024-03-06,"Wed, Mar 06, 24'",l+316,316,0.2403846153846154,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsDAL,L 6 - 7 OT,w+1.5,o6
+2023-24,2024,62,62,2024-03-08,"Fri, Mar 08, 24'",l+239,239,0.2949852507374631,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsNYI,L 2 - 7,l+1.5,o6
+2023-24,2024,63,63,2024-03-10,"Sun, Mar 10, 24'",w+181,181,0.35587188612099646,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsOTT,W 2 - 1,w+1.5,u6.5
+2023-24,2024,64,64,2024-03-12,"Tue, Mar 12, 24'",l+281,281,0.26246719160104987,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@PHI,L 2 - 3,w+1.5,u6
+2023-24,2024,65,65,2024-03-14,"Thu, Mar 14, 24'",l+257,257,0.2801120448179272,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@PIT,L 3 - 6,l+1.5,o6
+2023-24,2024,66,66,2024-03-16,"Sat, Mar 16, 24'",l+166,166,0.37593984962406013,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@CBJ,L 2 - 4,l+1.5,u6.5
+2023-24,2024,67,67,2024-03-17,"Sun, Mar 17, 24'",l+146,146,0.4065040650406504,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@CHI,L 2 - 5,l+1.5,o6
+2023-24,2024,68,68,2024-03-20,"Wed, Mar 20, 24'",l+351,351,0.22172949002217296,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@NAS,L 2 - 8,l+1.5,o6
+2023-24,2024,69,69,2024-03-22,"Fri, Mar 22, 24'",l+284,284,0.2604166666666667,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsTB,L 1 - 4,l+1.5,u6.5
+2023-24,2024,70,70,2024-03-24,"Sun, Mar 24, 24'",l-103,-103,0.5073891625615764,True,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsCHI,L 4 - 5 OT,w+1.5,o6
+2023-24,2024,71,71,2024-03-27,"Wed, Mar 27, 24'",l+314,314,0.24154589371980675,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsDAL,L 3 - 6,l+1.5,o6.5
+2023-24,2024,72,72,2024-03-29,"Fri, Mar 29, 24'",l+298,298,0.25125628140703515,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@MIN,L 1 - 3,l+1.5,u6
+2023-24,2024,73,73,2024-03-31,"Sun, Mar 31, 24'",w+257,257,0.2801120448179272,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@STL,W 4 - 0,w+1.5,u6
+2023-24,2024,74,74,2024-04-02,"Tue, Apr 02, 24'",l+175,175,0.36363636363636365,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsSEA,L 2 - 4,l+1.5,o5.5
+2023-24,2024,75,75,2024-04-05,"Fri, Apr 05, 24'",l+246,246,0.28901734104046245,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsLA,L 1 - 2,w+1.5,u5.5
+2023-24,2024,76,76,2024-04-06,"Sat, Apr 06, 24'",w+185,185,0.3508771929824561,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsSTL,W 3 - 2 OT,w+1.5,u6
+2023-24,2024,77,77,2024-04-07,"Sun, Apr 07, 24'",l+179,179,0.35842293906810035,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsARI,L 2 - 5,l+1.5,o6
+2023-24,2024,78,78,2024-04-10,"Wed, Apr 10, 24'",l+179,179,0.35842293906810035,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsCGY,L 2 - 3 OT,w+1.5,u6
+2023-24,2024,79,79,2024-04-12,"Fri, Apr 12, 24'",w+228,228,0.3048780487804878,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@SEA,W 3 - 1,w+1.5,u5.5
+2023-24,2024,80,80,2024-04-14,"Sun, Apr 14, 24'",l+177,177,0.36101083032490977,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,vsMIN,L 2 - 6,l+1.5,o6
+2023-24,2024,81,81,2024-04-16,"Tue, Apr 16, 24'",l+403,403,0.1988071570576541,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@EDM,L 2 - 9,l+1.5,o6
+2023-24,2024,82,82,2024-04-19,"Fri, Apr 19, 24'",l+225,225,0.3076923076923077,False,https://moneyline.com/nhl/teams/san-jose-sharks/2024/schedule/past-games,@CGY,L 1 - 5,l+1.5,u6.5
+2024-25,2025,1,83,2024-10-11,"Fri, Oct 11, 24'",l+142,142,0.4132231404958678,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsSTL,L 4 - 5 OT,w+1.5,o6
+2024-25,2025,2,84,2024-10-13,"Sun, Oct 13, 24'",l+113,113,0.4694835680751174,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsANA,L 0 - 2,l+1.5,u6
+2024-25,2025,3,85,2024-10-16,"Wed, Oct 16, 24'",l+300,300,0.25,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@DAL,L 2 - 3 SO,w+1.5,u6
+2024-25,2025,4,86,2024-10-18,"Fri, Oct 18, 24'",l+155,155,0.39215686274509803,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@CHI,L 2 - 4,l+1.5,P6
+2024-25,2025,5,87,2024-10-19,"Sat, Oct 19, 24'",l+318,318,0.23923444976076555,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@WPG,L 3 - 8,l+1.5,o5.5
+2024-25,2025,6,88,2024-10-21,"Mon, Oct 21, 24'",l+232,232,0.30120481927710846,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsCOL,L 1 - 4,l+1.5,u6.5
+2024-25,2025,7,89,2024-10-23,"Wed, Oct 23, 24'",l+133,133,0.4291845493562232,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@ANA,L 1 - 3,l+1.5,u6
+2024-25,2025,8,90,2024-10-25,"Fri, Oct 25, 24'",l+250,250,0.2857142857142857,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@LA,L 2 - 3,w+1.5,u6
+2024-25,2025,9,91,2024-10-27,"Sun, Oct 27, 24'",l+247,247,0.2881844380403458,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@VEG,L 3 - 7,l+1.5,o6
+2024-25,2025,10,92,2024-10-29,"Tue, Oct 29, 24'",w+216,216,0.31645569620253167,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@UTA,W 5 - 4 OT,w+1.5,o6
+2024-25,2025,11,93,2024-10-30,"Wed, Oct 30, 24'",w+257,257,0.2801120448179272,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsLA,W 4 - 2,w+1.5,P6
+2024-25,2025,12,94,2024-11-01,"Fri, Nov 01, 24'",w+133,133,0.4291845493562232,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsCHI,W 3 - 2,w+1.5,u6.5
+2024-25,2025,13,95,2024-11-03,"Sun, Nov 03, 24'",l+238,238,0.2958579881656805,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsVAN,L 2 - 3,w+1.5,u6.5
+2024-25,2025,14,96,2024-11-06,"Wed, Nov 06, 24'",w+108,108,0.4807692307692308,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsCBJ,W 2 - 1 OT,w+1.5,u6.5
+2024-25,2025,15,97,2024-11-08,"Fri, Nov 08, 24'",l+219,219,0.31347962382445144,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsMIN,L 2 - 5,l+1.5,o6
+2024-25,2025,16,98,2024-11-11,"Mon, Nov 11, 24'",w+272,272,0.26881720430107525,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@NJ,W 1 - 0,w+1.5,u6.5
+2024-25,2025,17,99,2024-11-12,"Tue, Nov 12, 24'",l+225,225,0.3076923076923077,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@PHI,L 3 - 4 SO,w+1.5,o6
+2024-25,2025,18,100,2024-11-15,"Fri, Nov 15, 24'",l+335,335,0.22988505747126436,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@NYR,L 2 - 3,w+1.5,u6.5
+2024-25,2025,19,101,2024-11-17,"Sun, Nov 17, 24'",l+172,172,0.36764705882352944,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@PIT,L 3 - 4 SO,w+1.5,o6.5
+2024-25,2025,20,102,2024-11-19,"Tue, Nov 19, 24'",w+124,124,0.44642857142857145,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsDET,W 5 - 4 OT,w+1.5,o6
+2024-25,2025,21,103,2024-11-21,"Thu, Nov 21, 24'",l+396,396,0.20161290322580644,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@DAL,L 2 - 5,l+1.5,o6.5
+2024-25,2025,22,104,2024-11-22,"Fri, Nov 22, 24'",l+179,179,0.35842293906810035,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@STL,L 2 - 3 SO,w+1.5,u6
+2024-25,2025,23,105,2024-11-24,"Sun, Nov 24, 24'",l+120,120,0.45454545454545453,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsBUF,L 2 - 4,l+1.5,P6
+2024-25,2025,24,106,2024-11-26,"Tue, Nov 26, 24'",w+201,201,0.33222591362126247,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsLA,W 7 - 2,w+1.5,o5.5
+2024-25,2025,25,107,2024-11-28,"Thu, Nov 28, 24'",l+197,197,0.3367003367003367,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsOTT,L 3 - 4,w+1.5,o6
+2024-25,2025,26,108,2024-11-29,"Fri, Nov 29, 24'",w+128,128,0.43859649122807015,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsSEA,W 8 - 5,w+1.5,o5.5
+2024-25,2025,27,109,2024-12-01,"Sun, Dec 01, 24'",w+180,180,0.35714285714285715,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@SEA,W 4 - 2,w+1.5,o5.5
+2024-25,2025,28,110,2024-12-04,"Wed, Dec 04, 24'",w+228,228,0.3048780487804878,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@WAS,W 2 - 1 OT,w+1.5,u6.5
+2024-25,2025,29,111,2024-12-06,"Fri, Dec 06, 24'",l+220,220,0.3125,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@TB,L 1 - 8,l+1.5,o6
+2024-25,2025,30,112,2024-12-07,"Sat, Dec 07, 24'",l+308,308,0.24509803921568626,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@FLA,L 1 - 3,l+1.5,u6.5
+2024-25,2025,31,113,2024-12-11,"Wed, Dec 11, 24'",l+391,391,0.20366598778004075,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@CAR,L 2 - 3,w+1.5,u6.5
+2024-25,2025,32,114,2024-12-13,"Fri, Dec 13, 24'",w+151,151,0.398406374501992,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@STL,W 4 - 3,w+1.5,o5.5
+2024-25,2025,33,115,2024-12-15,"Sun, Dec 15, 24'",l+157,157,0.38910505836575876,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsUTA,L 3 - 4,w+1.5,o6
+2024-25,2025,34,116,2024-12-18,"Wed, Dec 18, 24'",l+196,196,0.33783783783783783,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsWPG,L 3 - 4,w+1.5,o6
+2024-25,2025,35,117,2024-12-20,"Fri, Dec 20, 24'",l+233,233,0.3003003003003003,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsCOL,L 2 - 4,l+1.5,u6.5
+2024-25,2025,36,118,2024-12-21,"Sat, Dec 21, 24'",l+335,335,0.22988505747126436,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@EDM,L 2 - 3 OT,w+1.5,u6.5
+2024-25,2025,37,119,2024-12-24,"Tue, Dec 24, 24'",l+200,200,0.3333333333333333,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@VAN,L 3 - 4,w+1.5,o5.5
+2024-25,2025,38,120,2024-12-28,"Sat, Dec 28, 24'",l+204,204,0.32894736842105265,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsVEG,L 3 - 6,l+1.5,o6.5
+2024-25,2025,39,121,2024-12-29,"Sun, Dec 29, 24'",l+149,149,0.40160642570281124,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsCGY,L 1 - 3,l+1.5,u6.5
+2024-25,2025,40,122,2025-01-01,"Wed, Jan 01, 25'",l+151,151,0.398406374501992,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsPHI,L 0 - 4,l+1.5,u6.5
+2024-25,2025,41,123,2025-01-03,"Fri, Jan 03, 25'",w+224,224,0.30864197530864196,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsTB,W 2 - 1,w+1.5,u6.5
+2024-25,2025,42,124,2025-01-04,"Sat, Jan 04, 25'",w+297,297,0.2518891687657431,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsNJ,W 3 - 2,w+1.5,u6
+2024-25,2025,43,125,2025-01-08,"Wed, Jan 08, 25'",l+218,218,0.31446540880503143,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsVEG,L 2 - 4,l+1.5,u6.5
+2024-25,2025,44,126,2025-01-11,"Sat, Jan 11, 25'",l+219,219,0.31347962382445144,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@UTA,L 1 - 2,w+1.5,u6
+2024-25,2025,45,127,2025-01-12,"Sun, Jan 12, 25'",l+160,160,0.38461538461538464,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsMIN,L 1 - 3,l+1.5,u6
+2024-25,2025,46,128,2025-01-15,"Wed, Jan 15, 25'",w+155,155,0.39215686274509803,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@DET,W 6 - 3,w+1.5,o6
+2024-25,2025,47,129,2025-01-17,"Fri, Jan 17, 25'",l+147,147,0.4048582995951417,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@CBJ,L 1 - 4,l+1.5,u6
+2024-25,2025,48,130,2025-01-19,"Sun, Jan 19, 25'",l+184,184,0.352112676056338,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@NYI,L 1 - 4,l+1.5,u5.5
+2024-25,2025,49,131,2025-01-20,"Mon, Jan 20, 25'",l+185,185,0.3508771929824561,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@BOS,L 3 - 6,l+1.5,o5.5
+2024-25,2025,50,132,2025-01-22,"Wed, Jan 22, 25'",l+309,309,0.24449877750611246,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@NAS,L 5 - 7,l+1.5,o6
+2024-25,2025,51,133,2025-01-24,"Fri, Jan 24, 25'",l+184,184,0.352112676056338,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsNAS,L 5 - 6,w+1.5,o6
+2024-25,2025,52,134,2025-01-26,"Sun, Jan 26, 25'",l+250,250,0.2857142857142857,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsFLA,L 2 - 7,l+1.5,o6
+2024-25,2025,53,135,2025-01-28,"Tue, Jan 28, 25'",w+150,150,0.4,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsPIT,W 2 - 1,w+1.5,u6.5
+2024-25,2025,54,136,2025-01-31,"Fri, Jan 31, 25'",l+160,160,0.38461538461538464,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@SEA,L 2 - 6,l+1.5,o6
+2024-25,2025,55,137,2025-02-05,"Wed, Feb 05, 25'",l+142,142,0.4132231404958678,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsMON,L 3 - 4,w+1.5,o6.5
+2024-25,2025,56,138,2025-02-07,"Fri, Feb 07, 25'",l+164,164,0.3787878787878788,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsVAN,L 1 - 2 OT,w+1.5,u5.5
+2024-25,2025,57,139,2025-02-09,"Sun, Feb 09, 25'",l+196,196,0.33783783783783783,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsDAL,L 3 - 8,l+1.5,o6
+2024-25,2025,58,140,2025-02-24,"Mon, Feb 24, 25'",l+194,194,0.3401360544217687,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@CGY,L 2 - 3,w+1.5,u6
+2024-25,2025,59,141,2025-02-25,"Tue, Feb 25, 25'",l+379,379,0.20876826722338204,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@WPG,L 1 - 2 OT,w+1.5,u6
+2024-25,2025,60,142,2025-02-28,"Fri, Feb 28, 25'",l+183,183,0.35335689045936397,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@MON,L 3 - 4 OT,w+1.5,o6
+2024-25,2025,61,143,2025-03-02,"Sun, Mar 02, 25'",l+250,250,0.2857142857142857,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@OTT,L 3 - 5,l+1.5,o6
+2024-25,2025,62,144,2025-03-04,"Tue, Mar 04, 25'",w+264,264,0.27472527472527475,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@TOR,W 3 - 2 SO,w+1.5,u6.5
+2024-25,2025,63,145,2025-03-05,"Wed, Mar 05, 25'",w+179,179,0.35842293906810035,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@BUF,W 6 - 2,w+1.5,o6.5
+2024-25,2025,64,146,2025-03-07,"Fri, Mar 07, 25'",l+331,331,0.23201856148491878,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@COL,L 3 - 7,l+1.5,o6
+2024-25,2025,65,147,2025-03-09,"Sun, Mar 09, 25'",l+138,138,0.42016806722689076,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsNYI,L 2 - 4,l+1.5,P6
+2024-25,2025,66,148,2025-03-12,"Wed, Mar 12, 25'",l+140,140,0.4166666666666667,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsNAS,L 2 - 3,w+1.5,u6.5
+2024-25,2025,67,149,2025-03-14,"Fri, Mar 14, 25'",w-121,-121,0.5475113122171946,True,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsCHI,W 4 - 2,w-1.5,P6
+2024-25,2025,68,150,2025-03-15,"Sat, Mar 15, 25'",l+207,207,0.3257328990228013,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsWAS,L 1 - 5,l+1.5,P6
+2024-25,2025,69,151,2025-03-21,"Fri, Mar 21, 25'",l+283,283,0.26109660574412535,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsCAR,L 1 - 3,l+1.5,u6
+2024-25,2025,70,152,2025-03-23,"Sun, Mar 23, 25'",w-104,-104,0.5098039215686274,True,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsBOS,W 3 - 1,w+1.5,u5.5
+2024-25,2025,71,153,2025-03-28,"Fri, Mar 28, 25'",w+205,205,0.32786885245901637,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsTOR,W 6 - 5 SO,w+1.5,o6
+2024-25,2025,72,154,2025-03-30,"Sun, Mar 30, 25'",l+137,137,0.4219409282700422,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsNYR,L 1 - 6,l+1.5,o6
+2024-25,2025,73,155,2025-03-31,"Mon, Mar 31, 25'",l+296,296,0.25252525252525254,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@LA,L 1 - 8,l+1.5,o6
+2024-25,2025,74,156,2025-04-02,"Wed, Apr 02, 25'",l+153,153,0.3952569169960474,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@ANA,L 3 - 4 SO,w+1.5,o6.5
+2024-25,2025,75,157,2025-04-04,"Fri, Apr 04, 25'",l+228,228,0.3048780487804878,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsEDM,L 2 - 3,w+1.5,u6.5
+2024-25,2025,76,158,2025-04-06,"Sun, Apr 06, 25'",l+143,143,0.411522633744856,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsSEA,L 1 - 5,l+1.5,P6
+2024-25,2025,77,159,2025-04-08,"Tue, Apr 08, 25'",l+186,186,0.34965034965034963,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsCGY,L 2 - 3,w+1.5,u6
+2024-25,2025,78,160,2025-04-10,"Thu, Apr 10, 25'",l+279,279,0.2638522427440633,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@MIN,L 7 - 8 OT,w+1.5,o5.5
+2024-25,2025,79,161,2025-04-12,"Sat, Apr 12, 25'",l+302,302,0.24875621890547264,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@EDM,L 2 - 4,l+1.5,u6.5
+2024-25,2025,80,162,2025-04-14,"Mon, Apr 14, 25'",l+263,263,0.27548209366391185,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@CGY,L 2 - 5,l+1.5,o6
+2024-25,2025,81,163,2025-04-15,"Tue, Apr 15, 25'",l+260,260,0.2777777777777778,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,@VAN,L 1 - 2 OT,w+1.5,u6
+2024-25,2025,82,164,2025-04-17,"Thu, Apr 17, 25'",l+185,185,0.3508771929824561,False,https://moneyline.com/nhl/teams/san-jose-sharks/2025/schedule/past-games,vsEDM,L 0 - 3,l+1.5,u6.5
+2025-26,2026,1,165,2025-10-10,"Fri, Oct 10, 25'",l+185,185,0.3508771929824561,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsVEG,L 3 - 4 OT,w+1.5,o6.5
+2025-26,2026,2,166,2025-10-12,"Sun, Oct 12, 25'",l+108,108,0.4807692307692308,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsANA,L 6 - 7 OT,w+1.5,o6.5
+2025-26,2026,3,167,2025-10-15,"Wed, Oct 15, 25'",l+221,221,0.3115264797507788,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsCAR,L 1 - 5,l+1.5,u6.5
+2025-26,2026,4,168,2025-10-18,"Sat, Oct 18, 25'",l+218,218,0.31446540880503143,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@UTA,L 3 - 6,l+1.5,o6
+2025-26,2026,5,169,2025-10-19,"Sun, Oct 19, 25'",l+138,138,0.42016806722689076,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsPIT,L 0 - 3,l+1.5,u6.5
+2025-26,2026,6,170,2025-10-21,"Tue, Oct 21, 25'",l+183,183,0.35335689045936397,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@NYI,L 3 - 4,w+1.5,o6.5
+2025-26,2026,7,171,2025-10-23,"Thu, Oct 23, 25'",w+233,233,0.3003003003003003,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@NYR,W 6 - 5 OT,w+1.5,o6
+2025-26,2026,8,172,2025-10-24,"Fri, Oct 24, 25'",l+294,294,0.25380710659898476,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@NJ,L 1 - 3,l+1.5,u6.5
+2025-26,2026,9,173,2025-10-26,"Sun, Oct 26, 25'",w+168,168,0.373134328358209,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@MIN,W 6 - 5 OT,w+1.5,o6.5
+2025-26,2026,10,174,2025-10-29,"Wed, Oct 29, 25'",l+183,183,0.35335689045936397,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsLA,L 3 - 4,w+1.5,o6
+2025-26,2026,11,175,2025-10-31,"Fri, Oct 31, 25'",w+181,181,0.35587188612099646,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsNJ,W 5 - 2,w+1.5,o6.5
+2025-26,2026,12,176,2025-11-01,"Sat, Nov 01, 25'",w+208,208,0.3246753246753247,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsCOL,W 3 - 2 OT,w+1.5,u6.5
+2025-26,2026,13,177,2025-11-03,"Mon, Nov 03, 25'",l+165,165,0.37735849056603776,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsDET,L 2 - 3 SO,w+1.5,u6.5
+2025-26,2026,14,178,2025-11-06,"Thu, Nov 06, 25'",w+147,147,0.4048582995951417,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@SEA,W 6 - 1,w+1.5,o6
+2025-26,2026,15,179,2025-11-08,"Sat, Nov 08, 25'",w+163,163,0.38022813688212925,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsWPG,W 2 - 1,w+1.5,u6.5
+2025-26,2026,16,180,2025-11-09,"Sun, Nov 09, 25'",w+210,210,0.3225806451612903,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsFLA,W 3 - 1,w+1.5,u6.5
+2025-26,2026,17,181,2025-11-12,"Wed, Nov 12, 25'",w+168,168,0.373134328358209,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@MIN,W 2 - 1 OT,w+1.5,u6.5
+2025-26,2026,18,182,2025-11-14,"Fri, Nov 14, 25'",l+135,135,0.425531914893617,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@CGY,L 0 - 2,l+1.5,u6
+2025-26,2026,19,183,2025-11-16,"Sun, Nov 16, 25'",l+128,128,0.43859649122807015,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@SEA,L 1 - 4,l+1.5,u5.5
+2025-26,2026,20,184,2025-11-19,"Wed, Nov 19, 25'",w+115,115,0.46511627906976744,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsUTA,W 3 - 2 OT,w+1.5,u6
+2025-26,2026,21,185,2025-11-21,"Fri, Nov 21, 25'",w+147,147,0.4048582995951417,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsLA,W 4 - 3 SO,w+1.5,o5.5
+2025-26,2026,22,186,2025-11-23,"Sun, Nov 23, 25'",l+141,141,0.4149377593360996,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsOTT,L 2 - 3,w+1.5,u5.5
+2025-26,2026,23,187,2025-11-24,"Mon, Nov 24, 25'",w+111,111,0.47393364928909953,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsBOS,W 3 - 1,w+1.5,u6
+2025-26,2026,24,188,2025-11-27,"Thu, Nov 27, 25'",l+306,306,0.24630541871921183,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@COL,L 0 - 6,l+1.5,u6.5
+2025-26,2026,25,189,2025-11-28,"Fri, Nov 28, 25'",w-103,-103,0.5073891625615764,True,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsVAN,W 3 - 2,w+1.5,u6.5
+2025-26,2026,26,190,2025-11-30,"Sun, Nov 30, 25'",l+266,266,0.273224043715847,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@VEG,L 3 - 4,w+1.5,o6.5
+2025-26,2026,27,191,2025-12-02,"Tue, Dec 02, 25'",w+149,149,0.40160642570281124,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsUTA,W 6 - 3,w+1.5,o5.5
+2025-26,2026,28,192,2025-12-04,"Thu, Dec 04, 25'",l+124,124,0.44642857142857145,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsWAS,L 1 - 7,l+1.5,o6
+2025-26,2026,29,193,2025-12-06,"Sat, Dec 06, 25'",l+234,234,0.2994011976047904,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@DAL,L 1 - 4,l+1.5,u6
+2025-26,2026,30,194,2025-12-07,"Sun, Dec 07, 25'",w+264,264,0.27472527472527475,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@CAR,W 4 - 1,w+1.5,u6.5
+2025-26,2026,31,195,2025-12-10,"Wed, Dec 10, 25'",l+151,151,0.398406374501992,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@PHI,L 1 - 4,l+1.5,u6
+2025-26,2026,32,196,2025-12-12,"Fri, Dec 12, 25'",w+166,166,0.37593984962406013,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@TOR,W 3 - 2 OT,w+1.5,u6.5
+2025-26,2026,33,197,2025-12-13,"Sat, Dec 13, 25'",w+153,153,0.3952569169960474,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@PIT,W 6 - 5 OT,w+1.5,o6
+2025-26,2026,34,198,2025-12-17,"Wed, Dec 17, 25'",w+121,121,0.45248868778280543,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsCGY,W 6 - 3,w+1.5,o5.5
+2025-26,2026,35,199,2025-12-19,"Fri, Dec 19, 25'",l+168,168,0.373134328358209,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsDAL,L 3 - 5,l+1.5,o6
+2025-26,2026,36,200,2025-12-21,"Sun, Dec 21, 25'",l-131,-131,0.5670995670995671,True,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsSEA,L 2 - 4,l-1.5,P6
+2025-26,2026,37,201,2025-12-24,"Wed, Dec 24, 25'",l+168,168,0.373134328358209,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@VEG,L 2 - 7,l+1.5,o6
+2025-26,2026,38,202,2025-12-28,"Sun, Dec 28, 25'",w+125,125,0.4444444444444444,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@VAN,W 6 - 3,w+1.5,o6
+2025-26,2026,39,203,2025-12-30,"Tue, Dec 30, 25'",w+145,145,0.40816326530612246,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@ANA,W 5 - 4,w+1.5,o6.5
+2025-26,2026,40,204,2025-12-31,"Wed, Dec 31, 25'",w+152,152,0.3968253968253968,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsMIN,W 4 - 3 SO,w+1.5,o6.5
+2025-26,2026,41,205,2026-01-03,"Sat, Jan 03",l+179,179,0.35842293906810035,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsTB,L 3 - 7,l+1.5,o6
+2025-26,2026,42,206,2026-01-07,"Wed, Jan 07",w+114,114,0.4672897196261682,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsCBJ,W 5 - 2,w+1.5,o6.5
+2025-26,2026,43,207,2026-01-08,"Thu, Jan 08",w+185,185,0.3508771929824561,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@LA,W 4 - 3 OT,w+1.5,o6.5
+2025-26,2026,44,208,2026-01-10,"Sat, Jan 10",w+140,140,0.4166666666666667,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsDAL,W 5 - 4 OT,w+1.5,o6.5
+2025-26,2026,45,209,2026-01-12,"Mon, Jan 12",l+120,120,0.45454545454545453,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsVEG,L 2 - 7,l+1.5,o6.5
+2025-26,2026,46,210,2026-01-16,"Fri, Jan 16",w+148,148,0.4032258064516129,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@WAS,W 3 - 2,w+1.5,u6.5
+2025-26,2026,47,211,2026-01-17,"Sat, Jan 17",l+141,141,0.4149377593360996,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@DET,L 2 - 4,l+1.5,u6.5
+2025-26,2026,48,212,2026-01-19,"Mon, Jan 19",w+157,157,0.38910505836575876,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@FLA,W 4 - 1,w+1.5,u6.5
+2025-26,2026,49,213,2026-01-21,"Wed, Jan 21",l+250,250,0.2857142857142857,False,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,@TB,L 1 - 4,l+1.5,u6.5
+2025-26,2026,50,214,,Today,w-120,-120,0.5454545454545454,True,https://moneyline.com/nhl/teams/san-jose-sharks/2026/schedule/past-games,vsNYR,W 3 - 1,w-1.5,u6.5
