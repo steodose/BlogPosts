@@ -1,6 +1,6 @@
 ###### NHL Expected Goals Charts
 ###### By: Stephan Teodosescu
-###### October 2023 #####
+###### February 2025 #####
 
 library(tidyverse)
 library(hockeyR)
